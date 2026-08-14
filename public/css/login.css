@@ -1,0 +1,196 @@
+  :root{
+    --bg: #eaf1ff;
+    --card-border: #bcd4ff;
+    --blue: #5b8def;
+    --blue-dark: #4a78d6;
+    --text-dark: #1b1f2a;
+    --text-gray: #8a94a6;
+    --input-border: #d7deea;
+    --border-light: #e2e8f4;
+  }
+  *{ box-sizing: border-box; }
+  html,body{
+    margin:0; padding:0;
+    background: var(--bg);
+    font-family: 'Inter', sans-serif;
+    color: var(--text-dark);
+    min-height: 100vh;
+  }
+  body{
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    padding: 40px 16px;
+  }
+
+  .card{
+    width: 100%;
+    max-width: 420px;
+    background: #fff;
+    border: 1px solid var(--card-border);
+    border-radius: 24px;
+    box-shadow: 0 20px 45px -20px rgba(80,120,220,0.25);
+    padding: 40px 36px 36px;
+  }
+
+  .logo-wrap{
+    display:flex;
+    justify-content:center;
+    margin-bottom: 14px;
+  }
+  .logo-wrap svg{ width: 96px; height: 96px; }
+
+  h1.brand{
+    font-family: 'Poppins', sans-serif;
+    font-weight: 800;
+    font-size: 30px;
+    text-align:center;
+    margin: 0 0 6px;
+    letter-spacing: -0.5px;
+  }
+  p.tagline{
+    text-align:center;
+    color: var(--text-gray);
+    font-size: 13.5px;
+    margin: 0 0 28px;
+  }
+
+  form{ display:flex; flex-direction:column; }
+
+  label{
+    font-weight: 700;
+    font-size: 14px;
+    margin-bottom: 8px;
+  }
+
+  .field{ margin-bottom: 18px; }
+
+  .input-wrap{
+    position: relative;
+    display:flex;
+    align-items:center;
+  }
+  .input-wrap svg.icon{
+    position:absolute;
+    left: 14px;
+    width: 18px; height: 18px;
+    color: var(--text-gray);
+    pointer-events:none;
+  }
+  .input-wrap input{
+    width:100%;
+    padding: 13px 14px 13px 42px;
+    border: 1.5px solid var(--input-border);
+    border-radius: 12px;
+    font-size: 14.5px;
+    font-family: inherit;
+    color: var(--text-dark);
+    outline: none;
+    transition: border-color .15s ease, box-shadow .15s ease;
+  }
+  .input-wrap input::placeholder{ color: #a9b2c3; }
+  .input-wrap input:focus{
+    border-color: var(--blue);
+    box-shadow: 0 0 0 3px rgba(91,141,239,0.18);
+  }
+  .toggle-pass{
+    position:absolute;
+    right: 14px;
+    background:none;
+    border:none;
+    cursor:pointer;
+    color: var(--text-gray);
+    display:flex;
+    padding:0;
+  }
+  .toggle-pass svg{ width:19px; height:19px; }
+
+  .forgot{
+    text-align:right;
+    margin: -8px 0 20px;
+  }
+  .forgot a{
+    color: var(--blue);
+    font-size: 13px;
+    font-weight: 600;
+    text-decoration:none;
+  }
+  .forgot a:hover{ text-decoration:underline; }
+
+  .btn-primary{
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    gap: 8px;
+    background: var(--blue);
+    color:#fff;
+    border:none;
+    border-radius: 12px;
+    padding: 14px;
+    font-size: 15.5px;
+    font-weight: 700;
+    font-family: inherit;
+    cursor:pointer;
+    transition: background .15s ease, transform .1s ease;
+  }
+  .btn-primary:hover{ background: var(--blue-dark); }
+  .btn-primary:active{ transform: scale(0.99); }
+  .btn-primary svg{ width:18px; height:18px; }
+
+  .divider{
+    display:flex;
+    align-items:center;
+    gap: 14px;
+    margin: 26px 0 22px;
+  }
+  .divider .line{ flex:1; height:1px; background: var(--border-light); }
+  .divider span{ color: var(--text-gray); font-size: 13px; }
+
+  .signup-title{
+    text-align:center;
+    font-weight: 700;
+    font-size: 15px;
+    margin: 0 0 4px;
+  }
+  .signup-sub{
+    text-align:center;
+    color: var(--text-gray);
+    font-size: 13px;
+    margin: 0 0 16px;
+  }
+
+  .role-options{
+    display:grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+  }
+  .role-btn{
+    display:flex;
+    align-items:center;
+    gap: 10px;
+    background:#fafbfd;
+    border: 1.5px solid var(--border-light);
+    border-radius: 12px;
+    padding: 12px 12px;
+    cursor:pointer;
+    font-family: inherit;
+    text-align:left;
+    transition: border-color .15s ease, background .15s ease;
+  }
+  .role-btn:hover{ background:#f2f6ff; }
+  .role-btn.active{
+    border-color: var(--blue);
+    background: #fff;
+  }
+  .role-btn svg{ width: 26px; height:26px; color: var(--blue); flex-shrink:0; }
+  .role-btn .role-text{
+    font-size: 13.5px;
+    line-height: 1.25;
+    font-weight: 600;
+    color: var(--text-dark);
+  }
+
+  @media (max-width: 400px){
+    .card{ padding: 32px 22px 28px; }
+    .role-options{ gap: 8px; }
+  }
