@@ -1,6 +1,6 @@
 <aside class="lk-sidebar">
     <div class="lk-sidebar-header">
-        <i class="bi bi-stars lk-logo-icon"></i>
+        <img src="{{ asset('img/LogoSemFundo.png') }}" alt="Logo LumiKids" class="lk-logo-image">
         <div>
             <div class="lk-logo-title">LumiKids</div>
             <div class="lk-logo-subtitle">Gestão Escolar</div>
@@ -21,6 +21,14 @@
             <a href="{{ url('/alunos') }}" class="lk-nav-item {{ request()->is('alunos*') ? 'active' : '' }}">
                 <i class="bi bi-person"></i> Alunos
             </a>
+
+            @if(auth()->user()?->perfil === 'admin')
+                <a href="{{ route('admin.usuarios.index') }}"
+                    class="lk-nav-item {{ request()->routeIs('admin.usuarios.*') ? 'active' : '' }}">
+                    <i class="bi bi-person-badge"></i> Usuários
+                </a>
+            @endif
+
             <a href="{{ url('/registros-diarios') }}"
                 class="lk-nav-item {{ request()->is('registros-diarios*') ? 'active' : '' }}">
                 <i class="bi bi-clipboard-check"></i> Registros Diários

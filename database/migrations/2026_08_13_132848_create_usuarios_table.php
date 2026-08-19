@@ -17,6 +17,7 @@ return new class extends Migration {
             $table->string('email')->unique();
             $table->string('senha');
             $table->string('perfil'); // admin,professor,responsavel
+            $table->enum('status', ['pendente', 'aprovado', 'recusado'])->default('pendente');
             $table->timestamps();
         });
     }

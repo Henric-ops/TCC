@@ -53,6 +53,13 @@
             color: #fff;
         }
 
+        .lk-logo-image {
+            width: 40px;
+            height: 40px;
+            object-fit: contain;
+            flex-shrink: 0;
+        }
+
         .lk-logo-title {
             color: #fff;
             font-weight: 700;

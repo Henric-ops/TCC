@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use App\Models\User;
 
 class Aluno extends Model
 {
@@ -18,9 +19,14 @@ class Aluno extends Model
         return $this->belongsToMany(Turma::class, 'turma_aluno');
     }
 
-    public function responsaveis()
+    public function responsaveis()//método para obter os responsáveis vinculados ao aluno
     {
-        return $this->belongsToMany(Usuario::class, 'responsavel_aluno')->withPivot('parentesco');
+        return $this->belongsToMany(
+            User::class,
+            'responsavel_aluno',
+            'aluno_id',
+            'usuario_id'
+        )->withPivot('parentesco');
     }
 
     public function registrosDiarios()

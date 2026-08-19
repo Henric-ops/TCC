@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Models;
+use App\Models\User;
 
 use Illuminate\Database\Eloquent\Model;
 
@@ -13,9 +14,14 @@ class Turma extends Model
         return $this->belongsTo(Escola::class);
     }
 
-    public function professores()
+    public function professores()//método para obter os professores vinculados à turma
     {
-        return $this->belongsToMany(Usuario::class, 'turma_professor');
+        return $this->belongsToMany(
+            User::class,
+            'turma_professor',
+            'turma_id',
+            'usuario_id'
+        );
     }
 
     public function alunos()
