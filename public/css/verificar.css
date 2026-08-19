@@ -1,0 +1,128 @@
+.verificar-page {
+    max-width: 980px;
+    margin: 0 auto;
+}
+
+.verificar-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+}
+
+.verificar-title {
+    display: flex;
+    align-items: center;
+    gap: .85rem;
+}
+
+.verificar-title-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 2.75rem;
+    height: 2.75rem;
+    flex-shrink: 0;
+    border-radius: .75rem;
+    background: #e9efff;
+    color: #4c7df5;
+    font-size: 1.35rem;
+}
+
+.verificar-subtitle {
+    color: #6b7280;
+    margin: 0;
+}
+
+.verificar-card {
+    overflow: hidden;
+    border: 1px solid #e4e8f2;
+    border-radius: .75rem;
+    box-shadow: 0 .25rem 1.25rem rgba(38, 43, 61, .05);
+}
+
+.verificar-card .card-header {
+    display: flex;
+    align-items: center;
+    gap: .6rem;
+    border-bottom: 1px solid #e4e8f2;
+    background: #f8f9fc;
+    color: #262b3d;
+    padding: 1rem 1.5rem;
+}
+
+.verificar-card .card-body {
+    padding: 1.5rem;
+}
+
+.verificar-field {
+    position: relative;
+}
+
+.verificar-field .form-label {
+    color: #6b7280;
+    font-size: .78rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: .03em;
+}
+
+.verificar-field .form-control,
+.verificar-field .form-select {
+    min-height: 2.75rem;
+    border-color: #dfe4ef;
+    border-radius: .5rem;
+}
+
+.verificar-field .form-control:disabled {
+    background: #fbfcff;
+    color: #262b3d;
+    opacity: 1;
+}
+
+.verificar-section-title {
+    display: flex;
+    align-items: center;
+    gap: .5rem;
+    color: #262b3d;
+    font-size: 1rem;
+    font-weight: 700;
+}
+
+.verificar-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: .65rem;
+    padding-top: .5rem;
+}
+
+.verificar-actions .btn {
+    display: inline-flex;
+    align-items: center;
+    gap: .45rem;
+}
+
+.verificar-actions .btn i {
+    font-size: 1.05rem;
+}
+
+@media (max-width: 767.98px) {
+    .verificar-header {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+
+    .verificar-card .card-body {
+        padding: 1.25rem;
+    }
+
+    .verificar-actions {
+        justify-content: stretch;
+    }
+
+    .verificar-actions .btn {
+        flex: 1;
+        justify-content: center;
+    }
+}

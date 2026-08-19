@@ -7,6 +7,7 @@ use App\Http\Requests\Admin\StoreUsuarioRequest;
 use App\Http\Requests\Admin\UpdateUsuarioRequest;
 use Illuminate\Http\Request;
 use App\Models\Aluno;
+use App\Models\Escola;
 use App\Models\User;
 
 class UsuarioController extends Controller
@@ -23,19 +24,21 @@ class UsuarioController extends Controller
 
     public function create()
     {
+        $escolas = Escola::orderBy('nome')->get();
         $alunos = Aluno::orderBy('nome')->get();
 
-        return view('usuarios.create', compact('alunos'));
+        return view('usuarios.create', compact('alunos', 'escolas'));
     }
 
     public function store(StoreUsuarioRequest $request)
     {
         $usuario = User::create([
-            'escola_id' => auth()->user()->escola_id,
+            'escola_id' => $request->escola_id,
             'nome' => $request->nome,
             'email' => $request->email,
             'senha' => $request->senha,
             'perfil' => $request->perfil,
+            'status' => 'pendente',
         ]);
 
         if ($request->perfil === 'responsavel' && $request->filled('alunos')) {
@@ -51,10 +54,11 @@ class UsuarioController extends Controller
 
     public function edit(User $usuario)
     {
+        $escolas = Escola::orderBy('nome')->get();
         $alunos = Aluno::orderBy('nome')->get();
         $alunosVinculados = $usuario->alunosResponsavel->pluck('id')->toArray();
 
-        return view('usuarios.edit', compact('usuario', 'alunos', 'alunosVinculados'));
+        return view('usuarios.edit', compact('usuario', 'alunos', 'alunosVinculados', 'escolas'));
     }
 
     public function aprovar(Request $request, User $usuario)//método para aprovar o usuário e vincular ao aluno ou turma
@@ -144,6 +148,7 @@ class UsuarioController extends Controller
         $usuario->nome = $request->nome;
         $usuario->email = $request->email;
         $usuario->perfil = $request->perfil;
+        $usuario->escola_id = $request->escola_id;
 
         if ($request->filled('senha')) {
             $usuario->senha = $request->senha;

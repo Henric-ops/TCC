@@ -27,7 +27,9 @@ class RegisterController extends Controller
 			'escola_id' => ['required', 'exists:escolas,id'],
 		]);
 
-		User::create($dados);
+		User::create(array_merge($dados, [
+			'status' => 'pendente',
+		]));
 
 		return redirect()->route('login')->with(
 			'sucesso',

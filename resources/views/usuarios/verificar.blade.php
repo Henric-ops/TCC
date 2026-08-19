@@ -4,24 +4,33 @@
 
 @section('content')
 
-    <div class="container">
+    <link rel="stylesheet" href="{{ asset('css/verificar.css') }}">
+    <script src="{{ asset('js/verificar.js') }}" defer></script>
 
-        <div class="d-flex justify-content-between align-items-center mb-4">
-            <div>
-                <h1 class="h4 mb-1">Verificar cadastro</h1>
-                <p class="text-muted mb-0">
-                    Analise os dados antes de aprovar o usuário.
-                </p>
+    <div class="verificar-page">
+
+        <div class="verificar-header">
+            <div class="verificar-title">
+                <span class="verificar-title-icon" aria-hidden="true">
+                    <i class="bi bi-person-check-fill"></i>
+                </span>
+                <div>
+                    <h1 class="h4 mb-1">Validar cadastro</h1>
+                    <p class="verificar-subtitle">Analise os dados antes de aprovar o usuário.</p>
+                </div>
             </div>
 
-            <a href="{{ route('admin.usuarios.index') }}" class="btn btn-outline-secondary">
-                Voltar
+            <a href="{{ route('admin.usuarios.index') }}"
+                class="btn btn-outline-secondary d-inline-flex align-items-center gap-2">
+                <i class="bi bi-arrow-left" aria-hidden="true"></i>
+                Voltar para usuários
             </a>
         </div>
 
-        <div class="card">
+        <div class="card verificar-card">
 
             <div class="card-header">
+                <i class="bi bi-person-vcard" aria-hidden="true"></i>
                 <strong>Dados do usuário</strong>
             </div>
 
@@ -29,25 +38,25 @@
 
                 <div class="row">
 
-                    <div class="col-md-6 mb-3">
+                    <div class="col-md-6 mb-3 verificar-field">
                         <label class="form-label">Nome</label>
 
                         <input type="text" class="form-control" value="{{ $usuario->nome }}" disabled>
                     </div>
 
-                    <div class="col-md-6 mb-3">
+                    <div class="col-md-6 mb-3 verificar-field">
                         <label class="form-label">E-mail</label>
 
                         <input type="email" class="form-control" value="{{ $usuario->email }}" disabled>
                     </div>
 
-                    <div class="col-md-6 mb-3">
+                    <div class="col-md-6 mb-3 verificar-field">
                         <label class="form-label">Escola</label>
 
                         <input type="text" class="form-control" value="{{ $usuario->escola->nome }}" disabled>
                     </div>
 
-                    <div class="col-md-6 mb-3">
+                    <div class="col-md-6 mb-3 verificar-field">
                         <label class="form-label">Perfil</label>
 
                         <input type="text" class="form-control text-capitalize" value="{{ $usuario->perfil }}" disabled>
@@ -60,7 +69,8 @@
 
                 @if($usuario->perfil === 'responsavel')
 
-                    <h5 class="mb-3">
+                    <h5 class="verificar-section-title mb-3">
+                        <i class="bi bi-people-fill" aria-hidden="true"></i>
                         Vínculo do responsável
                     </h5>
 
@@ -68,7 +78,7 @@
 
                         @csrf
 
-                        <div class="mb-3">
+                        <div class="mb-3 verificar-field">
 
                             <label class="form-label">
                                 Aluno
@@ -102,14 +112,33 @@
 
                         </div>
 
-                        <div class="mb-3">
+                        <div class="mb-3 verificar-field">
 
                             <label class="form-label">
                                 Parentesco
                             </label>
 
-                            <input type="text" name="parentesco" class="form-control @error('parentesco') is-invalid @enderror"
-                                value="{{ old('parentesco') }}" placeholder="Ex.: mãe, pai, avó..." required>
+                            <select name="parentesco" class="form-select @error('parentesco') is-invalid @enderror" required>
+                                <option value="">Selecione o parentesco</option>
+                                @foreach([
+                                        'pai' => 'Pai',
+                                        'mae' => 'Mãe',
+                                        'avo' => 'Avô',
+                                        'ava' => 'Avó',
+                                        'irmao' => 'Irmão',
+                                        'irma' => 'Irmã',
+                                        'tio' => 'Tio',
+                                        'tia' => 'Tia',
+                                        'padrasto' => 'Padrasto',
+                                        'madrasta' => 'Madrasta',
+                                        'tutor_legal' => 'Tutor(a) legal',
+                                        'outro' => 'Outro',
+                                    ] as $valor => $label)
+                                    <option value="{{ $valor }}" {{ old('parentesco') === $valor ? 'selected' : '' }}>
+                                        {{ $label }}
+                                    </option>
+                                @endforeach
+                            </select>
 
                             @error('parentesco')
                                 <div class="invalid-feedback">
@@ -119,14 +148,16 @@
 
                         </div>
 
-                        <div class="d-flex justify-content-end gap-2">
+                        <div class="verificar-actions">
 
                             <button type="submit" formaction="{{ route('admin.usuarios.recusar', $usuario) }}"
-                                class="btn btn-outline-danger">
+                                class="btn btn-outline-danger" data-confirm-rejection>
+                                <i class="bi bi-x-circle" aria-hidden="true"></i>
                                 Recusar
                             </button>
 
                             <button type="submit" class="btn btn-success">
+                                <i class="bi bi-check-circle-fill" aria-hidden="true"></i>
                                 Aprovar cadastro
                             </button>
 
@@ -134,10 +165,11 @@
 
                     </form>
 
-                    {{-- PROFESSOR --}}
+              
                 @elseif($usuario->perfil === 'professor')
 
-                    <h5 class="mb-3">
+                    <h5 class="verificar-section-title mb-3">
+                        <i class="bi bi-easel2-fill" aria-hidden="true"></i>
                         Vínculo do professor
                     </h5>
 
@@ -145,7 +177,7 @@
 
                         @csrf
 
-                        <div class="mb-3">
+                        <div class="mb-3 verificar-field">
 
                             <label class="form-label">
                                 Turma
@@ -179,14 +211,16 @@
 
                         </div>
 
-                        <div class="d-flex justify-content-end gap-2">
+                        <div class="verificar-actions">
 
                             <button type="submit" formaction="{{ route('admin.usuarios.recusar', $usuario) }}"
-                                class="btn btn-outline-danger">
+                                class="btn btn-outline-danger" data-confirm-rejection>
+                                <i class="bi bi-x-circle" aria-hidden="true"></i>
                                 Recusar
                             </button>
 
                             <button type="submit" class="btn btn-success">
+                                <i class="bi bi-check-circle-fill" aria-hidden="true"></i>
                                 Aprovar cadastro
                             </button>
 

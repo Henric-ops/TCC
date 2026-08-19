@@ -54,8 +54,8 @@
         }
 
         .lk-logo-image {
-            width: 40px;
-            height: 40px;
+            width: 80px;
+            height: 80px;
             object-fit: contain;
             flex-shrink: 0;
         }
