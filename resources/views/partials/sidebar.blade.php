@@ -15,7 +15,8 @@
                 class="lk-nav-item {{ request()->routeIs('dashboard') ? 'active' : '' }}">
                 <i class="bi bi-grid-1x2"></i> Dashboard
             </a>
-            <a href="{{ url('/turmas') }}" class="lk-nav-item {{ request()->is('turmas*') ? 'active' : '' }}">
+            <a href="{{ route('admin.turmas.index') }}"
+                class="lk-nav-item {{ request()->routeIs('admin.turmas.*') ? 'active' : '' }}">
                 <i class="bi bi-people"></i> Turmas
             </a>
             <a href="{{ url('/alunos') }}" class="lk-nav-item {{ request()->is('alunos*') ? 'active' : '' }}">

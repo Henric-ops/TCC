@@ -151,7 +151,7 @@
                         <div class="verificar-actions">
 
                             <button type="submit" formaction="{{ route('admin.usuarios.recusar', $usuario) }}"
-                                class="btn btn-outline-danger" data-confirm-rejection>
+                                formnovalidate class="btn btn-outline-danger" data-confirm-rejection>
                                 <i class="bi bi-x-circle" aria-hidden="true"></i>
                                 Recusar
                             </button>
@@ -191,13 +191,9 @@
 
                                 @foreach($turmas as $turma)
 
-                                    @if($turma->escola_id === $usuario->escola_id)
-
-                                        <option value="{{ $turma->id }}">
-                                            {{ $turma->nome }}
-                                        </option>
-
-                                    @endif
+                                    <option value="{{ $turma->id }}">
+                                        {{ $turma->nome }}
+                                    </option>
 
                                 @endforeach
 
@@ -214,12 +210,12 @@
                         <div class="verificar-actions">
 
                             <button type="submit" formaction="{{ route('admin.usuarios.recusar', $usuario) }}"
-                                class="btn btn-outline-danger" data-confirm-rejection>
+                                formnovalidate class="btn btn-outline-danger" data-confirm-rejection> 
                                 <i class="bi bi-x-circle" aria-hidden="true"></i>
                                 Recusar
                             </button>
 
-                            <button type="submit" class="btn btn-success">
+                            <button type="submit" class="btn btn-primary">
                                 <i class="bi bi-check-circle-fill" aria-hidden="true"></i>
                                 Aprovar cadastro
                             </button>

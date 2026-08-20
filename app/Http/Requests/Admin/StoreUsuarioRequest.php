@@ -12,7 +12,7 @@ class StoreUsuarioRequest extends FormRequest
         return auth()->user()?->perfil === 'admin';
     }
 
-    public function rules(): array
+    public function rules(): array // metodo que define as regras de validação para o request
     {
         return [
             'nome' => 'required|string|max:255',

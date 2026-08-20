@@ -78,7 +78,7 @@ class UsuarioController extends Controller
 
             $aluno = Aluno::findOrFail($request->aluno_id);
 
-            if ($aluno->escola_id !== $usuario->escola_id) {
+            if ((int) $aluno->escola_id !== (int) $usuario->escola_id) {
                 return back()
                     ->withErrors([
                         'aluno_id' => 'O aluno selecionado pertence a outra escola.'
@@ -100,7 +100,7 @@ class UsuarioController extends Controller
 
             $turma = \App\Models\Turma::findOrFail($request->turma_id);
 
-            if ($turma->escola_id !== $usuario->escola_id) {
+            if ((int) $turma->escola_id !== (int) $usuario->escola_id) {
                 return back()
                     ->withErrors([
                         'turma_id' => 'A turma selecionada pertence a outra escola.'
