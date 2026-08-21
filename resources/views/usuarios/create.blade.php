@@ -14,6 +14,7 @@
                 </span>
                 <div>
                     <h1 class="h4 mb-1">Novo usuário</h1>
+                    <p class="usuario-form-subtitle">Cadastre um novo acesso para sua escola.</p>
                 </div>
             </div>
 
@@ -155,7 +156,7 @@
                     </div>
 
                     <div class="usuario-form-actions">
-                        <a href="{{ route('admin.usuarios.index') }}" class="btn btn-danger">
+                        <a href="{{ route('admin.usuarios.index') }}" class="btn btn-outline-secondary">
                             <i class="bi bi-x-lg" aria-hidden="true"></i>
                             Cancelar
                         </a>

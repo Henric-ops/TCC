@@ -8,7 +8,7 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
-  background: #EEF1FA;
+  background: #F4F7FC;
   font-family: 'Inter', sans-serif;
   padding: 24px;
 }
@@ -16,23 +16,27 @@ body {
 .login-page {
   display: flex;
   width: 100%;
-  max-width: 980px;
-  min-height: 620px;
+  max-width: 1040px;
+  min-height: 660px;
   background: #fff;
-  border-radius: 28px;
-  box-shadow: 0 30px 60px -20px rgba(76, 99, 232, .25);
+  border-radius: 20px;
+  box-shadow: 0 24px 55px -22px rgba(38, 43, 61, .28);
   overflow: hidden;
 }
 
-/* ---------- Painel esquerdo ---------- */
+/* Painel esquerdo*/
 .login-side {
   position: relative;
-  width: 42%;
-  background: linear-gradient(160deg, #EEF0FC 0%, #E6E9FB 100%);
+  width: 40%;
+  background-image: linear-gradient(155deg, rgba(17, 39, 86, .95), rgba(21, 44, 94, .82)), url('../img/sala-fundo.jpg');
+  background-size: cover;
+  background-position: center;
   padding: 56px 44px;
   overflow: hidden;
   display: flex;
   flex-direction: column;
+  align-items: center;
+  justify-content: center;
 }
 
 .login-side>* {
@@ -40,18 +44,20 @@ body {
   z-index: 1;
 }
 
-.wave-divider {
+.login-side::after {
+  content: '';
   position: absolute;
-  top: 0;
-  right: -1px;
-  width: 90px;
-  height: 100%;
-  z-index: 0;
+  inset: 0;
+  background: radial-gradient(circle at 12% 92%, rgba(76, 125, 245, .34), transparent 25%), linear-gradient(90deg, transparent 78%, rgba(10, 25, 59, .18));
+  pointer-events: none;
+}
+
+.wave-divider {
+  display: none;
 }
 
 .decor-sparkle {
-  position: absolute;
-  z-index: 1;
+  display: none;
 }
 
 .decor-sparkle.s1 {
@@ -78,41 +84,69 @@ body {
   left: 165px;
 }
 
+.brand-top {
+  width: 100%;
+  text-align: center;
+}
+
+.brand-logo {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 16px;
+}
+
+.brand-top .brand-logo svg {
+  width: 60px;
+  height: 60px;
+}
+
+.brand-rule {
+  width: 56px;
+  height: 3px;
+  margin: 16px auto 14px;
+  border-radius: 2px;
+  background: #4C7DF5;
+}
+
 .mascot-wrap {
+  width: 100%;
   margin-bottom: 20px;
 }
 
 .mascot-star {
   display: block;
-  width: 150px;
-  height: 100px;
+  margin: 0 auto;
+  width: 128px;
+  height: 88px;
   object-fit: contain;
-  object-position: left center;
+  object-position: center;
 }
 
 .brand-title {
   font-family: 'Poppins', sans-serif;
   font-size: 2rem;
   font-weight: 800;
-  color: #1B2141;
+  color: #fff;
   margin: 0 0 10px;
+  text-align: center;
 }
 
 .brand-title .accent {
-  color: #4C63E8;
+  color: #4C7DF5;
 }
 
 .brand-subtitle {
   font-size: 1.05rem;
-  color: #454B63;
+  color: #E8EDF9;
   font-weight: 600;
   line-height: 1.3;
   margin: 0 0 14px;
+  text-align: center;
 }
 
 .brand-desc {
   font-size: .88rem;
-  color: #848BA0;
+  color: #CBD5EA;
   line-height: 1.5;
   max-width: 220px;
 }
@@ -123,9 +157,9 @@ body {
   bottom: 190px;
   width: 90px;
   height: 46px;
-  background: #fff;
+  background: rgba(255, 255, 255, .12);
   border-radius: 50px;
-  box-shadow: -22px 6px 0 -6px #fff, 22px 6px 0 -10px #fff;
+  box-shadow: -22px 6px 0 -6px rgba(255, 255, 255, .12), 22px 6px 0 -10px rgba(255, 255, 255, .12);
   opacity: .9;
 }
 
@@ -133,7 +167,7 @@ body {
   position: absolute;
   left: 24px;
   bottom: 24px;
-  width: 350px;
+  width: 290px;
 }
 
 .blocks-image {
@@ -143,7 +177,7 @@ body {
   filter: drop-shadow(0 12px 20px rgba(20, 30, 70, .15));
 }
 
-/* ---------- Painel direito (form) ---------- */
+/* Painel direito (form)*/
 .login-main {
   flex: 1;
   padding: 64px 56px;
@@ -363,7 +397,7 @@ body {
   padding-left: 18px;
 }
 
-/* ---------- Responsivo ---------- */
+/*Responsivo*/
 @media (max-width: 760px) {
   .login-side {
     display: none;

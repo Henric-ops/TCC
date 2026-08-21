@@ -14,14 +14,19 @@
             </span>
             <div>
                 <h1 class="h4 mb-1">Usuários</h1>
-                <p class="text-muted mb-0">Gerencie os acessos e cadastros da sua escola.</p>
             </div>
         </div>
 
-        <a href="{{ route('admin.usuarios.create') }}" class="btn btn-primary d-inline-flex align-items-center gap-2">
-            <i class="bi bi-person-plus-fill" aria-hidden="true"></i>
-            Novo usuário
-        </a>
+        <div class="usuarios-header-actions d-flex align-items-center gap-3">
+            <span class="usuarios-total">
+                <strong>{{ $usuarios->total() }}</strong>
+                {{ $usuarios->total() === 1 ? 'cadastro' : 'cadastros' }}
+            </span>
+            <a href="{{ route('admin.usuarios.create') }}" class="btn btn-primary d-inline-flex align-items-center gap-2">
+                <i class="bi bi-person-plus-fill" aria-hidden="true"></i>
+                Novo usuário
+            </a>
+        </div>
     </div>
 
     @if(session('sucesso'))
@@ -125,8 +130,8 @@
                                     @csrf
                                     @method('DELETE')
 
-                                    <button type="submit" class="btn btn-sm btn-danger usuario-action"
-                                        title="Excluir usuário" aria-label="Excluir usuário">
+                                    <button type="submit" class="btn btn-sm btn-danger usuario-action" title="Excluir usuário"
+                                        aria-label="Excluir usuário">
                                         <i class="bi bi-trash3" aria-hidden="true"></i>
                                         <span>Excluir</span>
                                     </button>

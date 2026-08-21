@@ -13,14 +13,19 @@
             </span>
             <div>
                 <h1 class="h4 mb-1">Turmas</h1>
-                <p class="text-muted mb-0">Organize as turmas e acompanhe os alunos vinculados.</p>
             </div>
         </div>
 
-        <a href="{{ route('admin.turmas.create') }}" class="btn btn-primary d-inline-flex align-items-center gap-2">
-            <i class="bi bi-plus-lg" aria-hidden="true"></i>
-            Nova turma
-        </a>
+        <div class="turmas-header-actions d-flex align-items-center gap-3">
+            <span class="turmas-total">
+                <strong>{{ $turmas->total() }}</strong>
+                {{ $turmas->total() === 1 ? 'turma' : 'turmas' }}
+            </span>
+            <a href="{{ route('admin.turmas.create') }}" class="btn btn-primary d-inline-flex align-items-center gap-2">
+                <i class="bi bi-plus-lg" aria-hidden="true"></i>
+                Nova turma
+            </a>
+        </div>
     </div>
 
     @if(session('sucesso'))
@@ -53,7 +58,12 @@
                                     <strong>{{ $turma->nome }}</strong>
                                 </div>
                             </td>
-                            <td class="turma-year">{{ $turma->ano }}</td>
+                            <td>
+                                <span class="turma-year">
+                                    <i class="bi bi-calendar3" aria-hidden="true"></i>
+                                    {{ $turma->ano }}
+                                </span>
+                            </td>
                             <td>
                                 <span class="badge bg-primary-subtle text-primary-emphasis turma-badge">
                                     <i class="bi bi-clock" aria-hidden="true"></i>
@@ -63,13 +73,13 @@
                             <td>
                                 <span class="turma-student-count">
                                     <i class="bi bi-person-fill" aria-hidden="true"></i>
-                                    {{ $turma->alunos_count }}
+                                    <strong>{{ $turma->alunos_count }}</strong>
+                                    {{ $turma->alunos_count === 1 ? 'aluno' : 'alunos' }}
                                 </span>
                             </td>
                             <td class="text-end text-nowrap">
-                                <a href="{{ route('admin.turmas.edit', $turma) }}"
-                                    class="btn btn-sm btn-primary turma-action" title="Editar turma"
-                                    aria-label="Editar turma">
+                                <a href="{{ route('admin.turmas.edit', $turma) }}" class="btn btn-sm btn-primary turma-action"
+                                    title="Editar turma" aria-label="Editar turma">
                                     <i class="bi bi-pencil-square" aria-hidden="true"></i>
                                     <span>Editar</span>
                                 </a>
@@ -77,8 +87,8 @@
                                     onsubmit="return confirm('Remover esta turma?')">
                                     @csrf
                                     @method('DELETE')
-                                    <button type="submit" class="btn btn-sm btn-danger turma-action"
-                                        title="Excluir turma" aria-label="Excluir turma">
+                                    <button type="submit" class="btn btn-sm btn-danger turma-action" title="Excluir turma"
+                                        aria-label="Excluir turma">
                                         <i class="bi bi-trash3" aria-hidden="true"></i>
                                         <span>Excluir</span>
                                     </button>

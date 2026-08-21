@@ -1,14 +1,20 @@
 .usuario-form-page {
-    max-width: 900px;
+    max-width: 960px;
     margin: 0 auto;
 }
 
 .usuario-form-header {
+    background: linear-gradient(135deg, #ffffff 0%, #f7f9ff 100%);
+    border: 1px solid #dfe5f1;
+    border-left: 4px solid #4c7df5;
+    border-radius: .65rem;
+    padding: 1.15rem 1.35rem;
     display: flex;
     align-items: center;
     justify-content: space-between;
     gap: 1rem;
     margin-bottom: 1.5rem;
+    box-shadow: 0 .35rem 1.25rem rgba(38, 43, 61, .04);
 }
 
 .usuario-form-title {
@@ -37,23 +43,38 @@
 
 .usuario-form-card {
     overflow: hidden;
-    border: 1px solid #e4e8f2;
-    border-radius: .75rem;
-    box-shadow: 0 .25rem 1.25rem rgba(38, 43, 61, .05);
+    border: 1px solid #dfe5f1;
+    border-radius: .65rem;
+    box-shadow: 0 .35rem 1.25rem rgba(38, 43, 61, .05);
 }
 
 .usuario-form-card .card-header {
     display: flex;
     align-items: center;
     gap: .6rem;
-    border-bottom: 1px solid #e4e8f2;
-    background: #f8f9fc;
+    border-bottom: 1px solid #dfe5f1;
+    background: #f4f6fb;
     color: #262b3d;
     padding: 1rem 1.5rem;
 }
 
+.usuario-form-card .card-header i {
+    color: #4c7df5;
+    font-size: 1.1rem;
+}
+
 .usuario-form-card .card-body {
     padding: 1.5rem;
+}
+
+.usuario-form-card form>.row {
+    margin-bottom: .25rem;
+}
+
+.usuario-form-card hr {
+    margin: .5rem 0 1.35rem;
+    border-color: #dfe5f1;
+    opacity: 1;
 }
 
 .usuario-form-field .form-label {
@@ -69,6 +90,8 @@
     min-height: 2.75rem;
     border-color: #dfe4ef;
     border-radius: .5rem;
+    color: #262b3d;
+    transition: border-color .15s ease, box-shadow .15s ease;
 }
 
 .usuario-form-alunos {
@@ -92,6 +115,12 @@
     font-weight: 700;
 }
 
+#bloco-responsavel {
+    padding: .15rem .9rem 0;
+    border-radius: .55rem;
+    background: #fbfcff;
+}
+
 .usuario-form-help {
     display: block;
     margin-top: .4rem;
@@ -103,7 +132,9 @@
     display: flex;
     justify-content: flex-end;
     gap: .65rem;
-    padding-top: .5rem;
+    margin-top: .75rem;
+    padding-top: 1.25rem;
+    border-top: 1px solid #e6eaf2;
 }
 
 .usuario-form-actions .btn {
@@ -124,6 +155,10 @@
 
     .usuario-form-card .card-body {
         padding: 1.25rem;
+    }
+
+    #bloco-responsavel {
+        padding-inline: .25rem;
     }
 
     .usuario-form-actions {
