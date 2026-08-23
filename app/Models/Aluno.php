@@ -38,4 +38,8 @@ class Aluno extends Model
     {
         return $this->hasMany(Mensagem::class);
     }
+
+    protected $casts = [
+        'data_nascimento' => 'date',
+    ];
 }

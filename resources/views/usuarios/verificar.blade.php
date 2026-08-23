@@ -67,7 +67,7 @@
                 <hr>
 
 
-                @if($usuario->perfil === 'responsavel')
+                @if($usuario->perfil === 'responsavel')<!-- Se responsável exibe o formulário de vínculo com o aluno -->
 
                     <h5 class="verificar-section-title mb-3">
                         <i class="bi bi-people-fill" aria-hidden="true"></i>
@@ -91,15 +91,9 @@
                                 </option>
 
                                 @foreach($alunos as $aluno)
-
-                                    @if($aluno->escola_id === $usuario->escola_id)
-
-                                        <option value="{{ $aluno->id }}" {{ old('aluno_id') == $aluno->id ? 'selected' : '' }}>
-                                            {{ $aluno->nome }}
-                                        </option>
-
-                                    @endif
-
+                                    <option value="{{ $aluno->id }}" {{ old('aluno_id') == $aluno->id ? 'selected' : '' }}>
+                                        {{ $aluno->nome }}
+                                    </option>
                                 @endforeach
 
                             </select>
@@ -150,8 +144,8 @@
 
                         <div class="verificar-actions">
 
-                            <button type="submit" formaction="{{ route('admin.usuarios.recusar', $usuario) }}"
-                                formnovalidate class="btn btn-outline-danger" data-confirm-rejection>
+                            <button type="submit" formaction="{{ route('admin.usuarios.recusar', $usuario) }}" formnovalidate
+                                class="btn btn-outline-danger" data-confirm-rejection>
                                 <i class="bi bi-x-circle" aria-hidden="true"></i>
                                 Recusar
                             </button>
@@ -165,8 +159,8 @@
 
                     </form>
 
-              
-                @elseif($usuario->perfil === 'professor')
+
+                @elseif($usuario->perfil === 'professor')<!-- Se professor, exibe o formulário de vínculo com a turma -->
 
                     <h5 class="verificar-section-title mb-3">
                         <i class="bi bi-easel2-fill" aria-hidden="true"></i>
@@ -209,8 +203,8 @@
 
                         <div class="verificar-actions">
 
-                            <button type="submit" formaction="{{ route('admin.usuarios.recusar', $usuario) }}"
-                                formnovalidate class="btn btn-outline-danger" data-confirm-rejection> 
+                            <button type="submit" formaction="{{ route('admin.usuarios.recusar', $usuario) }}" formnovalidate
+                                class="btn btn-outline-danger" data-confirm-rejection>
                                 <i class="bi bi-x-circle" aria-hidden="true"></i>
                                 Recusar
                             </button>

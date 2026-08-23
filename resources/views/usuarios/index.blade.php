@@ -42,10 +42,10 @@
 
                 <thead>
                     <tr>
-                        <th>Nome</th>
-                        <th>E-mail</th>
-                        <th>Perfil</th>
-                        <th>Status</th>
+                        <th><i class="bi bi-person" aria-hidden="true"></i> Nome</th>
+                        <th><i class="bi bi-envelope" aria-hidden="true"></i> E-mail</th>
+                        <th><i class="bi bi-person-badge" aria-hidden="true"></i> Perfil</th>
+                        <th><i class="bi bi-activity" aria-hidden="true"></i> Status</th>
                         <th class="text-end">Ações</th>
                     </tr>
                 </thead>
@@ -56,7 +56,7 @@
 
                         <tr>
 
-                            <td class="py-3">
+                            <td>
                                 <div class="d-flex align-items-center gap-3">
                                     <span class="usuario-avatar" aria-hidden="true">
                                         {{ strtoupper(substr($usuario->nome, 0, 1)) }}

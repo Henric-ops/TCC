@@ -6,6 +6,8 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\UsuarioController;
 use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\Admin\TurmasController;
+use App\Http\Controllers\Admin\AlunoController;
+
 
 Route::get('/', function () {
     return redirect()->route('login');
@@ -29,10 +31,13 @@ Route::middleware('auth')->group(function () {
 
 Route::middleware(['auth', 'perfil:admin'])->prefix('admin')->name('admin.')->group(function () {
     Route::resource('usuarios', UsuarioController::class)->except(['show']); // gerenciar usuários
+    Route::resource('turmas', TurmasController::class)->except(['show']); // gerenciar turmas
+    Route::resource('alunos', AlunoController::class)->except(['show']);// gerenciar alunos
+
 
     Route::get('/usuarios/{usuario}/verificar', [UsuarioController::class, 'verificar'])->name('usuarios.verificar');
     Route::post('/usuarios/{usuario}/aprovar', [UsuarioController::class, 'aprovar'])->name('usuarios.aprovar');
     Route::post('/usuarios/{usuario}/recusar', [UsuarioController::class, 'recusar'])->name('usuarios.recusar');
 
-    Route::resource('turmas', TurmasController::class)->except(['show']); // gerenciar turmas
+
 });

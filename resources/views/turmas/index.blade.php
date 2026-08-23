@@ -8,9 +8,7 @@
 
     <div class="turmas-header d-flex justify-content-between align-items-center mb-4">
         <div class="d-flex align-items-center gap-3">
-            <span class="turmas-heading-icon" aria-hidden="true">
-                <i class="bi bi-mortarboard-fill"></i>
-            </span>
+
             <div>
                 <h1 class="h4 mb-1">Turmas</h1>
             </div>
@@ -40,17 +38,17 @@
             <table class="table table-hover align-middle mb-0">
                 <thead>
                     <tr>
-                        <th>Nome</th>
-                        <th>Ano</th>
-                        <th>Período</th>
-                        <th>Alunos</th>
+                        <th><i class="bi bi-people" aria-hidden="true"></i> Nome</th>
+                        <th><i class="bi bi-calendar3" aria-hidden="true"></i> Ano</th>
+                        <th><i class="bi bi-clock" aria-hidden="true"></i> Período</th>
+                        <th><i class="bi bi-person" aria-hidden="true"></i> Alunos</th>
                         <th class="text-end">Ações</th>
                     </tr>
                 </thead>
                 <tbody>
                     @forelse($turmas as $turma)
                         <tr>
-                            <td class="py-3">
+                            <td>
                                 <div class="d-flex align-items-center gap-3">
                                     <span class="turma-avatar" aria-hidden="true">
                                         <i class="bi bi-people-fill"></i>

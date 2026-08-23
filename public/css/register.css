@@ -1,8 +1,8 @@
 :root {
     --register-bg: #f4f7fc;
     --register-border: #e4e7f2;
-    --register-blue: #4c63e8;
-    --register-blue-dark: #3d57e0;
+    --register-blue: #263f8f;
+    --register-blue-dark: #1b2f70;
     --register-text: #1b2141;
     --register-muted: #8a94a6;
     --register-input: #d7deea;
@@ -255,15 +255,23 @@ select:focus {
     font: inherit;
     font-size: 15px;
     font-weight: 700;
-    transition: background .15s ease, transform .1s ease;
+    box-shadow: 0 6px 14px -8px rgba(38, 63, 143, .75);
+    transition: background .15s ease, box-shadow .15s ease, transform .15s ease;
 }
 
 .submit-btn:hover {
     background: var(--register-blue-dark);
+    box-shadow: 0 8px 18px -8px rgba(38, 63, 143, .8);
+    transform: translateY(-1px);
 }
 
 .submit-btn:active {
     transform: scale(.99);
+}
+
+.submit-btn:focus-visible {
+    outline: 3px solid rgba(76, 125, 245, .35);
+    outline-offset: 3px;
 }
 
 .submit-btn span {

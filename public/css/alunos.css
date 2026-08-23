@@ -1,0 +1,193 @@
+.alunos-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 28px;
+}
+
+.alunos-title {
+    font-family: 'Poppins', sans-serif;
+    font-weight: 700;
+    font-size: 1.4rem;
+    color: var(--lk-text);
+    margin: 0;
+}
+
+.btn-novo {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: var(--lk-active-bg);
+    color: #fff;
+    border: none;
+    border-radius: 10px;
+    padding: 10px 18px;
+    font-weight: 600;
+    font-size: .9rem;
+    text-decoration: none;
+    transition: background .15s ease;
+}
+
+.btn-novo:hover {
+    background: #3D68DD;
+    color: #fff;
+}
+
+.alunos-alert {
+    background: var(--lk-success-soft);
+    border: 1px solid #BFEBCC;
+    color: var(--lk-success);
+    border-radius: 10px;
+    padding: 12px 16px;
+    font-size: .88rem;
+    margin-bottom: 20px;
+}
+
+.alunos-panel {
+    background: var(--lk-surface);
+    border-radius: 16px;
+    border: 1px solid var(--lk-border-soft);
+    box-shadow: 0 2px 10px rgba(30, 40, 90, .05);
+    overflow: hidden;
+}
+
+.alunos-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.alunos-table th {
+    text-align: left;
+    font-size: .75rem;
+    text-transform: uppercase;
+    letter-spacing: .04em;
+    color: var(--lk-text-muted);
+    font-weight: 600;
+    padding: 14px 22px;
+    background: var(--lk-surface-soft);
+    border-bottom: 1px solid var(--lk-border);
+}
+
+.alunos-table td {
+    padding: 12px 22px;
+    font-size: .9rem;
+    color: var(--lk-text-body);
+    border-top: 1px solid var(--lk-border-soft);
+    vertical-align: middle;
+}
+
+.alunos-table tr:hover td {
+    background: var(--lk-surface-soft);
+}
+
+.aluno-nome {
+    font-weight: 600;
+    color: var(--lk-text);
+}
+
+.avatar-photo {
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid var(--lk-border-soft);
+    display: block;
+}
+
+.avatar-placeholder {
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
+    background: var(--lk-primary-soft);
+    color: var(--lk-active-bg);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.1rem;
+}
+
+.badge-idade {
+    display: inline-block;
+    padding: 3px 10px;
+    border-radius: 999px;
+    background: var(--lk-warning-soft);
+    color: var(--lk-warning);
+    font-size: .78rem;
+    font-weight: 600;
+}
+
+.badge-turmas {
+    display: inline-block;
+    padding: 3px 10px;
+    border-radius: 999px;
+    background: var(--lk-success-soft);
+    color: var(--lk-success);
+    font-size: .78rem;
+    font-weight: 600;
+}
+
+.acoes-cell {
+    text-align: right;
+    white-space: nowrap;
+}
+
+.btn-editar,
+.btn-excluir {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    border-radius: 8px;
+    padding: 6px 14px;
+    font-size: .82rem;
+    font-weight: 600;
+    text-decoration: none;
+    border: 1.5px solid transparent;
+    cursor: pointer;
+}
+
+.btn-editar {
+    background: #fff;
+    border-color: var(--lk-border);
+    color: var(--lk-text-label);
+}
+
+.btn-editar:hover {
+    background: var(--lk-surface-soft);
+    color: var(--lk-text);
+}
+
+.btn-excluir {
+    background: #fff;
+    border-color: #F7D3D6;
+    color: var(--lk-danger);
+}
+
+.btn-excluir:hover {
+    background: var(--lk-danger-soft);
+    color: #C43744;
+}
+
+.alunos-empty {
+    text-align: center;
+    color: var(--lk-text-muted);
+    padding: 48px 20px;
+    font-size: .9rem;
+}
+
+.alunos-empty i {
+    font-size: 1.6rem;
+    display: block;
+    margin-bottom: 8px;
+    color: #AAB4CC;
+}
+
+.aluno-identidade {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.aluno-identidade i {
+    color: var(--lk-active-bg);
+    font-size: 1.1rem;
+}

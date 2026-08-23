@@ -289,17 +289,19 @@ body {
   padding: 13px 20px;
   border: none;
   border-radius: 10px;
-  background: linear-gradient(135deg, #5A72F0, #3D57E0);
+  background: #263f8f;
   color: #fff;
   font-family: 'Inter', sans-serif;
   font-weight: 700;
   font-size: 1rem;
   cursor: pointer;
-  transition: opacity .15s ease;
+  transition: background .15s ease, box-shadow .15s ease, transform .15s ease;
 }
 
 .btn-primary:hover {
-  opacity: .92;
+  background: #1b2f70;
+  box-shadow: 0 8px 18px -8px rgba(38, 63, 143, .75);
+  transform: translateY(-1px);
 }
 
 .btn-primary svg {
@@ -337,20 +339,29 @@ body {
   gap: 8px;
   width: 100%;
   padding: 12px 20px;
-  border: 1.5px solid #4C63E8;
+  border: 1.5px solid #263f8f;
   border-radius: 10px;
-  background: transparent;
-  color: #4C63E8;
+  background: #263f8f;
+  color: #fff;
   font-family: 'Inter', sans-serif;
   font-weight: 600;
   font-size: .95rem;
   text-decoration: none;
-  transition: background .15s ease, color .15s ease;
+  transition: background .15s ease, border-color .15s ease, color .15s ease, box-shadow .15s ease, transform .15s ease;
 }
 
 .btn-secondary:hover {
-  background: #4C63E8;
+  border-color: #1b2f70;
+  background: #1b2f70;
   color: #fff;
+  box-shadow: 0 8px 18px -8px rgba(38, 63, 143, .6);
+  transform: translateY(-1px);
+}
+
+.btn-primary:focus-visible,
+.btn-secondary:focus-visible {
+  outline: 3px solid rgba(76, 125, 245, .35);
+  outline-offset: 3px;
 }
 
 .btn-secondary svg {

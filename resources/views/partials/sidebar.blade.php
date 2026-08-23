@@ -19,7 +19,8 @@
                 class="lk-nav-item {{ request()->routeIs('admin.turmas.*') ? 'active' : '' }}">
                 <i class="bi bi-people"></i> Turmas
             </a>
-            <a href="{{ url('/alunos') }}" class="lk-nav-item {{ request()->is('alunos*') ? 'active' : '' }}">
+            <a href="{{ route('admin.alunos.index') }}"
+                class="lk-nav-item {{ request()->routeIs('admin.alunos.*') ? 'active' : '' }}">
                 <i class="bi bi-person"></i> Alunos
             </a>
 
@@ -61,4 +62,11 @@
             </a>
         </div>
     </nav>
+
+    <form method="POST" action="{{ route('logout') }}" class="lk-logout-form">
+        @csrf
+        <button type="submit" class="lk-nav-item lk-logout-button">
+            <i class="bi bi-box-arrow-right"></i> Sair
+        </button>
+    </form>
 </aside>
