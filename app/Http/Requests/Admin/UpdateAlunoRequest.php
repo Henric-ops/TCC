@@ -17,7 +17,6 @@ class UpdateAlunoRequest extends FormRequest
             'escola_id' => 'required|exists:escolas,id',
             'nome' => 'required|string|max:255',
             'data_nascimento' => 'required|date|before:today',
-            'foto' => 'nullable|image|max:2048',
             'turmas' => 'nullable|array',
             'turmas.*' => 'exists:turmas,id',
         ];

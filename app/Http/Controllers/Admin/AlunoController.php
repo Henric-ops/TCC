@@ -8,7 +8,6 @@ use App\Http\Requests\Admin\UpdateAlunoRequest;
 use App\Models\Aluno;
 use App\Models\Turma;
 use App\Models\Escola;
-use Illuminate\Support\Facades\Storage;
 
 class AlunoController extends Controller
 {
@@ -29,15 +28,10 @@ class AlunoController extends Controller
 
     public function store(StoreAlunoRequest $request)
     {
-        $caminhoFoto = $request->hasFile('foto')
-            ? $request->file('foto')->store('alunos', 'public')
-            : null;
-
         $aluno = Aluno::create([
             'escola_id' => $request->escola_id,
             'nome' => $request->nome,
             'data_nascimento' => $request->data_nascimento,
-            'foto' => $caminhoFoto,
         ]);
 
         if ($request->filled('turmas')) {
@@ -60,13 +54,6 @@ class AlunoController extends Controller
     {
         $dados = $request->only('escola_id', 'nome', 'data_nascimento');
 
-        if ($request->hasFile('foto')) {
-            if ($aluno->foto) {
-                Storage::disk('public')->delete($aluno->foto);
-            }
-            $dados['foto'] = $request->file('foto')->store('alunos', 'public');
-        }
-
         $aluno->update($dados);
         $aluno->turmas()->sync($request->turmas ?? []);
 
@@ -85,10 +72,6 @@ class AlunoController extends Controller
 
         $aluno->turmas()->detach();
         $aluno->responsaveis()->detach();
-
-        if ($aluno->foto) {
-            Storage::disk('public')->delete($aluno->foto);
-        }
 
         $aluno->delete();
 

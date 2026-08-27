@@ -7,7 +7,7 @@ use App\Models\User;
 
 class Aluno extends Model
 {
-    protected $fillable = ['escola_id', 'nome', 'data_nascimento', 'foto'];
+    protected $fillable = ['escola_id', 'nome', 'data_nascimento'];
 
     public function escola()
     {
