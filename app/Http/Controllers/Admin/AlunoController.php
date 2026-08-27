@@ -73,8 +73,19 @@ class AlunoController extends Controller
         return redirect()->route('admin.alunos.index')->with('sucesso', 'Aluno atualizado com sucesso.');
     }
 
-    public function destroy(Aluno $aluno)
+    public function destroy(Aluno $aluno)//método para excluir um aluno e verificar se ele possui registros ou mensagens no sistema antes de permitir a exclusão
     {
+        $temHistorico = $aluno->mensagens()->exists()
+            || $aluno->registrosDiarios()->exists();
+
+        if ($temHistorico) {
+            return redirect()->route('admin.alunos.index')
+                ->with('erro', 'Esse aluno já possui registros no sistema e não pode ser excluído.');
+        }
+
+        $aluno->turmas()->detach();
+        $aluno->responsaveis()->detach();
+
         if ($aluno->foto) {
             Storage::disk('public')->delete($aluno->foto);
         }
