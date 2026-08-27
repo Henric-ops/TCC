@@ -186,8 +186,19 @@ class UsuarioController extends Controller
         ));
     }
 
-    public function destroy(User $usuario)
+    public function destroy(User $usuario)//método para excluir o usuário, mas apenas se ele não tiver histórico de mensagens ou registros
     {
+        $temHistorico = $usuario->mensagensEnviadas()->exists()
+            || $usuario->mensagensRecebidas()->exists()
+            || \App\Models\RegistroDiario::where('professor_id', $usuario->id)->exists();
+
+        if ($temHistorico) {
+            return redirect()->route('admin.usuarios.index')
+                ->with('erro', 'Esse usuário já tem registros ou mensagens no sistema e não pode ser excluído. Recuse o acesso dele em vez de apagar.');
+        }
+
+        $usuario->turmas()->detach();
+        $usuario->alunosResponsavel()->detach();
         $usuario->delete();
 
         return redirect()->route('admin.usuarios.index')->with('sucesso', 'Usuário removido.');

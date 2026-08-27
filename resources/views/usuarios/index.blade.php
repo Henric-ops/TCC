@@ -36,6 +36,13 @@
         </div>
     @endif
 
+    @if(session('erro'))
+        <div class="alert alert-danger d-flex align-items-center gap-2" role="alert">
+            <i class="bi bi-exclamation-triangle-fill" aria-hidden="true"></i>
+            {{ session('erro') }}
+        </div>
+    @endif
+
     <div class="card usuarios-table-card">
         <div class="table-responsive">
             <table class="table table-hover align-middle mb-0">
