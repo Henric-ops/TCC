@@ -7,6 +7,8 @@ use App\Http\Controllers\Admin\UsuarioController;
 use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\Admin\TurmasController;
 use App\Http\Controllers\Admin\AlunoController;
+use App\Http\Controllers\RegistroDiarioController;
+use App\Http\Controllers\FrequenciaController;
 
 
 Route::get('/', function () {
@@ -34,10 +36,36 @@ Route::middleware(['auth', 'perfil:admin'])->prefix('admin')->name('admin.')->gr
     Route::resource('turmas', TurmasController::class)->except(['show']); // gerenciar turmas
     Route::resource('alunos', AlunoController::class)->except(['show']);// gerenciar alunos
 
-
     Route::get('/usuarios/{usuario}/verificar', [UsuarioController::class, 'verificar'])->name('usuarios.verificar');
     Route::post('/usuarios/{usuario}/aprovar', [UsuarioController::class, 'aprovar'])->name('usuarios.aprovar');
     Route::post('/usuarios/{usuario}/recusar', [UsuarioController::class, 'recusar'])->name('usuarios.recusar');
 
+});
 
+
+
+Route::middleware(['auth', 'perfil:admin,professor'])->group(function () {
+    Route::get('frequencia', [FrequenciaController::class, 'selecionarTurma'])->name('frequencia.selecionar');
+    Route::get('frequencia/marcar', [FrequenciaController::class, 'form'])->name('frequencia.form');
+    Route::post('frequencia/marcar', [FrequenciaController::class, 'salvar'])->name('frequencia.salvar');
+    Route::get('frequencia/historico', [FrequenciaController::class, 'index'])->name('frequencia.index');
+});
+
+Route::middleware(['auth', 'perfil:responsavel'])->group(function () {
+    Route::get('minha-frequencia', [FrequenciaController::class, 'meusRegistros'])->name('frequencia.meus');
+});
+
+
+Route::middleware(['auth', 'perfil:admin,professor'])->group(function () {// rotas para admin e professor para gerenciar registros diários
+    Route::resource('registros-diarios', RegistroDiarioController::class)
+        ->except(['show'])
+        ->parameters(['registros-diarios' => 'registro'])
+        ->names('registros');
+
+    Route::get('registros-diarios/selecionar-aluno', [RegistroDiarioController::class, 'selecionarAluno'])
+        ->name('registros.selecionar-aluno');
+});
+
+Route::middleware(['auth', 'perfil:responsavel'])->group(function () {
+    Route::get('/meus-registros', [RegistroDiarioController::class, 'meusRegistros'])->name('registros.meus');
 });

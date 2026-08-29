@@ -3,6 +3,12 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use App\Models\User;
+use App\Models\Aluno;
+use App\Models\RegistroAlimentacao;
+use App\Models\RegistroSono;
+use App\Models\RegistroFralda;
+use App\Models\RegistroLiquido;
 
 class RegistroDiario extends Model
 {
@@ -17,7 +23,7 @@ class RegistroDiario extends Model
 
     public function professor()
     {
-        return $this->belongsTo(Usuario::class, 'professor_id');
+        return $this->belongsTo(User::class, 'professor_id');
     }
 
     public function alimentacoes()

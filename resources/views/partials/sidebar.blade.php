@@ -31,13 +31,32 @@
                 </a>
             @endif
 
-            <a href="{{ url('/registros-diarios') }}"
-                class="lk-nav-item {{ request()->is('registros-diarios*') ? 'active' : '' }}">
-                <i class="bi bi-clipboard-check"></i> Registros Diários
-            </a>
-            <a href="{{ url('/frequencia') }}" class="lk-nav-item {{ request()->is('frequencia*') ? 'active' : '' }}">
-                <i class="bi bi-calendar-check"></i> Frequência
-            </a>
+            @if(in_array(auth()->user()->perfil, ['admin', 'professor']))
+                <a href="{{ route('registros.index') }}"
+                    class="lk-nav-item {{ request()->routeIs('registros.*') ? 'active' : '' }}">
+                    <i class="bi bi-clipboard-check"></i> Registros Diários
+                </a>
+            @endif
+
+            @if(auth()->user()->perfil === 'responsavel')
+                <a href="{{ route('registros.meus') }}"
+                    class="lk-nav-item {{ request()->routeIs('registros.meus') ? 'active' : '' }}">
+                    <i class="bi bi-clipboard-check"></i> Registros
+                </a>
+            @endif
+            @if(in_array(auth()->user()->perfil, ['admin', 'professor']))
+                <a href="{{ route('frequencia.selecionar') }}"
+                    class="lk-nav-item {{ request()->routeIs('frequencia.selecionar') || request()->routeIs('frequencia.form') ? 'active' : '' }}">
+                    <i class="bi bi-calendar-check"></i> Frequência
+                </a>
+            @endif
+
+            @if(auth()->user()->perfil === 'responsavel')
+                <a href="{{ route('frequencia.meus') }}"
+                    class="lk-nav-item {{ request()->routeIs('frequencia.meus') ? 'active' : '' }}">
+                    <i class="bi bi-calendar-check"></i> Frequência
+                </a>
+            @endif
         </div>
 
         <div class="lk-nav-section">

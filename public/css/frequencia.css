@@ -1,0 +1,303 @@
+.frequencia-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    margin-bottom: 1.25rem;
+}
+
+.frequencia-header h1 {
+    color: var(--lk-text);
+    font-family: 'Poppins', sans-serif;
+    font-size: 1.4rem;
+    font-weight: 700;
+    margin: 0;
+}
+
+.frequencia-header-actions {
+    display: flex;
+    align-items: center;
+    gap: .75rem;
+}
+
+.frequencia-total {
+    color: var(--lk-text-label);
+    font-size: .8rem;
+    white-space: nowrap;
+}
+
+.frequencia-total strong {
+    color: var(--lk-text);
+    font-size: 1.05rem;
+    margin-right: .2rem;
+}
+
+.frequencia-table-card {
+    overflow: hidden;
+    border: 1px solid var(--lk-border);
+    border-radius: 16px;
+    box-shadow: 0 2px 10px rgba(30, 40, 90, .05);
+}
+
+.frequencia-table-card .table {
+    --bs-table-hover-bg: var(--lk-surface-soft);
+    margin-bottom: 0;
+}
+
+.frequencia-table-card thead th {
+    background: var(--lk-surface-soft);
+    border-bottom: 1px solid var(--lk-border);
+    color: var(--lk-text-label);
+    font-size: .72rem;
+    font-weight: 700;
+    letter-spacing: .04em;
+    padding: 14px 22px;
+    text-transform: uppercase;
+    white-space: nowrap;
+}
+
+.frequencia-table-card tbody tr {
+    transition: background-color .15s ease;
+}
+
+.frequencia-table-card tbody tr:last-child td {
+    border-bottom: 0;
+}
+
+.frequencia-table-card tbody td {
+    border-top: 1px solid var(--lk-border-soft);
+    color: var(--lk-text-body);
+    font-size: .9rem;
+    padding: 12px 22px;
+}
+
+.frequencia-action {
+    min-height: 2rem;
+    padding: 6px 12px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: .35rem;
+    border-radius: 8px;
+    font-size: .82rem;
+    font-weight: 600;
+    transition: transform .15s ease, box-shadow .15s ease;
+}
+
+.frequencia-action:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 .2rem .45rem rgba(38, 43, 61, .12);
+}
+
+.frequencia-action i {
+    font-size: .95rem;
+}
+
+.frequencia-empty {
+    color: #6b7280;
+    text-align: center;
+    padding: 2.2rem 1rem;
+}
+
+.frequencia-empty i {
+    display: block;
+    color: var(--lk-text-muted);
+    font-size: 2rem;
+    margin-bottom: .5rem;
+}
+
+.frequencia-card {
+    background: var(--lk-surface);
+    border: 1px solid var(--lk-border);
+    border-radius: 16px;
+    box-shadow: 0 2px 10px rgba(30, 40, 90, .05);
+    padding: 1.25rem;
+}
+
+.frequencia-date-form {
+    display: flex;
+    align-items: center;
+    gap: .75rem;
+}
+
+.frequencia-date-form .form-control {
+    border-radius: 10px;
+    border: 1px solid var(--lk-border);
+    background: var(--lk-surface);
+    color: var(--lk-text);
+    min-width: 170px;
+}
+
+.frequencia-date-form .form-control:focus {
+    border-color: rgba(76, 125, 245, .5);
+    box-shadow: 0 0 0 .2rem rgba(76, 125, 245, .15);
+}
+
+.freq-row {
+    padding: 1rem 0;
+    border-bottom: 1px solid var(--lk-border-soft);
+}
+
+.freq-row:first-child {
+    padding-top: 0;
+}
+
+.freq-row:last-child {
+    border-bottom: 0;
+}
+
+.freq-student {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: .75rem;
+}
+
+.freq-student-name {
+    color: var(--lk-text);
+    font-weight: 600;
+    font-size: 1rem;
+}
+
+.freq-toggle-group {
+    display: inline-flex;
+    align-items: center;
+    gap: .5rem;
+    flex-wrap: wrap;
+}
+
+.btn-check {
+    position: absolute;
+    clip: rect(0, 0, 0, 0);
+    pointer-events: none;
+}
+
+.freq-option {
+    min-width: 110px;
+    border-radius: 10px !important;
+    border: 1px solid var(--lk-border) !important;
+    background: var(--lk-surface) !important;
+    color: var(--lk-text-body) !important;
+    font-weight: 600 !important;
+    transition: all .15s ease;
+}
+
+.freq-option:hover {
+    border-color: rgba(76, 125, 245, .45) !important;
+    color: var(--lk-active-bg) !important;
+}
+
+.btn-check:checked + .freq-option-presente {
+    background: var(--lk-success-soft) !important;
+    border-color: var(--lk-success) !important;
+    color: var(--lk-success) !important;
+    box-shadow: inset 0 0 0 1px rgba(25, 135, 84, .08);
+}
+
+.btn-check:checked + .freq-option-falta {
+    background: var(--lk-danger-soft) !important;
+    border-color: var(--lk-danger) !important;
+    color: var(--lk-danger) !important;
+    box-shadow: inset 0 0 0 1px rgba(220, 53, 69, .08);
+}
+
+.justificativa-input {
+    display: none;
+    margin-top: .75rem;
+    border-radius: 10px;
+    border: 1px solid var(--lk-border);
+    background: var(--lk-surface-soft);
+    color: var(--lk-text);
+}
+
+.justificativa-input:focus {
+    border-color: rgba(76, 125, 245, .5);
+    box-shadow: 0 0 0 .2rem rgba(76, 125, 245, .15);
+}
+
+.freq-submit {
+    margin-top: 1.25rem;
+    border: 0;
+    border-radius: 10px;
+    background: var(--lk-active-bg);
+    color: #fff;
+    padding: .75rem 1.1rem;
+    font-weight: 600;
+    transition: transform .15s ease, box-shadow .15s ease;
+}
+
+.freq-submit:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 .3rem .7rem rgba(76, 125, 245, .2);
+}
+
+.freq-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: .35rem;
+    padding: .38rem .65rem;
+    border-radius: 999px;
+    font-weight: 600;
+    font-size: .78rem;
+}
+
+.freq-badge--presente {
+    background: var(--lk-success-soft);
+    color: var(--lk-success);
+}
+
+.freq-badge--falta {
+    background: var(--lk-danger-soft);
+    color: var(--lk-danger);
+}
+
+.freq-justificativa {
+    display: block;
+    margin-top: .35rem;
+    color: var(--lk-text-label);
+    font-size: .78rem;
+}
+
+.freq-link {
+    color: var(--lk-active-bg);
+    text-decoration: none;
+    font-weight: 600;
+}
+
+.freq-link:hover {
+    text-decoration: underline;
+}
+
+@media (max-width: 767.98px) {
+    .frequencia-header {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+
+    .frequencia-header-actions {
+        width: 100%;
+        justify-content: space-between;
+    }
+
+    .frequencia-date-form {
+        width: 100%;
+        justify-content: space-between;
+    }
+
+    .frequencia-date-form .form-control {
+        flex: 1;
+    }
+
+    .frequencia-table-card .table {
+        min-width: 650px;
+    }
+
+    .freq-student {
+        align-items: flex-start;
+    }
+
+    .freq-option {
+        min-width: 96px;
+    }
+}
