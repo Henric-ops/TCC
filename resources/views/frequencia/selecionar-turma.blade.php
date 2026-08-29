@@ -53,7 +53,8 @@
                                 </span>
                             </td>
                             <td class="text-end text-nowrap">
-                                <a href="{{ route('frequencia.form', ['turma_id' => $turma->id]) }}" class="btn btn-sm btn-primary frequencia-action">
+                                <a href="{{ route('frequencia.form', ['turma_id' => $turma->id]) }}"
+                                    class="btn btn-sm btn-primary frequencia-action">
                                     <i class="bi bi-check2-circle" aria-hidden="true"></i>
                                     <span>Marcar frequência</span>
                                 </a>

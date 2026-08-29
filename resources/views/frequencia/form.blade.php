@@ -48,8 +48,7 @@
                         </label>
                     </div>
                 </div>
-                <input type="text" name="justificativa[{{ $aluno->id }}]"
-                    class="form-control justificativa-input"
+                <input type="text" name="justificativa[{{ $aluno->id }}]" class="form-control justificativa-input"
                     placeholder="Justificativa da falta (opcional)" value="{{ $existente->justificativa ?? '' }}">
             </div>
         @empty
@@ -60,10 +59,17 @@
         @endforelse
 
         @if($alunos->isNotEmpty())
-            <button type="submit" class="freq-submit">
-                <i class="bi bi-floppy" aria-hidden="true"></i>
-                Salvar frequência
-            </button>
+            <div class="freq-form-actions">
+                <button type="button" class="btn btn-outline-secondary freq-nav-btn" onclick="window.history.back()">
+                    <i class="bi bi-arrow-left" aria-hidden="true"></i>
+                    Voltar
+                </button>
+
+                <button type="submit" class="freq-submit">
+                    <i class="bi bi-floppy" aria-hidden="true"></i>
+                    Salvar
+                </button>
+            </div>
         @endif
     </form>
 

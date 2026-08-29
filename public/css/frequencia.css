@@ -188,14 +188,14 @@
     color: var(--lk-active-bg) !important;
 }
 
-.btn-check:checked + .freq-option-presente {
+.btn-check:checked+.freq-option-presente {
     background: var(--lk-success-soft) !important;
     border-color: var(--lk-success) !important;
     color: var(--lk-success) !important;
     box-shadow: inset 0 0 0 1px rgba(25, 135, 84, .08);
 }
 
-.btn-check:checked + .freq-option-falta {
+.btn-check:checked+.freq-option-falta {
     background: var(--lk-danger-soft) !important;
     border-color: var(--lk-danger) !important;
     color: var(--lk-danger) !important;
@@ -216,15 +216,35 @@
     box-shadow: 0 0 0 .2rem rgba(76, 125, 245, .15);
 }
 
-.freq-submit {
+.freq-form-actions {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    gap: .75rem;
     margin-top: 1.25rem;
-    border: 0;
+    flex-wrap: wrap;
+}
+
+.freq-nav-btn,
+.freq-submit {
+    min-height: 2.8rem;
     border-radius: 10px;
+    font-weight: 600;
+    transition: transform .15s ease, box-shadow .15s ease;
+}
+
+.freq-nav-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: .4rem;
+}
+
+.freq-submit {
+    border: 0;
     background: var(--lk-active-bg);
     color: #fff;
     padding: .75rem 1.1rem;
-    font-weight: 600;
-    transition: transform .15s ease, box-shadow .15s ease;
 }
 
 .freq-submit:hover {

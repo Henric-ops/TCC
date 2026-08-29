@@ -67,5 +67,12 @@
         </div>
     </div>
 
-    <div class="mt-3">{{ $frequencias->links() }}</div>
+    <div class="d-flex align-items-center justify-content-between gap-3 mt-3 flex-wrap">
+        <a href="{{ route('frequencia.selecionar') }}" class="btn btn-outline-secondary">
+            <i class="bi bi-arrow-left" aria-hidden="true"></i>
+            Voltar
+        </a>
+
+        <div>{{ $frequencias->links() }}</div>
+    </div>
 @endsection
