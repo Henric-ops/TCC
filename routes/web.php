@@ -10,8 +10,7 @@ use App\Http\Controllers\Admin\AlunoController;
 use App\Http\Controllers\RegistroDiarioController;
 use App\Http\Controllers\FrequenciaController;
 use App\Http\Controllers\EmailController;
-use App\Mail\TesteEmail;
-use Illuminate\Support\Facades\Mail;
+use App\Http\Controllers\TurmaController;
 
 
 
@@ -91,6 +90,12 @@ Route::middleware(['auth', 'perfil:admin'])//rotas para administração do siste
         ])->name('usuarios.recusar');
     });
 
+
+
+Route::middleware(['auth', 'perfil:professor'])->group(function () {//rotas para professores
+    Route::get('minhas-turmas', [TurmaController::class, 'index'])->name('turmas.minhas');
+    Route::get('minhas-turmas/{turma}', [TurmaController::class, 'show'])->name('turmas.minha');
+});
 
 
 Route::middleware(['auth', 'perfil:admin,professor'])//rota para marcação de frequência
@@ -175,14 +180,3 @@ Route::middleware(['auth', 'perfil:admin,professor'])//rota para envio de e-mail
             'enviar'
         ])->name('emails.enviar');
     });
-
-
-
-//teste de envio de e-mail
-Route::get('/teste-email', function () {
-
-    Mail::to('lumikidsteste@gmail.com')
-        ->send(new TesteEmail());
-
-    return 'E-mail enviado com sucesso!';
-});

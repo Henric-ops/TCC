@@ -12,9 +12,10 @@ use Illuminate\Support\Facades\Mail;
 
 class EmailController extends Controller
 {
-    public function create()//função para criar o email, onde é carregado os alunos e seus responsáveis
+    public function create()
     {
-        $alunos = $this->alunosPermitidos(auth()->user());
+        // Busca os alunos permitidos para o usuário logado
+        $alunos = $this->alunosPermitidos(Auth::user());
 
         $alunosEmail = $alunos->map(function ($aluno) {
             return [

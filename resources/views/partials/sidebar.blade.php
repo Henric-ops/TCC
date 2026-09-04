@@ -15,26 +15,35 @@
                 class="lk-nav-item {{ request()->routeIs('dashboard') ? 'active' : '' }}">
                 <i class="bi bi-grid-1x2"></i> Dashboard
             </a>
-            <a href="{{ route('admin.turmas.index') }}"
-                class="lk-nav-item {{ request()->routeIs('admin.turmas.*') ? 'active' : '' }}">
-                <i class="bi bi-people"></i> Turmas
-            </a>
-            <a href="{{ route('admin.alunos.index') }}"
-                class="lk-nav-item {{ request()->routeIs('admin.alunos.*') ? 'active' : '' }}">
-                <i class="bi bi-person"></i> Alunos
-            </a>
 
-            @if(auth()->user()?->perfil === 'admin')
+            @if(auth()->user()->perfil === 'admin')
+                <a href="{{ route('admin.turmas.index') }}"
+                    class="lk-nav-item {{ request()->routeIs('admin.turmas.*') ? 'active' : '' }}">
+                    <i class="bi bi-people"></i> Turmas
+                </a>
+                <a href="{{ route('admin.alunos.index') }}"
+                    class="lk-nav-item {{ request()->routeIs('admin.alunos.*') ? 'active' : '' }}">
+                    <i class="bi bi-person"></i> Alunos
+                </a>
                 <a href="{{ route('admin.usuarios.index') }}"
                     class="lk-nav-item {{ request()->routeIs('admin.usuarios.*') ? 'active' : '' }}">
                     <i class="bi bi-person-badge"></i> Usuários
+                </a>
+            @elseif(auth()->user()->perfil === 'professor')
+                <a href="{{ route('turmas.minhas') }}"
+                    class="lk-nav-item {{ request()->routeIs('turmas.minha*') ? 'active' : '' }}">
+                    <i class="bi bi-people"></i> Minhas Turmas
                 </a>
             @endif
 
             @if(in_array(auth()->user()->perfil, ['admin', 'professor']))
                 <a href="{{ route('registros.index') }}"
-                    class="lk-nav-item {{ request()->routeIs('registros.*') ? 'active' : '' }}">
+                    class="lk-nav-item {{ request()->routeIs('registros.index') || request()->routeIs('registros.create') || request()->routeIs('registros.edit') || request()->routeIs('registros.selecionar-aluno') ? 'active' : '' }}">
                     <i class="bi bi-clipboard-check"></i> Registros Diários
+                </a>
+                <a href="{{ route('frequencia.selecionar') }}"
+                    class="lk-nav-item {{ request()->routeIs('frequencia.selecionar') || request()->routeIs('frequencia.form') || request()->routeIs('frequencia.index') ? 'active' : '' }}">
+                    <i class="bi bi-calendar-check"></i> Frequência
                 </a>
             @endif
 
@@ -43,33 +52,24 @@
                     class="lk-nav-item {{ request()->routeIs('registros.meus') ? 'active' : '' }}">
                     <i class="bi bi-clipboard-check"></i> Registros
                 </a>
-            @endif
-            @if(in_array(auth()->user()->perfil, ['admin', 'professor']))
-                <a href="{{ route('frequencia.selecionar') }}"
-                    class="lk-nav-item {{ request()->routeIs('frequencia.selecionar') || request()->routeIs('frequencia.form') ? 'active' : '' }}">
-                    <i class="bi bi-calendar-check"></i> Frequência
-                </a>
-            @endif
-
-            @if(auth()->user()->perfil === 'responsavel')
                 <a href="{{ route('frequencia.meus') }}"
                     class="lk-nav-item {{ request()->routeIs('frequencia.meus') ? 'active' : '' }}">
                     <i class="bi bi-calendar-check"></i> Frequência
                 </a>
             @endif
         </div>
+
         <div class="lk-nav-section">
             <span class="lk-nav-label">Comunicação</span>
 
             @if(in_array(auth()->user()->perfil, ['admin', 'professor']))
                 <a href="{{ route('emails.create') }}"
-                    class="lk-nav-item {{ request()->routeIs('emails.create') ? 'active' : '' }}">
-                    <i class="bi bi-envelope"></i> Comunicados
+                    class="lk-nav-item {{ request()->routeIs('emails.*') ? 'active' : '' }}">
+                    <i class="bi bi-envelope-fill"></i> Comunicados
                 </a>
             @endif
-
-
         </div>
+
 
         <div class="lk-nav-section">
             <span class="lk-nav-label">Análise</span>

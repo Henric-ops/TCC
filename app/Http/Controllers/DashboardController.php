@@ -6,6 +6,8 @@ use Illuminate\Support\Facades\Auth;
 use App\Models\Turma;
 use App\Models\Aluno;
 use App\Models\User;
+use App\Models\Frequencia;
+use App\Models\RegistroDiario;
 
 class DashboardController extends Controller
 {
@@ -55,7 +57,27 @@ class DashboardController extends Controller
     {
         $user = Auth::user();
 
-        return view('dashboard.professor', compact('user'));
+        $turmas = $user->turmas()->withCount('alunos')->orderBy('nome')->get();
+        $totalAlunos = $turmas->sum('alunos_count');
+
+        $registrosHoje = RegistroDiario::where('professor_id', $user->id)
+            ->whereDate('data', now()->format('Y-m-d'))
+            ->count();
+
+        $turmaIdsComFrequenciaHoje = Frequencia::whereIn('turma_id', $turmas->pluck('id'))
+            ->whereDate('data', now()->format('Y-m-d'))
+            ->pluck('turma_id')
+            ->unique();
+
+        $turmasSemFrequencia = $turmas->whereNotIn('id', $turmaIdsComFrequenciaHoje)->count();
+
+        return view('dashboard.professor', compact(
+            'user',
+            'turmas',
+            'totalAlunos',
+            'registrosHoje',
+            'turmasSemFrequencia'
+        ));
     }
 
     public function responsavel()
