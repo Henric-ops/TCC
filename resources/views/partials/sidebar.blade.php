@@ -58,19 +58,17 @@
                 </a>
             @endif
         </div>
-
         <div class="lk-nav-section">
             <span class="lk-nav-label">Comunicação</span>
 
-            <a href="{{ url('/comunicados') }}" class="lk-nav-item {{ request()->is('comunicados*') ? 'active' : '' }}">
-                <i class="bi bi-chat-square-text"></i> Comunicados
-            </a>
-            <a href="{{ url('/mensagens') }}" class="lk-nav-item {{ request()->is('mensagens*') ? 'active' : '' }}">
-                <i class="bi bi-bell"></i> Mensagens
-                @if(($mensagensNaoLidas ?? 0) > 0)
-                    <span class="lk-badge">{{ $mensagensNaoLidas }}</span>
-                @endif
-            </a>
+            @if(in_array(auth()->user()->perfil, ['admin', 'professor']))
+                <a href="{{ route('emails.create') }}"
+                    class="lk-nav-item {{ request()->routeIs('emails.create') ? 'active' : '' }}">
+                    <i class="bi bi-envelope"></i> Comunicados
+                </a>
+            @endif
+
+
         </div>
 
         <div class="lk-nav-section">

@@ -5,28 +5,23 @@ use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration {
-    /**
-     * Run the migrations.
-     */
     public function up(): void
     {
-        Schema::create('mensagens', function (Blueprint $table) {
-            $table->id();
-            $table->foreignId('remetente_id')->constrained('usuarios');
-            $table->foreignId('destinatario_id')->constrained('usuarios');
-            $table->foreignId('aluno_id')->constrained('alunos');
-            $table->text('conteudo');
-            $table->boolean('lida')->default(false);
-            $table->dateTime('enviado_em');
-            $table->timestamps();
+        Schema::table('mensagens', function (Blueprint $table) {
+            $table->string('assunto')->after('aluno_id');
+            $table->text('conteudo')->after('assunto');
+            $table->string('status')->default('enviado')->after('conteudo');
         });
     }
 
-    /**
-     * Reverse the migrations.
-     */
     public function down(): void
     {
-        Schema::dropIfExists('mensagens');
+        Schema::table('mensagens', function (Blueprint $table) {
+            $table->dropColumn([
+                'assunto',
+                'conteudo',
+                'status',
+            ]);
+        });
     }
 };

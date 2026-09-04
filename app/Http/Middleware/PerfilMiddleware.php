@@ -6,15 +6,19 @@ use Closure;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 
+
 class PerfilMiddleware
 {
-    public function handle(Request $request, Closure $next, string $perfil): Response
-    {
+    public function handle(
+        Request $request,
+        Closure $next,
+        string ...$perfis
+    ): Response {
         if (!auth()->check()) {
             return redirect()->route('login');
         }
 
-        if (auth()->user()->perfil !== $perfil) {
+        if (!in_array(auth()->user()->perfil, $perfis)) {
             abort(403, 'Você não tem permissão para acessar esta página.');
         }
 
