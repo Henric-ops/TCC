@@ -321,4 +321,14 @@ select:focus {
         grid-template-columns: 1fr;
         gap: 16px;
     }
+
+    .is-invalid {
+        border-color: #e0525f !important;
+    }
+
+    .field-error {
+        color: #e0525f;
+        font-size: 12.5px;
+        margin-top: 4px;
+    }
 }

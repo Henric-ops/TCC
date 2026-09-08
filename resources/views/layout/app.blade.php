@@ -12,11 +12,11 @@
         rel="stylesheet">
     <style>
         :root {
-            --lk-sidebar-bg: #262B3D;
+            --lk-sidebar-bg: #1B2141;
             --lk-sidebar-border: rgba(255, 255, 255, .08);
             --lk-text-muted: #9CA3B8;
             --lk-text-label: #6B7280;
-            --lk-active-bg: #4C7DF5;
+            --lk-active-bg: #3B82F6;
             --lk-content-bg: #EEF1F8;
             --lk-badge: #EF4444;
             --lk-surface: #fff;

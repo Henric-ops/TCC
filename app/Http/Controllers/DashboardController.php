@@ -30,7 +30,7 @@ class DashboardController extends Controller
         return redirect()->route('login');
     }
 
-    public function admin() //metodo para exibir o dashboard do administrador   
+    public function admin() //metodo para exibir o dashboard do administrador
     {
         $user = Auth::user();
 
@@ -38,9 +38,15 @@ class DashboardController extends Controller
         $totalAlunos = Aluno::count();
         $totalProfessores = User::where('perfil', 'professor')->where('status', 'aprovado')->count();
         $totalResponsaveis = User::where('perfil', 'responsavel')->where('status', 'aprovado')->count();
-        $pendentes = User::where('status', 'pendente')->count();
 
-        $turmas = Turma::withCount('alunos')->orderBy('nome')->take(5)->get();
+        $pendentes = User::where('status', 'pendente')->orderBy('created_at')->take(5)->get();
+        $totalPendentes = User::where('status', 'pendente')->count();
+
+        $registrosHoje = RegistroDiario::whereDate('data', now())->count();
+
+        $turmasComFrequenciaHoje = Frequencia::whereDate('data', now())->distinct('turma_id')->count('turma_id');
+
+        $turmas = Turma::withCount('alunos')->orderByDesc('alunos_count')->get();
 
         return view('dashboard.admin', compact(
             'user',
@@ -49,6 +55,9 @@ class DashboardController extends Controller
             'totalProfessores',
             'totalResponsaveis',
             'pendentes',
+            'totalPendentes',
+            'registrosHoje',
+            'turmasComFrequenciaHoje',
             'turmas'
         ));
     }

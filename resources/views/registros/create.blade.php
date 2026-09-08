@@ -33,7 +33,7 @@
                         @foreach(['colacao' => 'Colação', 'almoco' => 'Almoço'] as $chave => $nome)
                             <div class="meal-row"><span>{{ $nome }}</span>
                                 @foreach(['tudo' => 'TUDO', 'parte' => 'PARTE', 'rejeitou' => 'REJEITOU'] as $status => $rotulo)
-                                    <label class="radio" title="{{ $rotulo }}">
+                                    <label class="radio radio-{{ $status }}" title="{{ $rotulo }}">
                                         <input class="choice-input" type="radio" name="alimentacao[{{ $chave }}]"
                                             value="{{ $status }}">
                                     </label>
@@ -47,7 +47,7 @@
                         @foreach(['lanche' => 'Lanche', 'jantar' => 'Jantar'] as $chave => $nome)
                             <div class="meal-row"><span>{{ $nome }}</span>
                                 @foreach(['tudo' => 'TUDO', 'parte' => 'PARTE', 'rejeitou' => 'REJEITOU'] as $status => $rotulo)
-                                    <label class="radio" title="{{ $rotulo }}">
+                                    <label class="radio radio-{{ $status }}" title="{{ $rotulo }}">
                                         <input class="choice-input" type="radio" name="alimentacao[{{ $chave }}]"
                                             value="{{ $status }}">
                                     </label>
@@ -64,7 +64,7 @@
                 @foreach(['leite' => 'Leite', 'suco' => 'Suco', 'agua' => 'Água'] as $chave => $nome)
                     <div class="liquid-item"><span>{{ $nome }}</span>
                         @foreach(['tudo' => 'TUDO', 'parte' => 'PARTE', 'rejeitou' => 'REJEITOU'] as $status => $rotulo)
-                            <label class="radio" title="{{ $rotulo }}">
+                            <label class="radio radio-{{ $status }}" title="{{ $rotulo }}">
                                 <input class="choice-input" type="radio" name="liquidos[{{ $chave }}]" value="{{ $status }}">
                             </label>
                         @endforeach

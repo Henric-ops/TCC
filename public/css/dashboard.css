@@ -212,3 +212,212 @@
     padding: 40px 20px;
     font-size: .9rem;
 }
+
+/* ---------- Adições ao dashboard.css ---------- */
+
+.dash-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 20px;
+}
+
+.dash-date {
+    color: #8992A9;
+    font-size: .85rem;
+    text-transform: capitalize;
+    margin: 2px 0 0;
+}
+
+.hoje-bar {
+    display: flex;
+    align-items: center;
+    background: #1B2141;
+    border-radius: 16px;
+    padding: 20px 28px;
+    margin-bottom: 28px;
+    color: #fff;
+}
+
+.hoje-item {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.hoje-valor {
+    font-family: 'Poppins', sans-serif;
+    font-weight: 700;
+    font-size: 1.6rem;
+}
+
+.hoje-valor.text-warning {
+    color: #F5B942;
+}
+
+.hoje-label {
+    font-size: .78rem;
+    color: #A8ADC4;
+}
+
+.hoje-divider {
+    width: 1px;
+    height: 36px;
+    background: rgba(255, 255, 255, .12);
+    margin: 0 24px;
+}
+
+@media (max-width: 700px) {
+    .hoje-bar {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 16px;
+    }
+
+    .hoje-divider {
+        display: none;
+    }
+}
+
+.dash-columns {
+    display: grid;
+    grid-template-columns: 1.6fr 1fr;
+    gap: 20px;
+    align-items: start;
+}
+
+@media (max-width: 900px) {
+    .dash-columns {
+        grid-template-columns: 1fr;
+    }
+}
+
+.pendencia-list {
+    padding: 6px 0;
+}
+
+.pendencia-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 22px;
+    border-top: 1px solid #F4F5FA;
+}
+
+.pendencia-item:first-child {
+    border-top: none;
+}
+
+.pendencia-perfil {
+    display: inline-block;
+    margin-left: 8px;
+    font-size: .72rem;
+    font-weight: 600;
+    color: #8992A9;
+    background: #F4F5FA;
+    padding: 2px 8px;
+    border-radius: 999px;
+}
+
+.btn-verificar {
+    font-size: .8rem;
+    font-weight: 600;
+    color: #4C7DF5;
+    text-decoration: none;
+    padding: 6px 12px;
+    border: 1.5px solid #E4E7F2;
+    border-radius: 8px;
+}
+
+.btn-verificar:hover {
+    background: #F4F5FA;
+}
+
+.turma-list {
+    padding: 6px 0;
+}
+
+.turma-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 22px;
+    border-top: 1px solid #F4F5FA;
+}
+
+.turma-item:first-child {
+    border-top: none;
+}
+
+.turma-info {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: #1B2141;
+}
+
+.turma-alunos {
+    color: #8992A9;
+    font-size: .85rem;
+    font-weight: 500;
+}
+
+.feed {
+    padding: 6px 22px 18px;
+}
+
+.feed-item {
+    display: flex;
+    gap: 12px;
+    position: relative;
+    padding-bottom: 18px;
+}
+
+.feed-item:not(:last-child)::before {
+    content: '';
+    position: absolute;
+    left: 4px;
+    top: 14px;
+    bottom: -4px;
+    width: 1px;
+    background: #EEF0F7;
+}
+
+.feed-dot {
+    width: 9px;
+    height: 9px;
+    border-radius: 50%;
+    background: #4C7DF5;
+    margin-top: 5px;
+    flex-shrink: 0;
+}
+
+.feed-text {
+    font-size: .85rem;
+    color: #333A54;
+    margin: 0;
+    line-height: 1.4;
+}
+
+.feed-time {
+    font-size: .75rem;
+    color: #A0A8C0;
+}
+
+.numeros-lista {
+    padding: 6px 0;
+}
+
+.numero-item {
+    display: flex;
+    justify-content: space-between;
+    padding: 10px 22px;
+    font-size: .88rem;
+    color: #4C5578;
+}
+
+.numero-item strong {
+    font-family: 'Poppins', sans-serif;
+    color: #1B2141;
+}

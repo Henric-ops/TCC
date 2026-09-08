@@ -31,7 +31,7 @@
                         @foreach(['colacao' => 'Colação', 'almoco' => 'Almoço'] as $chave => $nome)
                             <div class="meal-row"><span>{{ $nome }}</span>
                                 @foreach(['tudo' => 'TUDO', 'parte' => 'PARTE', 'rejeitou' => 'REJEITOU'] as $status => $rotulo)
-                                    <label class="radio {{ ($alimentacaoAtual[$chave] ?? '') === $status ? 'selected' : '' }}" title="{{ $rotulo }}">
+                                    <label class="radio radio-{{ $status }} {{ ($alimentacaoAtual[$chave] ?? '') === $status ? 'selected' : '' }}" title="{{ $rotulo }}">
                                         <input class="choice-input" type="radio" name="alimentacao[{{ $chave }}]" value="{{ $status }}" {{ ($alimentacaoAtual[$chave] ?? '') === $status ? 'checked' : '' }}>
                                     </label>
                                 @endforeach
@@ -44,7 +44,7 @@
                         @foreach(['lanche' => 'Lanche', 'jantar' => 'Jantar'] as $chave => $nome)
                             <div class="meal-row"><span>{{ $nome }}</span>
                                 @foreach(['tudo' => 'TUDO', 'parte' => 'PARTE', 'rejeitou' => 'REJEITOU'] as $status => $rotulo)
-                                    <label class="radio {{ ($alimentacaoAtual[$chave] ?? '') === $status ? 'selected' : '' }}" title="{{ $rotulo }}">
+                                    <label class="radio radio-{{ $status }} {{ ($alimentacaoAtual[$chave] ?? '') === $status ? 'selected' : '' }}" title="{{ $rotulo }}">
                                         <input class="choice-input" type="radio" name="alimentacao[{{ $chave }}]" value="{{ $status }}" {{ ($alimentacaoAtual[$chave] ?? '') === $status ? 'checked' : '' }}>
                                     </label>
                                 @endforeach
@@ -58,7 +58,7 @@
                 @foreach(['leite' => 'Leite', 'suco' => 'Suco', 'agua' => 'Água'] as $chave => $nome)
                     <div class="liquid-item"><span>{{ $nome }}</span>
                         @foreach(['tudo' => 'TUDO', 'parte' => 'PARTE', 'rejeitou' => 'REJEITOU'] as $status => $rotulo)
-                            <label class="radio {{ ($liquidosAtual[$chave] ?? '') === $status ? 'selected' : '' }}" title="{{ $rotulo }}">
+                            <label class="radio radio-{{ $status }} {{ ($liquidosAtual[$chave] ?? '') === $status ? 'selected' : '' }}" title="{{ $rotulo }}">
                                 <input class="choice-input" type="radio" name="liquidos[{{ $chave }}]" value="{{ $status }}" {{ ($liquidosAtual[$chave] ?? '') === $status ? 'checked' : '' }}>
                             </label>
                         @endforeach

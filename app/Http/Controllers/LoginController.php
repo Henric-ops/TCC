@@ -29,6 +29,18 @@ class LoginController extends Controller
 
             $user = Auth::user();
 
+            if ($user->status !== 'aprovado') {
+                $mensagem = $user->status === 'pendente'
+                    ? 'Seu cadastro ainda está aguardando aprovação do administrador.'
+                    : 'Seu cadastro foi recusado. Entre em contato com a escola.';
+
+                Auth::logout();
+                $request->session()->invalidate();
+                $request->session()->regenerateToken();
+
+                return back()->withErrors(['email' => $mensagem])->onlyInput('email');
+            }
+
             if ($user->perfil === 'admin') {
                 return redirect()->route('admin.dashboard');
             }
