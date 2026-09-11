@@ -1,8 +1,8 @@
 :root {
-    --register-bg: #f4f7fc;
+    --register-bg: #eef1f8;
     --register-border: #e4e7f2;
-    --register-blue: #263f8f;
-    --register-blue-dark: #1b2f70;
+    --register-blue: #4c7df5;
+    --register-blue-dark: #3d68dd;
     --register-text: #1b2141;
     --register-muted: #8a94a6;
     --register-input: #d7deea;
@@ -27,7 +27,7 @@ body {
     padding: 0 24px;
     background: var(--register-bg);
     color: var(--register-text);
-    font-family: 'Inter', sans-serif;
+    font-family: 'Poppins', sans-serif;
 }
 
 .register-page {
@@ -36,7 +36,7 @@ body {
     max-width: 1040px;
     min-height: min(660px, calc(100vh - 48px));
     overflow: hidden;
-    border-radius: 20px;
+    border-radius: 16px;
     background: #fff;
     box-shadow: 0 24px 55px -22px rgba(38, 43, 61, .28);
 }

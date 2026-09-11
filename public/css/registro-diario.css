@@ -2,18 +2,18 @@
     --bg-app: #f8f9fc;
     --blue: var(--lk-active-bg, #4C7DF5);
     --blue-dark: #3D68DD;
-    --green: #22a06b;
+    --green: #14b892;
     --amber: #d99a16;
-    --red: #dc5a67;
+    --red: #dc3545;
     --card-bg: #ffffff;
-    --card-border: var(--lk-border, #e7e9f0);
+    --card-border: var(--lk-border, #dfe5f1);
     --text-dark: var(--lk-text, #252b42);
     --text-muted: var(--lk-text-label, #737b91);
-    --radius: 12px;
+    --radius: 10px;
 }
 
 body {
-    background-color: var(--lk-surface-soft, #f7f8fc);
+    background-color: var(--lk-content-bg, #eef1f8);
 }
 
 /* ---------- Cabeçalho do aluno ---------- */
@@ -23,7 +23,7 @@ body {
     border-radius: 16px;
     padding: 22px 26px;
     color: var(--text-dark);
-    box-shadow: 0 2px 12px rgba(30, 40, 90, .05);
+    box-shadow: var(--lk-shadow, 0 2px 10px rgba(30, 40, 90, .05));
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -74,7 +74,7 @@ body {
 .card {
     background: var(--card-bg);
     border: 1px solid var(--card-border);
-    border-radius: 16px;
+    border-radius: var(--lk-radius-card, 16px);
     padding: 26px;
 }
 
@@ -544,6 +544,33 @@ textarea:focus {
 
 .table tbody tr:hover {
     background-color: var(--bg-app);
+}
+
+.btn.registro-action,
+.btn.aluno-action {
+    min-height: 2rem;
+    padding: 6px 10px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: .3rem;
+    border-radius: 8px;
+    font-size: .82rem;
+    font-weight: 600;
+    text-decoration: none;
+    white-space: nowrap;
+    transition: transform .15s ease, box-shadow .15s ease, background .15s ease, color .15s ease;
+}
+
+.btn.registro-action:hover,
+.btn.aluno-action:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 .2rem .45rem rgba(38, 43, 61, .12);
+}
+
+.btn.registro-action i,
+.btn.aluno-action i {
+    font-size: .95rem;
 }
 
 .btn {

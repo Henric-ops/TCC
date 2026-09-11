@@ -73,7 +73,7 @@
 
 .frequencia-action {
     min-height: 2rem;
-    padding: 6px 12px;
+    padding: 6px 10px;
     display: inline-flex;
     align-items: center;
     justify-content: center;
@@ -81,7 +81,9 @@
     border-radius: 8px;
     font-size: .82rem;
     font-weight: 600;
-    transition: transform .15s ease, box-shadow .15s ease;
+    text-decoration: none;
+    white-space: nowrap;
+    transition: transform .15s ease, box-shadow .15s ease, background .15s ease, color .15s ease;
 }
 
 .frequencia-action:hover {

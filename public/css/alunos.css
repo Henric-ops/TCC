@@ -16,21 +16,25 @@
 .btn-novo {
     display: inline-flex;
     align-items: center;
+    justify-content: center;
     gap: 8px;
-    background: var(--lk-active-bg);
+    min-height: 2.75rem;
+    padding: .65rem 1rem;
+    background: var(--lk-primary, var(--lk-active-bg));
     color: #fff;
     border: none;
-    border-radius: 10px;
-    padding: 10px 18px;
+    border-radius: var(--lk-radius-control, 10px);
     font-weight: 600;
     font-size: .9rem;
     text-decoration: none;
-    transition: background .15s ease;
+    transition: background .15s ease, transform .15s ease, box-shadow .15s ease;
 }
 
 .btn-novo:hover {
-    background: #3D68DD;
+    background: var(--lk-primary-hover, #3D68DD);
     color: #fff;
+    transform: translateY(-1px);
+    box-shadow: 0 .3rem .7rem rgba(76, 125, 245, .2);
 }
 
 .alunos-alert {
@@ -135,14 +139,24 @@
 .btn-excluir {
     display: inline-flex;
     align-items: center;
+    justify-content: center;
     gap: 4px;
+    min-height: 2rem;
+    padding: 6px 10px;
     border-radius: 8px;
-    padding: 6px 14px;
     font-size: .82rem;
     font-weight: 600;
     text-decoration: none;
     border: 1.5px solid transparent;
     cursor: pointer;
+    white-space: nowrap;
+    transition: transform .15s ease, box-shadow .15s ease, background .15s ease, color .15s ease;
+}
+
+.btn-editar:hover,
+.btn-excluir:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 .2rem .45rem rgba(38, 43, 61, .12);
 }
 
 .btn-editar {

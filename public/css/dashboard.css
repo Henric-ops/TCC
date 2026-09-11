@@ -421,3 +421,66 @@
     font-family: 'Poppins', sans-serif;
     color: #1B2141;
 }
+
+.filho-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 18px;
+    margin-bottom: 28px;
+}
+
+.filho-card {
+    background: #fff;
+    border: 1px solid #EEF0F7;
+    border-radius: 16px;
+    padding: 20px;
+    box-shadow: 0 2px 10px rgba(30, 40, 90, .05);
+}
+
+.filho-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 14px;
+}
+
+.filho-nome {
+    font-family: 'Poppins', sans-serif;
+    font-weight: 700;
+    font-size: 1.05rem;
+    color: #1B2141;
+}
+
+.filho-meta {
+    font-size: .8rem;
+    color: #8992A9;
+    margin-top: 2px;
+}
+
+.filho-status-row {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+}
+
+.status-pill {
+    font-size: .75rem;
+    font-weight: 600;
+    padding: 4px 10px;
+    border-radius: 999px;
+}
+
+.status-pill.ok {
+    background: #E6F8F3;
+    color: #14B892;
+}
+
+.status-pill.falta {
+    background: #FDEBEC;
+    color: #E0525F;
+}
+
+.status-pill.pendente {
+    background: #F4F5FA;
+    color: #8992A9;
+}

@@ -93,6 +93,23 @@ class DashboardController extends Controller
     {
         $user = Auth::user();
 
-        return view('dashboard.responsavel', compact('user'));
+        $filhos = $user->alunosResponsavel()->with('turmas')->get();
+
+        $hoje = now()->format('Y-m-d');
+
+        foreach ($filhos as $filho) {
+            $filho->frequenciaHoje = Frequencia::where('aluno_id', $filho->id)->where('data', $hoje)->first();
+            $filho->registroHoje = RegistroDiario::where('aluno_id', $filho->id)->where('data', $hoje)->first();
+        }
+
+        $filhoIds = $filhos->pluck('id');
+
+        $atividadeRecente = RegistroDiario::with(['aluno', 'professor'])
+            ->whereIn('aluno_id', $filhoIds)
+            ->latest('created_at')
+            ->take(6)
+            ->get();
+
+        return view('dashboard.responsavel', compact('user', 'filhos', 'atividadeRecente'));
     }
 }
