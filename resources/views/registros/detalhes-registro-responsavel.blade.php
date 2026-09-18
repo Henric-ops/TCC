@@ -7,18 +7,26 @@
 @endpush
 
 @section('content')
-    <div class="header-card">
-        <div>
-            <h1>{{ $registro->aluno->nome }}</h1>
-            <div class="sub">Registro de {{ $registro->data->format('d/m/Y') }} · Lançado por
-                {{ $registro->professor->nome }}
+    <div class="registro-detail-header">
+        <div class="registro-detail-header__content">
+            <div class="registro-detail-avatar" aria-hidden="true">
+                {{ strtoupper(substr($registro->aluno->nome, 0, 1)) }}
+            </div>
+            <div>
+                <h1>{{ $registro->aluno->nome }}</h1>
+                <div class="registro-detail-subtitle">
+                    Registro de {{ $registro->data->format('d/m/Y') }} · Lançado por {{ $registro->professor->nome }}
+                </div>
             </div>
         </div>
-        <div class="date-pill"><i class="bi bi-calendar3"></i> {{ $registro->data->format('d/m/Y') }}</div>
+        <div class="registro-detail-date">
+            <i class="bi bi-calendar3" aria-hidden="true"></i>
+            {{ $registro->data->format('d/m/Y') }}
+        </div>
     </div>
 
-    <div class="grid-top">
-        <div class="card">
+    <div class="registro-detail-grid">
+        <div class="registro-detail-card">
             <div class="card-title"><span class="badge-icon green"><i class="bi bi-cup-hot-fill"></i></span> Alimentação
             </div>
 
@@ -59,7 +67,7 @@
             @endforeach
         </div>
 
-        <div class="card">
+        <div class="registro-detail-card">
             <div class="card-title"><span class="badge-icon purple"><i class="bi bi-moon-stars-fill"></i></span> Sono</div>
 
             @if($registro->sono)
@@ -90,7 +98,7 @@
         </div>
     </div>
 
-    <div class="card fralda-card">
+    <div class="registro-detail-card registro-detail-card--wide">
         <div class="card-title"><span class="badge-icon amber"><i class="bi bi-bandaid-fill"></i></span> Troca de fralda
         </div>
 
@@ -109,7 +117,10 @@
         @endif
     </div>
 
-    <div class="mt-3">
-        <a href="{{ route('registros.meus') }}" class="btn btn-outline-secondary btn-sm">Voltar ao histórico</a>
+    <div class="registro-detail-actions mt-3">
+        <a href="{{ route('registros.meus') }}" class="btn btn-outline-secondary btn-sm">
+            <i class="bi bi-arrow-left" aria-hidden="true"></i>
+            Voltar ao histórico
+        </a>
     </div>
 @endsection

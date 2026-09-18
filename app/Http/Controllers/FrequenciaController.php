@@ -90,7 +90,7 @@ class FrequenciaController extends Controller
             ->latest('data')
             ->paginate(20);
 
-        return view('frequencia.meus', compact('frequencias'));
+        return view('frequencia.frequencia-responsavel', compact('frequencias'));
     }
 
     private function turmasPermitidas($user)
