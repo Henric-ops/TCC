@@ -71,7 +71,6 @@
                                     <strong>{{ $registro->professor->nome }}</strong> registrou o dia de
                                     <strong>{{ $registro->aluno->nome }}</strong>
                                 </p>
-                                <span class="feed-time">{{ $registro->created_at->diffForHumans() }}</span>
                             </div>
                         </div>
                     @endforeach

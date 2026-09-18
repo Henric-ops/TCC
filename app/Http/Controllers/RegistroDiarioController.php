@@ -115,7 +115,7 @@ class RegistroDiarioController extends Controller
             ->latest('data')
             ->paginate(15);
 
-        return view('registros.meus', compact('registros'));
+        return view('registros.ver-registro-responsavel', compact('registros'));
     }
 
     private function salvarFilhos(RegistroDiario $registro, $request): void
@@ -208,5 +208,30 @@ class RegistroDiarioController extends Controller
         }
 
         abort(403);
+    }
+
+
+    public function meuRegistro(RegistroDiario $registro)//método para exibir detalhes de um registro específico para o responsável
+    {
+        $alunoIds = auth()->user()->alunosResponsavel->pluck('id');
+
+        abort_unless($alunoIds->contains($registro->aluno_id), 403);
+
+        $registro->load('aluno', 'professor', 'alimentacoes', 'sono', 'fraldas', 'liquidos');
+
+        $alimentacaoMap = $registro->alimentacoes->pluck('resultado', 'refeicao');
+        $liquidosMap = $registro->liquidos->pluck('resultado', 'tipo');
+        $xixiTotal = $registro->fraldas->where('xixi', true)->count();
+        $cocoTotal = $registro->fraldas->where('coco', true)->count();
+        $observacoesFralda = optional($registro->fraldas->first(fn($f) => filled($f->observacoes)))->observacoes;
+
+        return view('registros.detalhes-registro-responsavel', compact(
+            'registro',
+            'alimentacaoMap',
+            'liquidosMap',
+            'xixiTotal',
+            'cocoTotal',
+            'observacoesFralda'
+        ));
     }
 }

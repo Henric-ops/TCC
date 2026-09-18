@@ -630,3 +630,18 @@ textarea:focus {
     border-color: #f5c6cb;
     color: #721c24;
 }
+
+
+.resumo-linha {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 0;
+    border-top: 1px solid #f4f5fa;
+    font-size: .88rem;
+    color: var(--text-dark);
+}
+
+.resumo-linha:first-of-type {
+    border-top: none;
+}

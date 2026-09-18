@@ -162,6 +162,10 @@ Route::middleware(['auth', 'perfil:responsavel'])//rota para visualização dos 
             RegistroDiarioController::class,
             'meusRegistros'
         ])->name('registros.meus');
+
+        Route::get('/meus-registros', [RegistroDiarioController::class, 'meusRegistros'])->name('registros.meus');
+        Route::get('/meus-registros/{registro}', [RegistroDiarioController::class, 'meuRegistro'])->name('registros.meu-detalhe');
+
     });
 
 
