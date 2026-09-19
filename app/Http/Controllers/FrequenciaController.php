@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Frequencia;
 use App\Models\Turma;
 use Illuminate\Http\Request;
+use App\Models\Aluno;
 
 
 class FrequenciaController extends Controller
@@ -67,18 +68,65 @@ class FrequenciaController extends Controller
             ->with('sucesso', 'Frequência salva com sucesso.');
     }
 
-    public function index()
+
+
+    public function index(Request $request)//método para exibir a visão do dia ou o histórico de um aluno específico
     {
         $user = auth()->user();
-        $query = Frequencia::with(['aluno', 'turma'])->latest('data');
+        $turmasPermitidas = $this->turmasPermitidas($user);
 
-        if ($user->perfil === 'professor') {
-            $query->whereIn('turma_id', $this->turmasPermitidas($user)->pluck('id'));
+        $alunoId = $request->input('aluno_id');
+        $turmaId = $request->input('turma_id');
+
+        $alunos = Aluno::whereIn('id', function ($q) use ($turmasPermitidas) {
+            $q->select('aluno_id')->from('turma_aluno')->whereIn('turma_id', $turmasPermitidas->pluck('id'));
+        })->orderBy('nome')->get();
+
+        //busca o histórico de frequência de um aluno específico
+        if ($alunoId) {
+            abort_unless($alunos->contains('id', $alunoId), 403);
+
+            $registros = Frequencia::with('turma')
+                ->where('aluno_id', $alunoId)
+                ->when($request->inicio, fn($q) => $q->where('data', '>=', $request->inicio))
+                ->when($request->fim, fn($q) => $q->where('data', '<=', $request->fim))
+                ->orderByDesc('data')
+                ->paginate(20);
+
+            return view('frequencia.index', compact(
+                'registros',
+                'alunos',
+                'turmasPermitidas',
+                'alunoId',
+                'turmaId'
+            ));
         }
 
-        $frequencias = $query->paginate(20);
+        // busca o resumo de frequência do dia ou de uma turma específica
+        $data = $request->input('data', now()->format('Y-m-d'));
 
-        return view('frequencia.index', compact('frequencias'));
+        $query = Frequencia::where('data', $data);
+
+        if ($turmaId) {
+            abort_unless($turmasPermitidas->contains('id', $turmaId), 403);
+            $query->where('turma_id', $turmaId);
+        } else {
+            $query->whereIn('turma_id', $turmasPermitidas->pluck('id'));
+        }
+
+        $resumo = $query->selectRaw('turma_id, data, COUNT(*) as total, SUM(presente) as presentes')
+            ->groupBy('turma_id', 'data')
+            ->with(['turma' => fn($q) => $q->withCount('alunos')])
+            ->get();
+
+        return view('frequencia.index', compact(
+            'resumo',
+            'alunos',
+            'turmasPermitidas',
+            'alunoId',
+            'turmaId',
+            'data'
+        ));
     }
 
     public function meusRegistros()
