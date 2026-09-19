@@ -56,28 +56,33 @@
                     class="lk-nav-item {{ request()->routeIs('frequencia.meus') ? 'active' : '' }}">
                     <i class="bi bi-calendar-check"></i> Frequência
                 </a>
-            @endif
-        </div>
-
-        <div class="lk-nav-section">
-            <span class="lk-nav-label">Comunicação</span>
-
-            @if(in_array(auth()->user()->perfil, ['admin', 'professor']))
-                <a href="{{ route('emails.create') }}"
-                    class="lk-nav-item {{ request()->routeIs('emails.*') ? 'active' : '' }}">
-                    <i class="bi bi-envelope-fill"></i> Comunicados
+                <a href="{{ route('relatorio.meu') }}"
+                    class="lk-nav-item {{ request()->routeIs('relatorio.meu') ? 'active' : '' }}">
+                    <i class="bi bi-file-earmark-text"></i> Relatório
                 </a>
             @endif
         </div>
 
+        @if(in_array(auth()->user()->perfil, ['admin', 'professor']))
+            <div class="lk-nav-section">
+                <span class="lk-nav-label">Comunicação</span>
 
-        <div class="lk-nav-section">
-            <span class="lk-nav-label">Análise</span>
+                <a href="{{ route('emails.create') }}"
+                    class="lk-nav-item {{ request()->routeIs('emails.*') ? 'active' : '' }}">
+                    <i class="bi bi-envelope-fill"></i> Comunicados
+                </a>
+            </div>
+        @endif
 
-            <a href="{{ url('/relatorios') }}" class="lk-nav-item {{ request()->is('relatorios*') ? 'active' : '' }}">
-                <i class="bi bi-bar-chart"></i> Relatórios
-            </a>
-        </div>
+        @if(auth()->user()->perfil === 'admin')
+            <div class="lk-nav-section">
+                <span class="lk-nav-label">Análise</span>
+
+                <a href="{{ url('/relatorios') }}" class="lk-nav-item {{ request()->is('relatorios*') ? 'active' : '' }}">
+                    <i class="bi bi-bar-chart"></i> Relatórios
+                </a>
+            </div>
+        @endif
     </nav>
 
     <form method="POST" action="{{ route('logout') }}" class="lk-logout-form">

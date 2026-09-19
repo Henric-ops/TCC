@@ -11,6 +11,7 @@ use App\Http\Controllers\RegistroDiarioController;
 use App\Http\Controllers\FrequenciaController;
 use App\Http\Controllers\EmailController;
 use App\Http\Controllers\TurmaController;
+use App\Http\Controllers\RelatorioController;
 
 
 
@@ -163,8 +164,12 @@ Route::middleware(['auth', 'perfil:responsavel'])//rota para visualização dos 
             'meusRegistros'
         ])->name('registros.meus');
 
+        //rota para visualizar detalhes de um registro específico
         Route::get('/meus-registros', [RegistroDiarioController::class, 'meusRegistros'])->name('registros.meus');
         Route::get('/meus-registros/{registro}', [RegistroDiarioController::class, 'meuRegistro'])->name('registros.meu-detalhe');
+        //rota para gerar PDF do registro específico
+        Route::get('meu-relatorio', [RelatorioController::class, 'meuRelatorio'])->name('relatorio.meu');
+        Route::get('meu-relatorio/pdf', [RelatorioController::class, 'meuRelatorioPdf'])->name('relatorio.meu.pdf');
 
     });
 
