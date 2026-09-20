@@ -70,8 +70,8 @@
                             <td>{{ $turma->periodo }}</td>
                             <td>{{ $turma->alunos_count }}</td>
                             <td class="text-end">
-                                <a href="{{ route('registros.selecionar-aluno') }}" class="btn btn-sm btn-outline-primary">Registro
-                                    diário</a>
+                                <a href="{{ route('registros.selecionar-aluno', ['turma_id' => $turma->id]) }}"
+                                    class="btn btn-sm btn-outline-primary">Registro diário</a>
                                 <a href="{{ route('frequencia.form', ['turma_id' => $turma->id]) }}"
                                     class="btn btn-sm btn-outline-primary">Frequência</a>
                             </td>

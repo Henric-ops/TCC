@@ -137,21 +137,18 @@ Route::middleware(['auth', 'perfil:responsavel'])// rota para visualização da 
 
 
 
-Route::middleware(['auth', 'perfil:admin,professor'])//rota para registros diários
-    ->group(function () {
+Route::middleware(['auth', 'perfil:admin,professor'])->group(function () {
+    Route::resource('registros-diarios', RegistroDiarioController::class)
+        ->except(['show'])
+        ->parameters(['registros-diarios' => 'registro'])
+        ->names('registros');
 
-        Route::resource('registros-diarios', RegistroDiarioController::class)
-            ->except(['show'])
-            ->parameters([
-                'registros-diarios' => 'registro'
-            ])
-            ->names('registros');
+    Route::get('registros-diarios/selecionar-turma', [RegistroDiarioController::class, 'selecionarTurma'])
+        ->name('registros.selecionar-turma');
 
-        Route::get(
-            '/registros-diarios/selecionar-aluno',
-            [RegistroDiarioController::class, 'selecionarAluno']
-        )->name('registros.selecionar-aluno');
-    });
+    Route::get('registros-diarios/selecionar-aluno', [RegistroDiarioController::class, 'selecionarAluno'])
+        ->name('registros.selecionar-aluno');
+});
 
 
 

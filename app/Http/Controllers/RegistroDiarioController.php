@@ -10,28 +10,79 @@ use Illuminate\Http\Request;
 
 class RegistroDiarioController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
         $user = auth()->user();
+        $turmasPermitidas = $this->turmasPermitidas($user);
+        $alunosPermitidos = $this->alunosPermitidos($user);
 
-        $query = RegistroDiario::with(['aluno', 'professor'])->latest('data');
+        $turmaId = $request->input('turma_id');
+        $alunoId = $request->input('aluno_id');
+        $temFiltroData = $request->filled('inicio') || $request->filled('fim');
+
+        $query = RegistroDiario::with(['aluno', 'professor']);
 
         if ($user->perfil === 'professor') {
-            $query->whereIn('aluno_id', $this->alunosPermitidos($user)->pluck('id'));
+            $query->whereIn('aluno_id', $alunosPermitidos->pluck('id'));
         }
 
-        $registros = $query->paginate(15);
+        if ($turmaId) {
+            abort_unless($turmasPermitidas->contains('id', $turmaId), 403);
+            $alunosDaTurma = Turma::findOrFail($turmaId)->alunos->pluck('id');
+            $query->whereIn('aluno_id', $alunosDaTurma);
+        }
 
-        return view('registros.index', compact('registros'));
+        if ($alunoId) {
+            abort_unless($alunosPermitidos->contains('id', $alunoId), 403);
+            $query->where('aluno_id', $alunoId);
+        }
+
+        $query->when($temFiltroData, function ($q) use ($request) {
+            $q->when($request->filled('inicio'), fn($q2) => $q2->where('data', '>=', $request->inicio))
+                ->when($request->filled('fim'), fn($q2) => $q2->where('data', '<=', $request->fim));
+        }, function ($q) {
+            $q->whereDate('data', now()->format('Y-m-d'));
+        });
+
+        $registros = $query->latest('data')->paginate(15);
+
+        return view('registros.index', compact(
+            'registros',
+            'turmasPermitidas',
+            'alunosPermitidos',
+            'turmaId',
+            'alunoId',
+            'temFiltroData'
+        ));
     }
-
-    public function selecionarAluno()
+    public function selecionarAluno(Request $request)
     {
-        $alunos = $this->alunosPermitidos(auth()->user());
+        $turma = Turma::find($request->query('turma_id'));
 
-        return view('registros.selecionar-aluno', compact('alunos'));
+        if (!$turma || !$this->turmasPermitidas(auth()->user())->contains('id', $turma->id)) {
+            return redirect()->route('registros.selecionar-turma')->with('erro', 'Selecione uma turma válida.');
+        }
+
+        $alunos = $turma->alunos()->orderBy('nome')->get();
+
+        return view('registros.selecionar-aluno', compact('turma', 'alunos'));
     }
 
+    public function selecionarTurma()
+    {
+        $turmas = $this->turmasPermitidas(auth()->user());
+
+        return view('registros.selecionar-turma', compact('turmas'));
+    }
+
+    private function turmasPermitidas($user)
+    {
+        if ($user->perfil === 'admin') {
+            return Turma::orderBy('nome')->get();
+        }
+
+        return $user->turmas()->orderBy('nome')->get();
+    }
     public function create(Request $request)
     {
         $aluno = Aluno::find($request->query('aluno_id'));
