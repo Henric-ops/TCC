@@ -1,81 +1,65 @@
 @extends('layout.app')
 
-@section('title', 'Registros dos meus filhos')
+@section('title', 'Registros diários')
 
 @push('styles')
-    <link rel="stylesheet" href="{{ asset('css/registro-diario.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/historico-frequencia.css') }}">
 @endpush
 
 @section('content')
-    <div class="registros-header d-flex justify-content-between align-items-center mb-4">
-        <div class="d-flex align-items-center gap-3">
-            <div>
-                <h1 class="h4 mb-1">Registros diários</h1>
+    <h1 class="freq-title">Registros diários</h1>
+
+    <form method="GET" class="freq-filtros">
+        @if($filhos->count() > 1)
+            <div class="freq-filtro-item">
+                <label>Filho</label>
+                <select name="aluno_id" onchange="this.form.submit()">
+                    <option value="">Todos</option>
+                    @foreach($filhos as $filho)
+                        <option value="{{ $filho->id }}" {{ request('aluno_id') == $filho->id ? 'selected' : '' }}>{{ $filho->nome }}
+                        </option>
+                    @endforeach
+                </select>
             </div>
+        @endif
+        <div class="freq-filtro-item">
+            <label>De</label>
+            <input type="date" name="inicio" value="{{ request('inicio') }}" onchange="this.form.submit()">
         </div>
-
-        <div class="registros-header-actions d-flex align-items-center gap-3">
-
+        <div class="freq-filtro-item">
+            <label>Até</label>
+            <input type="date" name="fim" value="{{ request('fim') }}" onchange="this.form.submit()">
         </div>
-    </div>
+    </form>
 
-    <div class="card registros-table-card">
-        <div class="table-responsive">
-            <table class="table table-hover align-middle mb-0">
+    <div class="freq-panel">
+        @if($registros->isEmpty())
+            <div class="freq-empty">Nenhum registro ainda.</div>
+        @else
+            <table class="freq-table">
                 <thead>
                     <tr>
-                        <th><i class="bi bi-person" aria-hidden="true"></i> Aluno</th>
-                        <th><i class="bi bi-calendar3" aria-hidden="true"></i> Data</th>
-                        <th><i class="bi bi-person-badge" aria-hidden="true"></i> Professor</th>
+                        <th>Aluno</th>
+                        <th>Data</th>
+                        <th>Professor</th>
                         <th class="text-end">Ação</th>
                     </tr>
                 </thead>
                 <tbody>
-                    @forelse($registros as $registro)
+                    @foreach($registros as $registro)
                         <tr>
-                            <td>
-                                <div class="d-flex align-items-center gap-3">
-                                    <span class="registro-avatar" aria-hidden="true">
-                                        {{ strtoupper(substr($registro->aluno->nome, 0, 1)) }}
-                                    </span>
-                                    <strong>{{ $registro->aluno->nome }}</strong>
-                                </div>
-                            </td>
-                            <td>
-                                <span class="registro-date">
-                                    <i class="bi bi-calendar3" aria-hidden="true"></i>
-                                    {{ $registro->data->format('d/m/Y') }}
-                                </span>
-                            </td>
-                            <td>
-                                <span class="registro-professor">
-                                    <i class="bi bi-person-badge" aria-hidden="true"></i>
-                                    {{ $registro->professor->nome }}
-                                </span>
-                            </td>
-                            <td class="text-end text-nowrap">
-                                <a href="{{ route('registros.meu-detalhe', $registro) }}"
-                                    class="btn btn-sm btn-primary registro-action" title="Ver detalhes"
-                                    aria-label="Ver detalhes">
-                                    <i class="bi bi-eye" aria-hidden="true"></i>
-                                    <span>Ver detalhes</span>
-                                </a>
+                            <td>{{ $registro->aluno->nome }}</td>
+                            <td>{{ $registro->data->format('d/m/Y') }}</td>
+                            <td>{{ $registro->professor->nome }}</td>
+                            <td class="text-end">
+                                <a href="{{ route('registros.meu-detalhe', $registro) }}" class="btn-ver">Ver detalhes</a>
                             </td>
                         </tr>
-                    @empty
-                        <tr>
-                            <td colspan="4" class="text-center py-5">
-                                <div class="registro-empty">
-                                    <i class="bi bi-inbox" aria-hidden="true"></i>
-                                    <span>Nenhum registro ainda.</span>
-                                </div>
-                            </td>
-                        </tr>
-                    @endforelse
+                    @endforeach
                 </tbody>
             </table>
-        </div>
+        @endif
     </div>
 
-    <div class="mt-3">{{ $registros->links() }}</div>
+    <div class="mt-3">{{ $registros->appends(request()->query())->links() }}</div>
 @endsection

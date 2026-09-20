@@ -105,17 +105,26 @@ class RegistroDiarioController extends Controller
 
         return redirect()->route('registros.index')->with('sucesso', 'Registro removido.');
     }
-
-    public function meusRegistros()
+    public function meusRegistros(Request $request)
     {
         $alunoIds = auth()->user()->alunosResponsavel->pluck('id');
+        $filhos = auth()->user()->alunosResponsavel;
+
+        $temFiltroData = $request->filled('inicio') || $request->filled('fim');
 
         $registros = RegistroDiario::with(['aluno', 'professor'])
             ->whereIn('aluno_id', $alunoIds)
+            ->when($request->filled('aluno_id'), fn($q) => $q->where('aluno_id', $request->aluno_id))
+            ->when($temFiltroData, function ($q) use ($request) {
+                $q->when($request->filled('inicio'), fn($q2) => $q2->where('data', '>=', $request->inicio))
+                    ->when($request->filled('fim'), fn($q2) => $q2->where('data', '<=', $request->fim));
+            }, function ($q) {
+                $q->whereDate('data', now()->format('Y-m-d'));
+            })
             ->latest('data')
             ->paginate(15);
 
-        return view('registros.ver-registro-responsavel', compact('registros'));
+        return view('registros.ver-registro-responsavel', compact('registros', 'filhos', 'temFiltroData'));
     }
 
     private function salvarFilhos(RegistroDiario $registro, $request): void

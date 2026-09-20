@@ -129,16 +129,26 @@ class FrequenciaController extends Controller
         ));
     }
 
-    public function meusRegistros()
+    public function meusRegistros(Request $request)
     {
         $alunoIds = auth()->user()->alunosResponsavel->pluck('id');
+        $filhos = auth()->user()->alunosResponsavel;
+
+        $temFiltroData = $request->filled('inicio') || $request->filled('fim');
 
         $frequencias = Frequencia::with(['aluno', 'turma'])
             ->whereIn('aluno_id', $alunoIds)
+            ->when($request->filled('aluno_id'), fn($q) => $q->where('aluno_id', $request->aluno_id))
+            ->when($temFiltroData, function ($q) use ($request) {
+                $q->when($request->filled('inicio'), fn($q2) => $q2->where('data', '>=', $request->inicio))
+                    ->when($request->filled('fim'), fn($q2) => $q2->where('data', '<=', $request->fim));
+            }, function ($q) {
+                $q->whereDate('data', now()->format('Y-m-d'));
+            })
             ->latest('data')
             ->paginate(20);
 
-        return view('frequencia.frequencia-responsavel', compact('frequencias'));
+        return view('frequencia.frequencia-responsavel', compact('frequencias', 'filhos', 'temFiltroData'));
     }
 
     private function turmasPermitidas($user)
