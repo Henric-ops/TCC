@@ -185,6 +185,16 @@ body {
   flex-direction: column;
 }
 
+.login-main>form,
+.login-main>.divider,
+.login-main>.signup-title,
+.login-main>.btn-secondary {
+  width: 100%;
+  max-width: 400px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
 .welcome-title {
   font-family: 'Poppins', sans-serif;
   font-size: 1.5rem;
@@ -315,7 +325,8 @@ body {
   display: flex;
   align-items: center;
   gap: 12px;
-  margin: 20px 0 14px;
+  margin-top: 20px;
+  margin-bottom: 14px;
   color: #9BA1B5;
   font-size: .85rem;
 }

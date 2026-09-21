@@ -114,6 +114,16 @@ body {
     background: #fff;
 }
 
+.register-card>form,
+.register-card>.notice,
+.register-card>.error-box,
+.register-card>.login-link {
+    width: 100%;
+    max-width: 400px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
 .logo-wrap {
     display: flex;
     justify-content: center;
@@ -282,7 +292,7 @@ select:focus {
 }
 
 .login-link {
-    margin: 20px 0 0;
+    margin: 20px auto 0;
     color: var(--register-muted);
     font-size: 13px;
     text-align: center;
