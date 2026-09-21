@@ -6,22 +6,22 @@ use App\Models\Frequencia;
 use App\Models\Turma;
 use Illuminate\Http\Request;
 use App\Models\Aluno;
+use Illuminate\Support\Facades\Auth;
 
 
 class FrequenciaController extends Controller
 {
     public function selecionarTurma()
     {
-        $turmas = $this->turmasPermitidas(auth()->user());
+        $turmas = $this->turmasPermitidas(Auth::user());
 
         return view('frequencia.selecionar-turma', compact('turmas'));
     }
-
     public function form(Request $request)
     {
         $turma = Turma::find($request->query('turma_id'));
 
-        if (!$turma || !$this->turmasPermitidas(auth()->user())->contains('id', $turma->id)) {
+        if (!$turma || !$this->turmasPermitidas(Auth::user())->contains('id', $turma->id)) {
             return redirect()->route('frequencia.selecionar')->with('erro', 'Selecione uma turma válida.');
         }
 
@@ -49,7 +49,7 @@ class FrequenciaController extends Controller
 
         $turma = Turma::findOrFail($request->turma_id);
 
-        if (!$this->turmasPermitidas(auth()->user())->contains('id', $turma->id)) {
+        if (!$this->turmasPermitidas(Auth::user())->contains('id', $turma->id)) {
             abort(403);
         }
 
@@ -59,7 +59,7 @@ class FrequenciaController extends Controller
                 [
                     'presente' => $status === 'presente',
                     'justificativa' => $request->input("justificativa.$alunoId"),
-                    'registrado_por' => auth()->id(),
+                    'registrado_por' => Auth::id(),
                 ]
             );
         }
@@ -72,7 +72,7 @@ class FrequenciaController extends Controller
 
     public function index(Request $request)//método para exibir a visão do dia ou o histórico de um aluno específico
     {
-        $user = auth()->user();
+        $user = Auth::user();
         $turmasPermitidas = $this->turmasPermitidas($user);
 
         $alunoId = $request->input('aluno_id');
@@ -142,8 +142,8 @@ class FrequenciaController extends Controller
 
     public function meusRegistros(Request $request)
     {
-        $alunoIds = auth()->user()->alunosResponsavel->pluck('id');
-        $filhos = auth()->user()->alunosResponsavel;
+        $alunoIds = Auth::user()->alunosResponsavel->pluck('id');
+        $filhos = Auth::user()->alunosResponsavel;
 
         $temFiltroData = $request->filled('inicio') || $request->filled('fim');
 

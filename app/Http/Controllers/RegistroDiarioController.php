@@ -7,12 +7,14 @@ use App\Models\Aluno;
 use App\Models\RegistroDiario;
 use App\Models\Turma;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+
 
 class RegistroDiarioController extends Controller
 {
     public function index(Request $request)//método para exibir a lista de registros diários com filtros
     {
-        $user = auth()->user();
+        $user = Auth::user();
         $turmasPermitidas = $this->turmasPermitidas($user);
         $alunosPermitidos = $this->alunosPermitidos($user);
 
@@ -63,7 +65,7 @@ class RegistroDiarioController extends Controller
     {
         $turma = Turma::find($request->query('turma_id'));
 
-        if (!$turma || !$this->turmasPermitidas(auth()->user())->contains('id', $turma->id)) {
+        if (!$turma || !$this->turmasPermitidas(Auth::user())->contains('id', $turma->id)) {
             return redirect()->route('registros.selecionar-turma')->with('erro', 'Selecione uma turma válida.');
         }
 
@@ -74,7 +76,7 @@ class RegistroDiarioController extends Controller
 
     public function selecionarTurma()
     {
-        $turmas = $this->turmasPermitidas(auth()->user());
+        $turmas = $this->turmasPermitidas(Auth::user());
 
         return view('registros.selecionar-turma', compact('turmas'));
     }
@@ -91,7 +93,7 @@ class RegistroDiarioController extends Controller
     {
         $aluno = Aluno::find($request->query('aluno_id'));
 
-        if (!$aluno || !$this->alunosPermitidos(auth()->user())->contains('id', $aluno->id)) {
+        if (!$aluno || !$this->alunosPermitidos(Auth::user())->contains('id', $aluno->id)) {
             return redirect()->route('registros.selecionar-aluno')->with('erro', 'Selecione um aluno válido.');
         }
 
@@ -102,7 +104,7 @@ class RegistroDiarioController extends Controller
     {
         $registro = RegistroDiario::create([
             'aluno_id' => $request->aluno_id,
-            'professor_id' => auth()->id(),
+            'professor_id' => Auth::id(),
             'data' => now()->format('Y-m-d'),
             'observacao' => null,
         ]);
@@ -162,8 +164,8 @@ class RegistroDiarioController extends Controller
     }
     public function meusRegistros(Request $request)//método para exibir a lista de registros diários do responsável com filtros
     {
-        $alunoIds = auth()->user()->alunosResponsavel->pluck('id');
-        $filhos = auth()->user()->alunosResponsavel;
+        $alunoIds = Auth::user()->alunosResponsavel->pluck('id');
+        $filhos = Auth::user()->alunosResponsavel;
 
         $temFiltroData = $request->filled('inicio') || $request->filled('fim');
 
@@ -261,7 +263,7 @@ class RegistroDiarioController extends Controller
 
     private function autorizarAcesso(RegistroDiario $registro): void
     {
-        $user = auth()->user();
+        $user = Auth::user();
 
         if ($user->perfil === 'admin') {
             return;
@@ -277,7 +279,7 @@ class RegistroDiarioController extends Controller
 
     public function meuRegistro(RegistroDiario $registro)//método para exibir detalhes de um registro específico para o responsável
     {
-        $alunoIds = auth()->user()->alunosResponsavel->pluck('id');
+        $alunoIds = Auth::user()->alunosResponsavel->pluck('id');
 
         abort_unless($alunoIds->contains($registro->aluno_id), 403);
 

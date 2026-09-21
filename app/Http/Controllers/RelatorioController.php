@@ -6,12 +6,14 @@ use App\Models\Frequencia;
 use App\Models\RegistroDiario;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+
 
 class RelatorioController extends Controller
 {
     public function meuRelatorio(Request $request)
     {
-        $filhos = auth()->user()->alunosResponsavel;
+        $filhos = Auth::user()->alunosResponsavel;
 
         $alunoId = $request->input('aluno_id', $filhos->first()?->id);
         $aluno = $filhos->firstWhere('id', $alunoId);
@@ -25,7 +27,7 @@ class RelatorioController extends Controller
 
     public function meuRelatorioPdf(Request $request)
     {
-        $filhos = auth()->user()->alunosResponsavel;
+        $filhos = Auth::user()->alunosResponsavel;
 
         $alunoId = $request->input('aluno_id', $filhos->first()?->id);
         $aluno = $filhos->firstWhere('id', $alunoId);
