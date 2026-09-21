@@ -137,13 +137,13 @@
     border-top: 1px solid #e6eaf2;
 }
 
-.usuario-form-actions .btn {
+.usuario-form-actions .usuario-button {
     display: inline-flex;
     align-items: center;
     gap: .45rem;
 }
 
-.usuario-form-actions .btn i {
+.usuario-form-actions .usuario-button i {
     font-size: 1rem;
 }
 

@@ -45,20 +45,26 @@
             font-family: 'Poppins', sans-serif;
             background: var(--lk-content-bg);
             margin: 0;
+            overflow: hidden;
         }
 
         .lk-layout {
             display: flex;
             min-height: 100vh;
+            padding-left: 260px;
         }
 
         .lk-sidebar {
             display: flex;
             flex-direction: column;
+            position: fixed;
+            inset: 0 auto 0 0;
             width: 260px;
+            height: 100vh;
             flex-shrink: 0;
             background: var(--lk-sidebar-bg);
-            padding: 1.5rem 1rem;
+            padding: 1rem .85rem;
+            overflow: hidden;
         }
 
         .lk-sidebar nav {
@@ -82,9 +88,9 @@
             display: flex;
             align-items: center;
             gap: .75rem;
-            padding-bottom: 1.25rem;
+            padding-bottom: .85rem;
             border-bottom: 1px solid var(--lk-sidebar-border);
-            margin-bottom: 1.5rem;
+            margin-bottom: 1rem;
         }
 
         .lk-logo-icon {
@@ -93,8 +99,8 @@
         }
 
         .lk-logo-image {
-            width: 80px;
-            height: 80px;
+            width: 62px;
+            height: 62px;
             object-fit: contain;
             flex-shrink: 0;
         }
@@ -112,7 +118,7 @@
         }
 
         .lk-nav-section {
-            margin-bottom: 1.75rem;
+            margin-bottom: 1rem;
         }
 
         .lk-nav-label {
@@ -122,21 +128,21 @@
             font-weight: 700;
             letter-spacing: .06em;
             text-transform: uppercase;
-            margin-bottom: .75rem;
-            padding-left: .5rem;
+            margin-bottom: .45rem;
+            padding-left: .4rem;
         }
 
         .lk-nav-item {
             display: flex;
             align-items: center;
-            gap: .75rem;
-            padding: .65rem 1rem;
+            gap: .65rem;
+            padding: .5rem .8rem;
             border-radius: 999px;
             color: var(--lk-text-muted);
             text-decoration: none;
-            font-size: .9rem;
+            font-size: .84rem;
             font-weight: 500;
-            margin-bottom: .25rem;
+            margin-bottom: .15rem;
             transition: background .15s ease, color .15s ease;
         }
 
@@ -163,6 +169,10 @@
 
         .lk-content {
             flex: 1;
+            min-width: 0;
+            height: 100vh;
+            overflow-x: hidden;
+            overflow-y: auto;
             padding: 2rem;
         }
 

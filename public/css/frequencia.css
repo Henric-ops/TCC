@@ -78,7 +78,10 @@
     align-items: center;
     justify-content: center;
     gap: .35rem;
+    border: 1px solid #cbd9ff;
     border-radius: 8px;
+    background: #f7f9ff;
+    color: #3d68dd;
     font-size: .82rem;
     font-weight: 600;
     text-decoration: none;
@@ -87,6 +90,9 @@
 }
 
 .frequencia-action:hover {
+    border-color: #4c7df5;
+    background: #eaf0ff;
+    color: #315bcb;
     transform: translateY(-1px);
     box-shadow: 0 .2rem .45rem rgba(38, 43, 61, .12);
 }
@@ -282,13 +288,25 @@
 }
 
 .freq-link {
-    color: var(--lk-active-bg);
-    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: .35rem;
+    border: 1px solid var(--lk-border);
+    border-radius: 8px;
+    padding: 6px 10px;
+    background: #fff;
+    color: var(--lk-text-label);
+    font-size: .82rem;
     font-weight: 600;
+    text-decoration: none;
+    transition: border-color .15s ease, background .15s ease, color .15s ease, transform .15s ease;
 }
 
 .freq-link:hover {
-    text-decoration: underline;
+    border-color: #aeb8c9;
+    background: #f3f5f8;
+    color: #4f5b70;
+    transform: translateY(-1px);
 }
 
 @media (max-width: 767.98px) {

@@ -97,13 +97,13 @@
     padding-top: .5rem;
 }
 
-.verificar-actions .btn {
+.verificar-actions .usuario-button {
     display: inline-flex;
     align-items: center;
     gap: .45rem;
 }
 
-.verificar-actions .btn i {
+.verificar-actions .usuario-button i {
     font-size: 1.05rem;
 }
 
@@ -121,7 +121,7 @@
         justify-content: stretch;
     }
 
-    .verificar-actions .btn {
+    .verificar-actions .usuario-button {
         flex: 1;
         justify-content: center;
     }

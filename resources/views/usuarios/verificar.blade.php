@@ -5,6 +5,7 @@
 @section('content')
 
     <link rel="stylesheet" href="{{ asset('css/verificar.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/usuario-buttons.css') }}">
     <script src="{{ asset('js/verificar.js') }}" defer></script>
 
     <div class="verificar-page">
@@ -20,8 +21,7 @@
                 </div>
             </div>
 
-            <a href="{{ route('admin.usuarios.index') }}"
-                class="btn btn-outline-secondary d-inline-flex align-items-center gap-2">
+            <a href="{{ route('admin.usuarios.index') }}" class="usuario-button usuario-button-muted">
                 <i class="bi bi-arrow-left" aria-hidden="true"></i>
                 Voltar para usuários
             </a>
@@ -145,12 +145,12 @@
                         <div class="verificar-actions">
 
                             <button type="submit" formaction="{{ route('admin.usuarios.recusar', $usuario) }}" formnovalidate
-                                class="btn btn-outline-danger" data-confirm-rejection>
+                                class="usuario-button usuario-button-danger" data-confirm-rejection>
                                 <i class="bi bi-x-circle" aria-hidden="true"></i>
                                 Recusar
                             </button>
 
-                            <button type="submit" class="btn btn-success">
+                            <button type="submit" class="usuario-button usuario-button-primary">
                                 <i class="bi bi-check-circle-fill" aria-hidden="true"></i>
                                 Aprovar cadastro
                             </button>
@@ -204,12 +204,12 @@
                         <div class="verificar-actions">
 
                             <button type="submit" formaction="{{ route('admin.usuarios.recusar', $usuario) }}" formnovalidate
-                                class="btn btn-outline-danger" data-confirm-rejection>
+                                class="usuario-button usuario-button-danger" data-confirm-rejection>
                                 <i class="bi bi-x-circle" aria-hidden="true"></i>
                                 Recusar
                             </button>
 
-                            <button type="submit" class="btn btn-primary">
+                            <button type="submit" class="usuario-button usuario-button-primary">
                                 <i class="bi bi-check-circle-fill" aria-hidden="true"></i>
                                 Aprovar cadastro
                             </button>

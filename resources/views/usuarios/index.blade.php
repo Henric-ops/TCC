@@ -6,6 +6,7 @@
 
 
     <link rel="stylesheet" href="{{ asset('css/tabela.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/usuario-buttons.css') }}">
 
     <div class="usuarios-header d-flex justify-content-between align-items-center mb-4">
         <div class="d-flex align-items-center gap-3">
@@ -19,7 +20,7 @@
                 <strong>{{ $usuarios->total() }}</strong>
                 {{ $usuarios->total() === 1 ? 'cadastro' : 'cadastros' }}
             </span>
-            <a href="{{ route('admin.usuarios.create') }}" class="btn btn-primary d-inline-flex align-items-center gap-2">
+            <a href="{{ route('admin.usuarios.create') }}" class="usuario-button usuario-button-primary">
                 <i class="bi bi-person-plus-fill" aria-hidden="true"></i>
                 Novo usuário
             </a>
@@ -113,7 +114,7 @@
                             <td class="text-end text-nowrap">
 
                                 <a href="{{ route('admin.usuarios.edit', $usuario) }}"
-                                    class="btn btn-sm btn-primary usuario-action" title="Editar usuário"
+                                    class="usuario-action usuario-action-primary" title="Editar usuário"
                                     aria-label="Editar usuário">
                                     <i class="bi bi-pencil-square" aria-hidden="true"></i>
                                     <span>Editar</span>
@@ -121,7 +122,7 @@
 
                                 @if($usuario->status === 'pendente')
                                     <a href="{{ route('admin.usuarios.verificar', $usuario) }}"
-                                        class="btn btn-sm btn-success usuario-action" title="Validar cadastro"
+                                        class="usuario-action usuario-action-primary" title="Validar cadastro"
                                         aria-label="Validar cadastro">
                                         <i class="bi bi-person-check-fill" aria-hidden="true"></i>
                                         <span>Validar</span>
@@ -134,7 +135,7 @@
                                     @csrf
                                     @method('DELETE')
 
-                                    <button type="submit" class="btn btn-sm btn-danger usuario-action" title="Excluir usuário"
+                                    <button type="submit" class="usuario-action usuario-action-danger" title="Excluir usuário"
                                         aria-label="Excluir usuário">
                                         <i class="bi bi-trash3" aria-hidden="true"></i>
                                         <span>Excluir</span>

@@ -135,7 +135,10 @@
         <input type="hidden" name="coco" id="coco-input" value="0">
 
         <div class="save-bar">
-            <span class="text-muted small"><i class="bi bi-shield-check"></i> Dados deste registro</span>
+            <a href="{{ route('registros.selecionar-aluno', ['turma_id' => $aluno->turmas->first()?->id]) }}"
+                class="back-button">
+                <i class="bi bi-arrow-left" aria-hidden="true"></i> Voltar
+            </a>
             <button class="save-button" type="submit"><i class="bi bi-save2-fill me-1"></i> Salvar registro</button>
         </div>
     </form>

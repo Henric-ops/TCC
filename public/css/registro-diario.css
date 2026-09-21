@@ -21,13 +21,40 @@ body {
     background: var(--card-bg);
     border: 1px solid var(--card-border);
     border-radius: 16px;
-    padding: 22px 26px;
+    padding: 16px 20px;
     color: var(--text-dark);
     box-shadow: var(--lk-shadow, 0 2px 10px rgba(30, 40, 90, .05));
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 22px;
+    margin-bottom: 16px;
+}
+
+.header-actions {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.back-button {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    border: 1px solid #d6dce8;
+    border-radius: 9px;
+    padding: 8px 11px;
+    color: #687386;
+    background: #fff;
+    font-size: .8rem;
+    font-weight: 600;
+    text-decoration: none;
+    transition: border-color .15s ease, background .15s ease, color .15s ease;
+}
+
+.back-button:hover {
+    border-color: #aeb8c9;
+    background: #f3f5f8;
+    color: #4f5b70;
 }
 
 .registro-detail-header {
@@ -65,7 +92,7 @@ body {
 
 .registro-detail-header h1 {
     margin: 0;
-    font-size: 1.5rem;
+    font-size: 1.35rem;
     font-weight: 700;
     letter-spacing: -.01em;
     color: var(--text-dark);
@@ -95,8 +122,8 @@ body {
 .grid-top {
     display: grid;
     grid-template-columns: 1.3fr 1fr;
-    gap: 22px;
-    margin-bottom: 22px;
+    gap: 16px;
+    margin-bottom: 16px;
 }
 
 .registro-detail-grid {
@@ -116,7 +143,7 @@ body {
     background: var(--card-bg);
     border: 1px solid var(--card-border);
     border-radius: var(--lk-radius-card, 16px);
-    padding: 26px;
+    padding: 18px;
 }
 
 .registro-detail-card {
@@ -138,7 +165,7 @@ body {
     font-weight: 700;
     font-size: .92rem;
     color: var(--text-dark);
-    margin-bottom: 20px;
+    margin-bottom: 14px;
     letter-spacing: .02em;
 }
 
@@ -147,13 +174,13 @@ body {
 }
 
 .card-title .badge-icon {
-    width: 36px;
-    height: 36px;
+    width: 30px;
+    height: 30px;
     border-radius: 10px;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 15px;
+    font-size: 13px;
     flex-shrink: 0;
 }
 
@@ -181,8 +208,8 @@ body {
 .feed-row {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 24px;
-    margin-bottom: 8px;
+    gap: 16px;
+    margin-bottom: 4px;
 }
 
 @media (max-width: 600px) {
@@ -220,8 +247,8 @@ body {
     display: grid;
     grid-template-columns: 90px repeat(3, 1fr);
     align-items: center;
-    padding: 10px 0;
-    font-size: .88rem;
+    padding: 7px 0;
+    font-size: .82rem;
     font-weight: 500;
     color: var(--text-dark);
     border-top: 1px solid #f4f5fa;
@@ -232,8 +259,8 @@ body {
 }
 
 .radio {
-    width: 24px;
-    height: 24px;
+    width: 21px;
+    height: 21px;
     border-radius: 50%;
     border: 2px solid #d8dce8;
     display: flex;
@@ -294,7 +321,7 @@ label.radio {
     font-weight: 700;
     font-size: .82rem;
     color: var(--text-dark);
-    margin: 20px 0 12px;
+    margin: 14px 0 8px;
     letter-spacing: .02em;
 }
 
@@ -316,8 +343,8 @@ label.radio {
     display: grid;
     grid-template-columns: 90px repeat(3, 1fr);
     align-items: center;
-    padding: 10px 0;
-    font-size: .88rem;
+    padding: 7px 0;
+    font-size: .82rem;
     font-weight: 500;
     color: var(--text-dark);
     border-top: 1px solid #f4f5fa;
@@ -339,16 +366,16 @@ label.radio {
 .sono-btns {
     display: flex;
     gap: 12px;
-    margin-bottom: 18px;
+    margin-bottom: 12px;
 }
 
 .sono-btn {
     flex: 1;
-    padding: 12px 0;
+    padding: 9px 0;
     border-radius: 10px;
     text-align: center;
     font-weight: 600;
-    font-size: .88rem;
+    font-size: .82rem;
     cursor: pointer;
     border: 1.5px solid var(--card-border);
     position: relative;
@@ -388,12 +415,12 @@ label.radio {
 .period-block {
     border: 1px solid var(--card-border);
     border-radius: 12px;
-    padding: 14px 16px;
+    padding: 10px 12px;
     display: flex;
     align-items: center;
-    gap: 10px;
-    margin-bottom: 12px;
-    font-size: .86rem;
+    gap: 7px;
+    margin-bottom: 8px;
+    font-size: .8rem;
     font-weight: 500;
     color: var(--text-dark);
     flex-wrap: wrap;
@@ -402,8 +429,8 @@ label.radio {
 .time-input {
     border: 1px solid var(--card-border);
     border-radius: 9px;
-    padding: 8px 12px;
-    font-size: .86rem;
+    padding: 6px 9px;
+    font-size: .8rem;
     font-weight: 600;
     color: var(--text-dark);
     display: flex;
@@ -436,7 +463,7 @@ label.radio {
 
 /* ---------- Fralda ---------- */
 .fralda-card {
-    margin-top: 22px;
+    margin-top: 16px;
 }
 
 .registro-detail-actions {
@@ -448,14 +475,29 @@ label.radio {
     display: inline-flex;
     align-items: center;
     gap: .5rem;
+    border: 1px solid #d6dce8;
     border-radius: 10px;
+    background: #fff;
+    color: #687386;
+    font-size: .82rem;
+    font-weight: 600;
+    padding: 8px 13px;
+    text-decoration: none;
+    transition: border-color .15s ease, background .15s ease, color .15s ease, transform .15s ease;
+}
+
+.registro-detail-actions .btn:hover {
+    border-color: #aeb8c9;
+    background: #f3f5f8;
+    color: #4f5b70;
+    transform: translateY(-1px);
 }
 
 .fralda-grid {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 32px;
-    margin-top: 16px;
+    gap: 22px;
+    margin-top: 10px;
 }
 
 @media (max-width: 600px) {
@@ -472,7 +514,7 @@ label.radio {
     display: flex;
     align-items: center;
     gap: 6px;
-    margin-bottom: 10px;
+    margin-bottom: 7px;
 }
 
 .counter {
@@ -486,9 +528,9 @@ label.radio {
 .counter button {
     background: var(--lk-surface-soft, #f7f8fc);
     border: none;
-    width: 50px;
-    height: 48px;
-    font-size: 18px;
+    width: 42px;
+    height: 40px;
+    font-size: 16px;
     font-weight: 700;
     color: var(--blue);
     cursor: pointer;
@@ -512,7 +554,7 @@ label.radio {
     font-weight: 700;
     color: var(--text-dark);
     letter-spacing: .02em;
-    margin: 22px 0 10px;
+    margin: 14px 0 7px;
 }
 
 .registro-detail-card p {
@@ -526,10 +568,10 @@ label.radio {
 
 textarea {
     width: 100%;
-    min-height: 90px;
+    min-height: 70px;
     border: 1px solid var(--card-border);
     border-radius: 11px;
-    padding: 14px;
+    padding: 10px;
     font-family: inherit;
     font-size: .88rem;
     color: var(--text-dark);
@@ -550,24 +592,26 @@ textarea:focus {
     justify-content: flex-end;
     align-items: center;
     gap: 14px;
-    margin-top: 22px;
+    margin-top: 16px;
 }
 
 .save-button {
-    border: none;
-    border-radius: 10px;
-    padding: 13px 22px;
-    background: var(--blue);
-    color: #fff;
-    font-weight: 700;
-    font-size: .92rem;
+    border: 1px solid #cbd9ff;
+    border-radius: 9px;
+    padding: 8px 13px;
+    background: #f7f9ff;
+    color: var(--blue-dark);
+    font-weight: 600;
+    font-size: .84rem;
     cursor: pointer;
-    box-shadow: 0 4px 12px rgba(76, 125, 245, .2);
-    transition: 120ms ease;
+    box-shadow: none;
+    transition: border-color .15s ease, background .15s ease, color .15s ease, transform .15s ease;
 }
 
 .save-button:hover {
-    background: var(--blue-dark);
+    border-color: var(--blue);
+    background: #eaf0ff;
+    color: #315bcb;
     transform: translateY(-1px);
 }
 

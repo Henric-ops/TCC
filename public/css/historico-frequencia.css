@@ -6,6 +6,68 @@
     margin-bottom: 20px;
 }
 
+.freq-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    border: 1px solid transparent;
+    border-radius: 8px;
+    padding: 7px 12px;
+    font-family: inherit;
+    font-size: .78rem;
+    font-weight: 600;
+    line-height: 1.2;
+    text-decoration: none;
+    cursor: pointer;
+    transition: background-color .15s ease, border-color .15s ease, color .15s ease, transform .15s ease;
+}
+
+.freq-btn:hover {
+    transform: translateY(-1px);
+}
+
+.freq-btn:focus-visible {
+    outline: 3px solid rgba(76, 125, 245, .25);
+    outline-offset: 2px;
+}
+
+.freq-btn-primary {
+    padding: 10px 16px;
+    background: #4C7DF5;
+    color: #fff;
+    box-shadow: 0 4px 10px rgba(76, 125, 245, .2);
+}
+
+.freq-btn-primary:hover {
+    background: #3D68DD;
+    color: #fff;
+}
+
+.freq-btn-edit {
+    border-color: #DCE5FF;
+    background: #F5F7FF;
+    color: #3D68DD;
+}
+
+.freq-btn-edit:hover {
+    border-color: #BFCFFF;
+    background: #EAF0FF;
+    color: #315BCB;
+}
+
+.freq-btn-delete {
+    border-color: #F5D5D9;
+    background: #FFF8F8;
+    color: #D64B59;
+}
+
+.freq-btn-delete:hover {
+    border-color: #EBAEB5;
+    background: #FDEBEC;
+    color: #B93745;
+}
+
 .freq-filtros {
     background: #fff;
     border: 1px solid #EEF0F7;
@@ -96,6 +158,13 @@
     text-align: right;
 }
 
+.freq-actions {
+    display: inline-flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 8px;
+}
+
 .status-pill {
     display: inline-block;
     padding: 4px 12px;
@@ -130,20 +199,22 @@
     display: inline-flex;
     align-items: center;
     gap: 4px;
-    border: 1.5px solid #4C7DF5;
-    color: #4C7DF5;
-    background: #fff;
+    border: 1px solid #cbd9ff;
+    color: #3D68DD;
+    background: #F7F9FF;
     border-radius: 8px;
-    padding: 6px 14px;
-    font-size: .8rem;
+    padding: 6px 10px;
+    font-size: .82rem;
     font-weight: 600;
     text-decoration: none;
-    transition: background .15s ease, color .15s ease;
+    transition: border-color .15s ease, background .15s ease, color .15s ease, transform .15s ease;
 }
 
 .btn-ver:hover {
-    background: #4C7DF5;
-    color: #fff;
+    border-color: #4C7DF5;
+    background: #EAF0FF;
+    color: #315BCB;
+    transform: translateY(-1px);
 }
 
 .freq-empty {

@@ -26,7 +26,7 @@
             <label>Aluno</label>
             <select name="aluno_id" onchange="this.form.submit()">
                 <option value="">Todos (ver por dia)</option>
-                @foreach($alunos as $aluno)
+                @foreach($alunosParaFiltro as $aluno)
                     <option value="{{ $aluno->id }}" {{ (string) $alunoId === (string) $aluno->id ? 'selected' : '' }}>
                         {{ $aluno->nome }}
                     </option>

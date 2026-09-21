@@ -9,8 +9,8 @@
 @section('content')
     <div class="d-flex justify-content-between align-items-center mb-4">
         <h1 class="freq-title mb-0">Registros Diários</h1>
-        <a href="{{ route('registros.selecionar-turma') }}" class="btn btn-primary">
-            <i class="bi bi-plus-lg"></i> Novo registro
+        <a href="{{ route('registros.selecionar-turma') }}" class="freq-btn freq-btn-primary">
+            <i class="bi bi-plus-lg" aria-hidden="true"></i> Novo registro
         </a>
     </div>
 
@@ -34,7 +34,7 @@
             <label>Aluno</label>
             <select name="aluno_id" onchange="this.form.submit()">
                 <option value="">Todos</option>
-                @foreach($alunosPermitidos as $aluno)
+                @foreach($alunosParaFiltro as $aluno)
                     <option value="{{ $aluno->id }}" {{ (string) $alunoId === (string) $aluno->id ? 'selected' : '' }}>
                         {{ $aluno->nome }}
                     </option>
@@ -52,7 +52,7 @@
     </form>
 
     <p class="text-muted small mb-3">
-        {{ $temFiltroData ? 'Mostrando período selecionado.' : 'Registros de hoje — use os filtros para ver outras datas.' }}
+        {{ $temFiltroData ? 'Mostrando período selecionado.' : 'Mostrando apenas hoje — use os filtros para ver outras datas.' }}
     </p>
 
     <div class="freq-panel">
@@ -75,13 +75,19 @@
                             <td>{{ $registro->data->format('d/m/Y') }}</td>
                             <td>{{ $registro->professor->nome }}</td>
                             <td class="text-end">
-                                <a href="{{ route('registros.edit', $registro) }}" class="btn btn-sm btn-primary">Editar</a>
-                                <form action="{{ route('registros.destroy', $registro) }}" method="POST" class="d-inline"
-                                    onsubmit="return confirm('Remover este registro?')">
-                                    @csrf
-                                    @method('DELETE')
-                                    <button type="submit" class="btn btn-sm btn-danger">Excluir</button>
-                                </form>
+                                <div class="freq-actions">
+                                    <a href="{{ route('registros.edit', $registro) }}" class="freq-btn freq-btn-edit">
+                                        <i class="bi bi-pencil-square" aria-hidden="true"></i> Editar
+                                    </a>
+                                    <form action="{{ route('registros.destroy', $registro) }}" method="POST" class="d-inline"
+                                        onsubmit="return confirm('Remover este registro?')">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button type="submit" class="freq-btn freq-btn-delete">
+                                            <i class="bi bi-trash3" aria-hidden="true"></i> Excluir
+                                        </button>
+                                    </form>
+                                </div>
                             </td>
                         </tr>
                     @endforeach

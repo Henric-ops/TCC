@@ -78,16 +78,28 @@ class FrequenciaController extends Controller
         $alunoId = $request->input('aluno_id');
         $turmaId = $request->input('turma_id');
 
-        $alunos = Aluno::whereIn('id', function ($q) use ($turmasPermitidas) {
+        $alunosPermitidos = Aluno::whereIn('id', function ($q) use ($turmasPermitidas) {
             $q->select('aluno_id')->from('turma_aluno')->whereIn('turma_id', $turmasPermitidas->pluck('id'));
         })->orderBy('nome')->get();
 
+        if ($turmaId) {
+            abort_unless($turmasPermitidas->contains('id', $turmaId), 403);
+
+            $alunosParaFiltro = Turma::findOrFail($turmaId)
+                ->alunos()
+                ->orderBy('nome')
+                ->get();
+        } else {
+            $alunosParaFiltro = $alunosPermitidos;
+        }
+
         //busca o histórico de frequência de um aluno específico
         if ($alunoId) {
-            abort_unless($alunos->contains('id', $alunoId), 403);
+            abort_unless($alunosParaFiltro->contains('id', $alunoId), 403);
 
             $registros = Frequencia::with('turma')
                 ->where('aluno_id', $alunoId)
+                ->when($turmaId, fn($q) => $q->where('turma_id', $turmaId))
                 ->when($request->inicio, fn($q) => $q->where('data', '>=', $request->inicio))
                 ->when($request->fim, fn($q) => $q->where('data', '<=', $request->fim))
                 ->orderByDesc('data')
@@ -95,7 +107,7 @@ class FrequenciaController extends Controller
 
             return view('frequencia.index', compact(
                 'registros',
-                'alunos',
+                'alunosParaFiltro',
                 'turmasPermitidas',
                 'alunoId',
                 'turmaId'
@@ -108,7 +120,6 @@ class FrequenciaController extends Controller
         $query = Frequencia::where('data', $data);
 
         if ($turmaId) {
-            abort_unless($turmasPermitidas->contains('id', $turmaId), 403);
             $query->where('turma_id', $turmaId);
         } else {
             $query->whereIn('turma_id', $turmasPermitidas->pluck('id'));
@@ -121,7 +132,7 @@ class FrequenciaController extends Controller
 
         return view('frequencia.index', compact(
             'resumo',
-            'alunos',
+            'alunosParaFiltro',
             'turmasPermitidas',
             'alunoId',
             'turmaId',

@@ -5,6 +5,7 @@
 @section('content')
 
     <link rel="stylesheet" href="{{ asset('css/turmas.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/usuario-buttons.css') }}">
 
     <div class="turmas-header d-flex justify-content-between align-items-center mb-4">
         <div class="d-flex align-items-center gap-3">
@@ -19,7 +20,7 @@
                 <strong>{{ $turmas->total() }}</strong>
                 {{ $turmas->total() === 1 ? 'turma' : 'turmas' }}
             </span>
-            <a href="{{ route('admin.turmas.create') }}" class="btn btn-primary d-inline-flex align-items-center gap-2">
+            <a href="{{ route('admin.turmas.create') }}" class="usuario-button usuario-button-primary">
                 <i class="bi bi-plus-lg" aria-hidden="true"></i>
                 Nova turma
             </a>
@@ -76,7 +77,7 @@
                                 </span>
                             </td>
                             <td class="text-end text-nowrap">
-                                <a href="{{ route('admin.turmas.edit', $turma) }}" class="btn btn-sm btn-primary turma-action"
+                                <a href="{{ route('admin.turmas.edit', $turma) }}" class="usuario-action usuario-action-primary"
                                     title="Editar turma" aria-label="Editar turma">
                                     <i class="bi bi-pencil-square" aria-hidden="true"></i>
                                     <span>Editar</span>
@@ -85,7 +86,7 @@
                                     onsubmit="return confirm('Remover esta turma?')">
                                     @csrf
                                     @method('DELETE')
-                                    <button type="submit" class="btn btn-sm btn-danger turma-action" title="Excluir turma"
+                                    <button type="submit" class="usuario-action usuario-action-danger" title="Excluir turma"
                                         aria-label="Excluir turma">
                                         <i class="bi bi-trash3" aria-hidden="true"></i>
                                         <span>Excluir</span>
