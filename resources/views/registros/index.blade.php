@@ -4,12 +4,13 @@
 
 @push('styles')
     <link rel="stylesheet" href="{{ asset('css/historico-frequencia.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/usuario-buttons.css') }}">
 @endpush
 
 @section('content')
     <div class="d-flex justify-content-between align-items-center mb-4">
         <h1 class="freq-title mb-0">Registros Diários</h1>
-        <a href="{{ route('registros.selecionar-turma') }}" class="freq-btn freq-btn-primary">
+        <a href="{{ route('registros.selecionar-turma') }}" class="usuario-button usuario-button-primary">
             <i class="bi bi-plus-lg" aria-hidden="true"></i> Novo registro
         </a>
     </div>

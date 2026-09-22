@@ -16,10 +16,6 @@
         </div>
 
         <div class="usuarios-header-actions d-flex align-items-center gap-3">
-            <span class="usuarios-total">
-                <strong>{{ $usuarios->total() }}</strong>
-                {{ $usuarios->total() === 1 ? 'cadastro' : 'cadastros' }}
-            </span>
             <a href="{{ route('admin.usuarios.create') }}" class="usuario-button usuario-button-primary">
                 <i class="bi bi-person-plus-fill" aria-hidden="true"></i>
                 Novo usuário

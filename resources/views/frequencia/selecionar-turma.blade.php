@@ -9,13 +9,6 @@
 @section('content')
     <div class="frequencia-header">
         <h1>Frequência</h1>
-
-        <div class="frequencia-header-actions">
-            <span class="frequencia-total">
-                <strong>{{ $turmas->count() }}</strong>
-                {{ $turmas->count() === 1 ? 'turma' : 'turmas' }}
-            </span>
-        </div>
     </div>
 
     @if(session('erro'))

@@ -16,10 +16,6 @@
         </div>
 
         <div class="turmas-header-actions d-flex align-items-center gap-3">
-            <span class="turmas-total">
-                <strong>{{ $turmas->total() }}</strong>
-                {{ $turmas->total() === 1 ? 'turma' : 'turmas' }}
-            </span>
             <a href="{{ route('admin.turmas.create') }}" class="usuario-button usuario-button-primary">
                 <i class="bi bi-plus-lg" aria-hidden="true"></i>
                 Nova turma

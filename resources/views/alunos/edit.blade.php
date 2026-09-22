@@ -4,6 +4,7 @@
 
 @section('content')
     <link rel="stylesheet" href="{{ asset('css/usuario-form.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/usuario-buttons.css') }}">
 
     <div class="usuario-form-page">
         <div class="usuario-form-header">
@@ -17,8 +18,7 @@
                 </div>
             </div>
 
-            <a href="{{ route('admin.alunos.index') }}"
-                class="btn btn-outline-secondary d-inline-flex align-items-center gap-2">
+            <a href="{{ route('admin.alunos.index') }}" class="usuario-button usuario-button-muted">
                 <i class="bi bi-arrow-left" aria-hidden="true"></i>
                 Voltar para alunos
             </a>
@@ -108,11 +108,11 @@
                     </div>
 
                     <div class="usuario-form-actions">
-                        <a href="{{ route('admin.alunos.index') }}" class="btn btn-outline-danger">
+                        <a href="{{ route('admin.alunos.index') }}" class="usuario-button usuario-button-danger">
                             <i class="bi bi-x-lg" aria-hidden="true"></i>
                             Cancelar
                         </a>
-                        <button type="submit" class="btn btn-primary">
+                        <button type="submit" class="usuario-button usuario-button-primary">
                             <i class="bi bi-check2-circle" aria-hidden="true"></i>
                             Salvar alterações
                         </button>
