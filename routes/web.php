@@ -12,6 +12,7 @@ use App\Http\Controllers\FrequenciaController;
 use App\Http\Controllers\EmailController;
 use App\Http\Controllers\TurmaController;
 use App\Http\Controllers\RelatorioController;
+use App\Http\Controllers\Admin\EscolaController;
 
 
 
@@ -73,6 +74,9 @@ Route::middleware(['auth', 'perfil:admin'])//rotas para administração do siste
             ->except(['show']);
 
         Route::resource('alunos', AlunoController::class)
+            ->except(['show']);
+
+        Route::resource('escolas', EscolaController::class)
             ->except(['show']);
 
         Route::get('/usuarios/{usuario}/verificar', [

@@ -17,6 +17,11 @@
             </a>
 
             @if(auth()->user()->perfil === 'admin')
+
+                <a href="{{ route('admin.escolas.index') }}"
+                    class="lk-nav-item {{ request()->routeIs('admin.escolas.*') ? 'active' : '' }}">
+                    <i class="bi bi-building"></i> Escolas
+                </a>
                 <a href="{{ route('admin.turmas.index') }}"
                     class="lk-nav-item {{ request()->routeIs('admin.turmas.*') ? 'active' : '' }}">
                     <i class="bi bi-people"></i> Turmas
