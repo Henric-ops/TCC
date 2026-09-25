@@ -63,7 +63,7 @@
             @else
                 <div class="feed">
                     @foreach($comunicadosRecentes as $comunicado)
-                        <div class="feed-item">
+                        <a href="{{ route('comunicados.comunicados-responsavel', $comunicado) }}" class="feed-item feed-item-link">
                             <span class="feed-dot"></span>
                             <div>
                                 <p class="feed-text">
@@ -71,7 +71,7 @@
                                 </p>
                                 <span class="feed-time">{{ $comunicado->enviado_em->diffForHumans() }}</span>
                             </div>
-                        </div>
+                        </a>
                     @endforeach
                 </div>
             @endif

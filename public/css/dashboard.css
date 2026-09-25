@@ -484,3 +484,16 @@
     background: #F4F5FA;
     color: #8992A9;
 }
+
+.feed-item-link {
+    text-decoration: none;
+    color: inherit;
+    border-radius: 8px;
+    padding: 4px 6px;
+    margin: -4px -6px 0;
+    transition: background .12s ease;
+}
+
+.feed-item-link:hover {
+    background: #F4F5FA;
+}

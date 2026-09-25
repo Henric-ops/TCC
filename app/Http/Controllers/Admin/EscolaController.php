@@ -40,7 +40,7 @@ class EscolaController extends Controller
         return redirect()->route('admin.escolas.index')->with('sucesso', 'Escola atualizada com sucesso.');
     }
 
-    public function destroy(Escola $escola)
+    public function destroy(Escola $escola)// método para excluir uma escola
     {
         $temVinculos = $escola->usuarios()->exists() || $escola->alunos()->exists() || $escola->turmas()->exists();
 

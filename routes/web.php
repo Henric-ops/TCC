@@ -13,6 +13,8 @@ use App\Http\Controllers\EmailController;
 use App\Http\Controllers\TurmaController;
 use App\Http\Controllers\RelatorioController;
 use App\Http\Controllers\Admin\EscolaController;
+use App\Http\Controllers\ComunicadosController;
+
 
 
 
@@ -171,6 +173,10 @@ Route::middleware(['auth', 'perfil:responsavel'])//rota para visualização dos 
         //rota para gerar PDF do registro específico
         Route::get('meu-relatorio', [RelatorioController::class, 'meuRelatorio'])->name('relatorio.meu');
         Route::get('meu-relatorio/pdf', [RelatorioController::class, 'meuRelatorioPdf'])->name('relatorio.meu.pdf');
+
+        //rota para visualizar detalhes de um comunicado 
+        Route::get('meus-comunicados/{mensagem}', [ComunicadosController::class, 'meuDetalhe'])->name('comunicados.comunicados-responsavel');
+
 
     });
 
