@@ -55,22 +55,21 @@
 
         <div class="dash-panel">
             <div class="dash-panel-header">
-                <h2>Atividade recente</h2>
-                <a href="{{ route('registros.meus') }}">Ver todos os registros</a>
+                <h2>Comunicados recentes</h2>
             </div>
 
-            @if($atividadeRecente->isEmpty())
-                <div class="dash-empty">Nenhum registro ainda.</div>
+            @if($comunicadosRecentes->isEmpty())
+                <div class="dash-empty">Nenhum comunicado recebido ainda.</div>
             @else
                 <div class="feed">
-                    @foreach($atividadeRecente as $registro)
+                    @foreach($comunicadosRecentes as $comunicado)
                         <div class="feed-item">
                             <span class="feed-dot"></span>
                             <div>
                                 <p class="feed-text">
-                                    <strong>{{ $registro->professor->nome }}</strong> registrou o dia de
-                                    <strong>{{ $registro->aluno->nome }}</strong>
+                                    <strong>{{ $comunicado->assunto }}</strong> — de {{ $comunicado->remetente->nome }}
                                 </p>
+                                <span class="feed-time">{{ $comunicado->enviado_em->diffForHumans() }}</span>
                             </div>
                         </div>
                     @endforeach

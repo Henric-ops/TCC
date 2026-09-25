@@ -8,6 +8,7 @@ use App\Models\Aluno;
 use App\Models\User;
 use App\Models\Frequencia;
 use App\Models\RegistroDiario;
+use App\Models\Mensagem;
 
 class DashboardController extends Controller
 {
@@ -116,51 +117,27 @@ class DashboardController extends Controller
         ));
     }
 
+
+
     public function responsavel()
     {
-        /** @var User $user */
         $user = Auth::user();
 
-        $filhos = $user->alunosResponsavel()
-            ->with('turmas')
-            ->get();
+        $filhos = $user->alunosResponsavel()->with('turmas')->get();
 
         $hoje = now()->format('Y-m-d');
 
         foreach ($filhos as $filho) {
-            $filho->frequenciaHoje = Frequencia::where(
-                'aluno_id',
-                $filho->id
-            )
-                ->where('data', $hoje)
-                ->first();
-
-            $filho->registroHoje = RegistroDiario::where(
-                'aluno_id',
-                $filho->id
-            )
-                ->where('data', $hoje)
-                ->first();
+            $filho->frequenciaHoje = Frequencia::where('aluno_id', $filho->id)->where('data', $hoje)->first();
+            $filho->registroHoje = RegistroDiario::where('aluno_id', $filho->id)->where('data', $hoje)->first();
         }
 
-        $filhoIds = $filhos->pluck('id');
-
-        $atividadeRecente = RegistroDiario::with([
-            'aluno',
-            'professor'
-        ])
-            ->whereIn('aluno_id', $filhoIds)
-            ->latest('created_at')
-            ->take(6)
+        $comunicadosRecentes = Mensagem::with('remetente')
+            ->where('destinatario_id', $user->id)
+            ->latest('enviado_em')
+            ->take(5)
             ->get();
 
-        return view(
-            'dashboard.responsavel',
-            compact(
-                'user',
-                'filhos',
-                'atividadeRecente'
-            )
-        );
+        return view('dashboard.responsavel', compact('user', 'filhos', 'comunicadosRecentes'));
     }
 }

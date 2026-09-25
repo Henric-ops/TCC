@@ -2,26 +2,37 @@
 
 @section('title', 'Nova turma')
 
-@section('content')
+@push('styles')
     <link rel="stylesheet" href="{{ asset('css/usuario-form.css') }}">
     <link rel="stylesheet" href="{{ asset('css/usuario-buttons.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/turma-edit.css') }}">
+@endpush
 
-    <div class="usuario-form-page">
+@section('content')
+    @php
+        $professoresSelecionados = old('professores', $professoresVinculados ?? []);
+    @endphp
+
+    <div class="usuario-form-page turma-edit-page turma-create-page">
         <div class="usuario-form-header">
-            <div class="usuario-form-title">
-                <span class="usuario-form-title-icon" aria-hidden="true">
-                    <i class="bi bi-easel2-fill"></i>
-                </span>
-                <div>
-                    <h1 class="h4 mb-1">Nova turma</h1>
-                    <p class="usuario-form-subtitle">Cadastre uma turma e organize seus vínculos.</p>
+            <div class="turma-edit-heading">
+                <a href="{{ route('admin.turmas.index') }}" class="usuario-button turma-edit-back">
+                    <i class="bi bi-arrow-left" aria-hidden="true"></i>
+                    Turmas
+                </a>
+
+                <div class="usuario-form-title">
+                    <span class="usuario-form-title-icon" aria-hidden="true">
+                        <i class="bi bi-easel2-fill"></i>
+                    </span>
+                    <div>
+                        <h1 class="h4 mb-1">Nova turma</h1>
+                        <p class="usuario-form-subtitle">Cadastre uma turma e organize seus vínculos.</p>
+                    </div>
                 </div>
             </div>
 
-            <a href="{{ route('admin.turmas.index') }}" class="usuario-button usuario-button-muted">
-                <i class="bi bi-arrow-left" aria-hidden="true"></i>
-                Voltar para turmas
-            </a>
+          
         </div>
 
         <div class="card usuario-form-card">
@@ -95,49 +106,60 @@
                             @enderror
                         </div>
 
-                       <div class="col-12 mb-3 usuario-form-field">
-    <label class="form-label">Professor(es)</label>
+                        <div class="col-12 mb-3 usuario-form-field">
+                            <div class="turma-edit-professores-header">
+                                <label class="form-label mb-0">Professores responsáveis</label>
+                            </div>
 
-    @if($professores->isEmpty())
-        <div class="usuario-form-checkbox-list">
-            <small class="usuario-form-help">
-                Nenhum professor aprovado ainda.
-            </small>
-        </div>
-    @else
-        <div class="usuario-form-checkbox-list">
-            @foreach($professores as $professor)
-                <div class="form-check usuario-form-checkbox">
-                    <input
-                        class="form-check-input"
-                        type="checkbox"
-                        name="professores[]"
-                        value="{{ $professor->id }}"
-                        id="professor_{{ $professor->id }}"
-                        {{ in_array($professor->id, old('professores', $professoresVinculados ?? [])) ? 'checked' : '' }}
-                    >
+                            @if($professores->isEmpty())
+                                <div class="usuario-form-checkbox-list mt-2">
+                                    <small class="usuario-form-help mb-0">
+                                        Nenhum professor aprovado ainda.
+                                    </small>
+                                </div>
+                            @else
+                                <div class="usuario-form-checkbox-list mt-2">
+                                    @foreach($professores as $professor)
+                                        @php
+                                            $professorSelecionado = in_array($professor->id, $professoresSelecionados);
+                                            $iniciais = collect(explode(' ', trim($professor->nome)))
+                                                ->filter()
+                                                ->take(2)
+                                                ->map(fn ($parte) => strtoupper(substr($parte, 0, 1)))
+                                                ->implode('');
+                                        @endphp
 
-                    <label
-                        class="form-check-label"
-                        for="professor_{{ $professor->id }}"
-                    >
-                        {{ $professor->nome }}
-                    </label>
-                </div>
-            @endforeach
-        </div>
+                                        <label class="form-check usuario-form-checkbox" for="professor_{{ $professor->id }}">
+                                            <input
+                                                class="form-check-input"
+                                                type="checkbox"
+                                                name="professores[]"
+                                                value="{{ $professor->id }}"
+                                                id="professor_{{ $professor->id }}"
+                                                {{ $professorSelecionado ? 'checked' : '' }}
+                                            >
+                                            <span class="turma-edit-professor-avatar" aria-hidden="true">
+                                                {{ $iniciais }}
+                                            </span>
+                                            <span class="turma-edit-professor-info">
+                                                <strong>{{ $professor->nome }}</strong>
+                                                <small>Professor</small>
+                                            </span>
+                                            <span class="turma-edit-status {{ $professorSelecionado ? '' : 'is-available' }}">
+                                                <i class="bi {{ $professorSelecionado ? 'bi-check-lg' : 'bi-circle' }}" aria-hidden="true"></i>
+                                                {{ $professorSelecionado ? 'Selecionado' : 'Disponível' }}
+                                            </span>
+                                        </label>
+                                    @endforeach
+                                </div>
+                            @endif
 
-        <small class="usuario-form-help">
-            Selecione um ou mais professores responsáveis pela turma.
-        </small>
-    @endif
-
-    @error('professores')
-        <div class="invalid-feedback d-block">
-            {{ $message }}
-        </div>
-    @enderror
-</div>
+                            @error('professores')
+                                <div class="invalid-feedback d-block">
+                                    {{ $message }}
+                                </div>
+                            @enderror
+                        </div>
                     </div>
 
                     <div class="usuario-form-actions">
@@ -145,7 +167,7 @@
                             <i class="bi bi-x-lg" aria-hidden="true"></i>
                             Cancelar
                         </a>
-                        <button type="submit" class="usuario-button usuario-button-primary">
+                        <button type="submit" class="usuario-button turma-edit-save">
                             <i class="bi bi-check2-circle" aria-hidden="true"></i>
                             Salvar turma
                         </button>

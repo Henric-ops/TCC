@@ -118,7 +118,7 @@
     </div>
 
     <div class="registro-detail-actions mt-3">
-        <a href="{{ route('registros.meus') }}" class="btn registro-back-action">
+        <a href="{{ route('registros.meus') }}" class="back-button">
             <i class="bi bi-arrow-left" aria-hidden="true"></i>
             Voltar ao histórico
         </a>
