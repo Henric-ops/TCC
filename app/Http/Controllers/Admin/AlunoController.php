@@ -13,9 +13,30 @@ class AlunoController extends Controller
 {
     public function index()
     {
-        $alunos = Aluno::withCount('turmas')->orderBy('nome')->paginate(15);
+        $busca = request('busca');
+        $turmaId = request('turma_id');
 
-        return view('alunos.index', compact('alunos'));
+        $turmasPermitidas = Turma::orderBy('nome')->get();
+
+        $alunos = Aluno::with(['turmas'])
+            ->when($busca, function ($query) use ($busca) {
+                $query->where('nome', 'like', '%' . $busca . '%');
+            })
+            ->when($turmaId, function ($query) use ($turmaId) {
+                $query->whereHas('turmas', function ($q) use ($turmaId) {
+                    $q->where('turmas.id', $turmaId);
+                });
+            })
+            ->orderBy('nome')
+            ->paginate(15)
+            ->withQueryString();
+
+        return view('alunos.index', compact(
+            'alunos',
+            'turmasPermitidas',
+            'busca',
+            'turmaId'
+        ));
     }
 
     public function create()

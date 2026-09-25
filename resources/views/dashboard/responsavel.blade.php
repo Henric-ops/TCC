@@ -46,7 +46,7 @@
                         @if($filho->registroHoje)
                             <span class="status-pill ok">Registro do dia feito</span>
                         @else
-                            <span class="status-pill pendente">Sem registro hoje</span>
+                            <span class="status-pill falta">Sem registro hoje</span>
                         @endif
                     </div>
                 </div>

@@ -13,6 +13,46 @@
     font-weight: 700;
 }
 
+.alunos-filtros {
+    margin-bottom: 24px;
+}
+
+.alunos-filtro-item {
+    min-width: 190px;
+}
+
+.alunos-busca {
+    display: flex;
+    align-items: center;
+    gap: .45rem;
+    min-height: 38px;
+    padding: 8px 12px;
+    border: 1.5px solid #E4E7F2;
+    border-radius: 9px;
+    background: #fff;
+    color: #333A54;
+    font-size: .85rem;
+    transition: border-color .15s ease;
+}
+
+.alunos-busca input {
+    width: 100%;
+    min-width: 140px;
+    border: 0;
+    outline: 0;
+    background: transparent;
+    color: inherit;
+    font-size: .85rem;
+}
+
+.alunos-busca:focus-within {
+    border-color: #4C7DF5;
+}
+
+.alunos-filtro-btn {
+    align-self: end;
+}
+
 .alunos-table-card {
     overflow: hidden;
     border: 1px solid var(--lk-border);
@@ -94,8 +134,20 @@
         width: 100%;
     }
 
-    .alunos-header-actions .usuario-button {
-        flex: 1;
+    .alunos-filtros {
+        width: 100%;
+    }
+
+    .alunos-filtro-item {
+        flex: 1 1 160px;
+    }
+
+    .alunos-filtro-btn {
+        flex: 1 1 100%;
+    }
+
+    .alunos-header>.usuario-button {
+        width: 100%;
     }
 
     .alunos-table-card .table {
