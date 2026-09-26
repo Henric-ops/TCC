@@ -67,8 +67,8 @@
                             <label for="cnpj" class="form-label">CNPJ</label>
 
                             <input type="text" id="cnpj" name="cnpj"
-                                class="form-control @error('cnpj') is-invalid @enderror" value="{{ old('cnpj') }}"
-                                maxlength="18" placeholder="00.000.000/0000-00">
+                                class="form-control @error('cnpj') is-invalid @enderror"
+                                value="{{ old('cnpj', $escola->cnpj) }}" maxlength="18" placeholder="00.000.000/0000-00">
 
                             @error('cnpj')
                                 <div class="invalid-feedback">{{ $message }}</div>

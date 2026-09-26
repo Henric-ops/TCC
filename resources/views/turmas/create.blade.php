@@ -60,20 +60,18 @@
                     @csrf
 
                     <div class="row">
-                        <div class="col-md-6 mb-3 usuario-form-field">
-                            <label for="escola_id" class="form-label">Escola</label>
-                            <select name="escola_id" id="escola_id" class="form-select @error('escola_id') is-invalid @enderror" required>
-                                <option value="">Selecione a escola</option>
-                                @foreach($escolas as $escola)
-                                    <option value="{{ $escola->id }}" {{ old('escola_id') == $escola->id ? 'selected' : '' }}>
-                                        {{ $escola->nome }}
-                                    </option>
-                                @endforeach
-                            </select>
-                            @error('escola_id')
-                                <div class="invalid-feedback">{{ $message }}</div>
-                            @enderror
-                        </div>
+                      <div class="mb-3">
+    <label class="form-label">Escola</label>
+    <select name="escola_id" id="escola_id" class="form-select @error('escola_id') is-invalid @enderror">
+        <option value="">Selecione</option>
+        @foreach($escolas as $escola)
+            <option value="{{ $escola->id }}" {{ old('escola_id', $turma->escola_id ?? '') == $escola->id ? 'selected' : '' }}>
+                {{ $escola->nome }}
+            </option>
+        @endforeach
+    </select>
+    @error('escola_id')<div class="invalid-feedback">{{ $message }}</div>@enderror
+</div>
 
                         <div class="col-md-6 mb-3 usuario-form-field">
                             <label for="nome" class="form-label">Nome</label>
@@ -129,7 +127,7 @@
                                                 ->implode('');
                                         @endphp
 
-                                        <label class="form-check usuario-form-checkbox" for="professor_{{ $professor->id }}">
+                                        <label class="form-check usuario-form-checkbox" for="professor_{{ $professor->id }}" data-escola="{{ $professor->escola_id }}">
                                             <input
                                                 class="form-check-input"
                                                 type="checkbox"
@@ -176,4 +174,27 @@
             </div>
         </div>
     </div>
+
+    <script>
+        const escolaSelect = document.getElementById('escola_id');
+        const professorLabels = document.querySelectorAll('.usuario-form-checkbox');
+
+        function filtrarProfessoresPorEscola() {
+            const escolaId = escolaSelect.value;
+
+            professorLabels.forEach((label) => {
+                const pertence = label.dataset.escola === escolaId;
+                const escondido = escolaId !== '' && !pertence;
+
+                label.style.display = escondido ? 'none' : '';
+
+                if (escondido) {
+                    label.querySelector('input[type=checkbox]').checked = false;
+                }
+            });
+        }
+
+        escolaSelect.addEventListener('change', filtrarProfessoresPorEscola);
+        filtrarProfessoresPorEscola();
+    </script>
 @endsection

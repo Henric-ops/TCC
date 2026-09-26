@@ -85,13 +85,14 @@
 
                         <div class="col-md-6 mb-3 usuario-form-field">
                             <label for="turmas" class="form-label">Turma(s)</label>
-                            <select name="turmas[]" id="turmas" multiple class="form-select @error('turmas') is-invalid @enderror">
-                                @foreach($turmas as $turma)
-                                    <option value="{{ $turma->id }}" {{ in_array($turma->id, old('turmas', [])) ? 'selected' : '' }}>
-                                        {{ $turma->nome }} — {{ $turma->periodo }}
-                                    </option>
-                                @endforeach
-                            </select>
+                            <select name="turmas[]" multiple class="form-select" id="turmas">
+    @foreach($turmas as $turma)
+        <option value="{{ $turma->id }}" data-escola="{{ $turma->escola_id }}"
+            {{ in_array($turma->id, old('turmas', $turmasVinculadas ?? [])) ? 'selected' : '' }}>
+            {{ $turma->nome }} — {{ $turma->periodo }}
+        </option>
+    @endforeach
+</select>
                             @if($turmas->isEmpty())
                                 <small class="usuario-form-help">Nenhuma turma cadastrada ainda.</small>
                             @else
@@ -117,4 +118,21 @@
             </div>
         </div>
     </div>
+
+    <script>
+    const escolaSelect = document.getElementById('escola_id');
+    const turmasSelect = document.getElementById('turmas');
+
+    function filtrarTurmasPorEscola() {
+        const escolaId = escolaSelect.value;
+        Array.from(turmasSelect.options).forEach((option) => {
+            const pertence = option.dataset.escola === escolaId;
+            option.hidden = escolaId !== '' && !pertence;
+            if (option.hidden) option.selected = false;
+        });
+    }
+
+    escolaSelect.addEventListener('change', filtrarTurmasPorEscola);
+    filtrarTurmasPorEscola();
+</script>
 @endsection

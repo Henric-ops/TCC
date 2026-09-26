@@ -8,10 +8,10 @@ class StoreTurmaRequest extends FormRequest
 {
     public function authorize(): bool
     {
-        return auth()->user()?->perfil === 'admin';
+        return $this->user()->perfil === 'admin';
     }
 
-    public function rules(): array//método para definir as regras de validação para o formulário de criação de turma
+    public function rules(): array
     {
         return [
             'escola_id' => 'required|exists:escolas,id',
@@ -22,4 +22,6 @@ class StoreTurmaRequest extends FormRequest
             'professores.*' => 'exists:usuarios,id',
         ];
     }
+
+
 }

@@ -36,6 +36,20 @@
         </div>
 
         <div class="freq-filtro-item alunos-filtro-item">
+            <label for="escola_id">Escola</label>
+
+            <select name="escola_id" id="escola_id" class="alunos-filtro-escola">
+                <option value="">Todas as escolas</option>
+
+                @foreach($escolasPermitidas as $escola)
+                    <option value="{{ $escola->id }}" {{ (string) $escolaId === (string) $escola->id ? 'selected' : '' }}>
+                        {{ $escola->nome }}
+                    </option>
+                @endforeach
+            </select>
+        </div>
+
+        <div class="freq-filtro-item alunos-filtro-item">
             <label for="turma_id">Turma</label>
 
             <select name="turma_id" id="turma_id">
@@ -53,6 +67,11 @@
             <i class="bi bi-search" aria-hidden="true"></i>
             Buscar
         </button>
+
+        <a href="{{ route('admin.alunos.index') }}" class="usuario-button usuario-button-muted alunos-filtro-btn">
+            <i class="bi bi-x-lg" aria-hidden="true"></i>
+            Limpar
+        </a>
 
     </form>
 

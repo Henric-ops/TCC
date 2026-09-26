@@ -22,8 +22,9 @@ class StoreUsuarioRequest extends FormRequest
             'escola_id' => 'required|exists:escolas,id',
             'alunos' => 'nullable|array',
             'alunos.*' => [
-                Rule::exists('alunos', 'id')->where(fn ($query) =>
-                    $query->where('escola_id', $this->input('escola_id'))
+                Rule::exists('alunos', 'id')->where(
+                    fn($query) =>
+                        $query->where('escola_id', $this->input('escola_id'))
                 ),
             ],
             'parentesco' => 'nullable|string|max:100|required_if:perfil,responsavel',

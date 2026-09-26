@@ -12,14 +12,55 @@ use App\Models\User;
 
 class UsuarioController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $usuarios = User::where('perfil', '!=', 'admin')
+        $baseQuery = User::where('perfil', '!=', 'admin');
+
+        // Filtro por perfil
+        $query = clone $baseQuery;
+
+        if ($request->filled('perfil')) {
+            $query->where('perfil', $request->perfil);
+        }
+
+        // Filtro por status
+        if ($request->filled('status')) {
+            $query->where('status', $request->status);
+        }
+
+        // Busca por nome ou e-mail
+        if ($request->filled('busca')) {
+            $busca = $request->busca;
+
+            $query->where(function ($q) use ($busca) {
+                $q->where('nome', 'like', "%{$busca}%")
+                    ->orWhere('email', 'like', "%{$busca}%");
+            });
+        }
+
+        $usuarios = $query
             ->with(['alunosResponsavel', 'turmas'])
             ->orderBy('nome')
-            ->paginate(15);
+            ->paginate(15)
+            ->withQueryString();
 
-        return view('usuarios.index', compact('usuarios'));
+        // Quantidade de usuários por perfil
+        $totalUsuarios = (clone $baseQuery)->count();
+
+        $totalProfessores = (clone $baseQuery)
+            ->where('perfil', 'professor')
+            ->count();
+
+        $totalResponsaveis = (clone $baseQuery)
+            ->where('perfil', 'responsavel')
+            ->count();
+
+        return view('usuarios.index', compact(
+            'usuarios',
+            'totalUsuarios',
+            'totalProfessores',
+            'totalResponsaveis'
+        ));
     }
 
     public function create()
@@ -27,25 +68,28 @@ class UsuarioController extends Controller
         $escolas = Escola::orderBy('nome')->get();
         $alunos = Aluno::orderBy('nome')->get();
 
-        return view('usuarios.create', compact('alunos', 'escolas'));
+        return view('usuarios.create', compact('escolas', 'alunos'));
     }
 
     public function store(StoreUsuarioRequest $request)
     {
+        if ($request->perfil === 'responsavel') {
+            $this->validarAlunosDaEscola($request->escola_id, $request->input('alunos', []));
+        }
+
         $usuario = User::create([
             'escola_id' => $request->escola_id,
             'nome' => $request->nome,
             'email' => $request->email,
             'senha' => $request->senha,
             'perfil' => $request->perfil,
-            'status' => 'pendente',
+            'status' => 'aprovado',
         ]);
 
         if ($request->perfil === 'responsavel' && $request->filled('alunos')) {
             $pivotData = collect($request->alunos)->mapWithKeys(fn($alunoId) => [
                 $alunoId => ['parentesco' => $request->parentesco],
             ]);
-
             $usuario->alunosResponsavel()->attach($pivotData);
         }
 
@@ -58,11 +102,21 @@ class UsuarioController extends Controller
         $alunos = Aluno::orderBy('nome')->get();
         $alunosVinculados = $usuario->alunosResponsavel->pluck('id')->toArray();
 
-        return view('usuarios.edit', compact('usuario', 'alunos', 'alunosVinculados', 'escolas'));
+        return view('usuarios.edit', compact('usuario', 'escolas', 'alunos', 'alunosVinculados'));
     }
 
     public function aprovar(Request $request, User $usuario)//método para aprovar o usuário e vincular ao aluno ou turma
     {
+
+        $request->validate([
+            'alunos' => $usuario->perfil === 'responsavel' ? 'required|array|min:1' : 'nullable|array',
+            'alunos.*' => 'exists:alunos,id',
+            'parentesco' => $usuario->perfil === 'responsavel' ? 'required|string|max:100' : 'nullable',
+        ]);
+
+        if ($usuario->perfil === 'responsavel') {
+            $this->validarAlunosDaEscola($usuario->escola_id, $request->input('alunos', []));
+        }
         if ($usuario->status !== 'pendente') {
             return redirect()
                 ->route('admin.usuarios.index')
@@ -145,10 +199,16 @@ class UsuarioController extends Controller
 
     public function update(UpdateUsuarioRequest $request, User $usuario)
     {
+        $escolaMudou = (int) $usuario->escola_id !== (int) $request->escola_id;
+
+        if ($request->perfil === 'responsavel') {
+            $this->validarAlunosDaEscola($request->escola_id, $request->input('alunos', []));
+        }
+
+        $usuario->escola_id = $request->escola_id;
         $usuario->nome = $request->nome;
         $usuario->email = $request->email;
         $usuario->perfil = $request->perfil;
-        $usuario->escola_id = $request->escola_id;
 
         if ($request->filled('senha')) {
             $usuario->senha = $request->senha;
@@ -160,14 +220,18 @@ class UsuarioController extends Controller
             $pivotData = collect($request->alunos ?? [])->mapWithKeys(fn($alunoId) => [
                 $alunoId => ['parentesco' => $request->parentesco],
             ]);
-
             $usuario->alunosResponsavel()->sync($pivotData);
         } else {
             $usuario->alunosResponsavel()->detach();
         }
 
+        if ($request->perfil !== 'professor' || $escolaMudou) {
+            $usuario->turmas()->detach();
+        }
+
         return redirect()->route('admin.usuarios.index')->with('sucesso', 'Usuário atualizado com sucesso.');
     }
+
 
     public function verificar(User $usuario)//método para verificar o usuário e exibir os alunos e turmas da escola
     {
@@ -202,5 +266,17 @@ class UsuarioController extends Controller
         $usuario->delete();
 
         return redirect()->route('admin.usuarios.index')->with('sucesso', 'Usuário removido.');
+    }
+
+
+    private function validarAlunosDaEscola($escolaId, array $alunoIds): void
+    {
+        if (empty($alunoIds)) {
+            return;
+        }
+
+        $foraDaEscola = Aluno::whereIn('id', $alunoIds)->where('escola_id', '!=', $escolaId)->exists();
+
+        abort_if($foraDaEscola, 422, 'Um ou mais alunos selecionados não pertencem à escola escolhida.');
     }
 }

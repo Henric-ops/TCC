@@ -4,14 +4,15 @@ namespace App\Http\Requests\Admin;
 
 use Illuminate\Foundation\Http\FormRequest;
 
+
 class UpdateTurmaRequest extends FormRequest
 {
     public function authorize(): bool
     {
-        return auth()->user()?->perfil === 'admin';
+        return $this->user()->perfil === 'admin';
     }
 
-    public function rules(): array//metodo para definir as regras de validação para o formulário de atualização de turma
+    public function rules(): array
     {
         return [
             'escola_id' => 'required|exists:escolas,id',

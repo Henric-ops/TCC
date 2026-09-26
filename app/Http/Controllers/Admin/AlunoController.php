@@ -14,13 +14,18 @@ class AlunoController extends Controller
     public function index()
     {
         $busca = request('busca');
+        $escolaId = request('escola_id');
         $turmaId = request('turma_id');
 
+        $escolasPermitidas = Escola::orderBy('nome')->get();
         $turmasPermitidas = Turma::orderBy('nome')->get();
 
         $alunos = Aluno::with(['turmas'])
             ->when($busca, function ($query) use ($busca) {
                 $query->where('nome', 'like', '%' . $busca . '%');
+            })
+            ->when($escolaId, function ($query) use ($escolaId) {
+                $query->where('escola_id', $escolaId);
             })
             ->when($turmaId, function ($query) use ($turmaId) {
                 $query->whereHas('turmas', function ($q) use ($turmaId) {
@@ -33,8 +38,10 @@ class AlunoController extends Controller
 
         return view('alunos.index', compact(
             'alunos',
+            'escolasPermitidas',
             'turmasPermitidas',
             'busca',
+            'escolaId',
             'turmaId'
         ));
     }
@@ -49,6 +56,8 @@ class AlunoController extends Controller
 
     public function store(StoreAlunoRequest $request)
     {
+        $this->validarTurmasDaEscola($request->escola_id, $request->input('turmas', []));
+
         $aluno = Aluno::create([
             'escola_id' => $request->escola_id,
             'nome' => $request->nome,
@@ -73,6 +82,8 @@ class AlunoController extends Controller
 
     public function update(UpdateAlunoRequest $request, Aluno $aluno)
     {
+        $this->validarTurmasDaEscola($request->escola_id, $request->input('turmas', []));
+
         $dados = $request->only('escola_id', 'nome', 'data_nascimento');
 
         $aluno->update($dados);
@@ -97,5 +108,16 @@ class AlunoController extends Controller
         $aluno->delete();
 
         return redirect()->route('admin.alunos.index')->with('sucesso', 'Aluno removido.');
+    }
+
+    private function validarTurmasDaEscola($escolaId, array $turmaIds): void
+    {
+        if (empty($turmaIds)) {
+            return;
+        }
+
+        $foraDaEscola = Turma::whereIn('id', $turmaIds)->where('escola_id', '!=', $escolaId)->exists();
+
+        abort_if($foraDaEscola, 422, 'Uma ou mais turmas selecionadas não pertencem à escola escolhida.');
     }
 }
