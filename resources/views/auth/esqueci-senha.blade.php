@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>LumiKids - Login</title>
+    <title>LumiKids - Esqueci minha senha</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link
         href="https://fonts.googleapis.com/css2?family=Poppins:wght@600;700;800&family=Inter:wght@400;500;600;700&display=swap"
@@ -14,8 +14,6 @@
 
 <body>
     <div class="login-page">
-
-
         <aside class="login-side">
             <svg class="wave-divider" viewBox="0 0 100 800" preserveAspectRatio="none">
                 <path d="M100,0 C40,100 100,200 60,300 C20,400 90,500 50,600 C10,700 80,750 100,800 L100,0 Z"
@@ -54,28 +52,25 @@
             <div class="illustration-cloud"></div>
         </aside>
 
-
         <main class="login-main">
-            <h2 class="welcome-title">Acesse sua conta </h2>
-            <p class="welcome-sub">Faça login para continuar</p>
+            <h2 class="welcome-title">Esqueci minha senha</h2>
+            <p class="welcome-sub">Informe seu e-mail e enviaremos um link pra redefinir.</p>
 
-            @if (session('sucesso'))
-                <div class="alert-success" role="status">
-                    {{ session('sucesso') }}
-                </div>
+            @if(session('sucesso'))
+                <div class="alert-success" role="status">{{ session('sucesso') }}</div>
             @endif
 
-            @if ($errors->any())
+            @if($errors->any())
                 <div class="alert-error">
                     <ul>
-                        @foreach ($errors->all() as $error)
+                        @foreach($errors->all() as $error)
                             <li>{{ $error }}</li>
                         @endforeach
                     </ul>
                 </div>
             @endif
 
-            <form method="POST" action="{{ route('login.submit') }}" id="loginForm">
+            <form method="POST" action="{{ route('password.email') }}">
                 @csrf
 
                 <div class="field">
@@ -91,29 +86,8 @@
                     </div>
                 </div>
 
-                <div class="field">
-                    <label for="senha">Senha</label>
-                    <div class="input-wrap">
-                        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                            stroke-linecap="round" stroke-linejoin="round">
-                            <rect x="3" y="11" width="18" height="10" rx="2" />
-                            <path d="M7 11V7a5 5 0 0 1 10 0v4" />
-                        </svg>
-                        <input type="password" id="senha" name="senha" placeholder="••••••••" required>
-                        <button type="button" class="toggle-pass" id="togglePass" aria-label="Mostrar senha">
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                                stroke-linecap="round" stroke-linejoin="round">
-                                <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8Z" />
-                                <circle cx="12" cy="12" r="3" />
-                            </svg>
-                        </button>
-                    </div>
-                </div>
-
-                <div class="forgot"><a href="{{ route('password.request') }}">Esqueci a senha</a></div>
-
                 <button type="submit" class="btn-primary">
-                    Entrar
+                    Enviar link
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"
                         stroke-linejoin="round">
                         <path d="M5 12h14" />
@@ -122,39 +96,9 @@
                 </button>
             </form>
 
-            <div class="divider">
-                <div class="line"></div><span>ou</span>
-                <div class="line"></div>
-            </div>
-
-            <p class="signup-title">Não possui conta ainda?</p>
-            <a href="{{ route('register') }}" class="btn-secondary">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                    stroke-linejoin="round">
-                    <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2" />
-                    <circle cx="9" cy="7" r="4" />
-                    <path d="M19 8v6M22 11h-6" />
-                </svg>
-                Criar conta
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"
-                    stroke-linejoin="round">
-                    <path d="M5 12h14" />
-                    <path d="m12 5 7 7-7 7" />
-                </svg>
-            </a>
-
+            <p class="signup-title mt-3"><a href="{{ route('login') }}">Voltar ao login</a></p>
         </main>
     </div>
-
-    <script>
-        const toggleBtn = document.getElementById('togglePass');
-        const senhaInput = document.getElementById('senha');
-        toggleBtn.addEventListener('click', () => {
-            const show = senhaInput.type === 'password';
-            senhaInput.type = show ? 'text' : 'password';
-            toggleBtn.setAttribute('aria-label', show ? 'Ocultar senha' : 'Mostrar senha');
-        });
-    </script>
 </body>
 
 </html>

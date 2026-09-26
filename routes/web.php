@@ -14,8 +14,7 @@ use App\Http\Controllers\TurmaController;
 use App\Http\Controllers\RelatorioController;
 use App\Http\Controllers\Admin\EscolaController;
 use App\Http\Controllers\ComunicadosController;
-
-
+use App\Http\Controllers\PasswordResetController;
 
 
 Route::get('/', function () {
@@ -196,3 +195,18 @@ Route::middleware(['auth', 'perfil:admin,professor'])//rota para envio de e-mail
             'enviar'
         ])->name('emails.enviar');
     });
+
+
+
+Route::middleware('guest')->group(function () {
+    Route::get('/login', [LoginController::class, 'showLogin'])->name('login');
+    Route::post('/login', [LoginController::class, 'login'])->name('login.submit');
+
+    Route::get('/register', [RegisterController::class, 'showRegister'])->name('register');
+    Route::post('/register', [RegisterController::class, 'register'])->name('register.store');
+
+    Route::get('/esqueci-senha', [PasswordResetController::class, 'solicitar'])->name('password.request');
+    Route::post('/esqueci-senha', [PasswordResetController::class, 'enviarLink'])->name('password.email');
+    Route::get('/redefinir-senha/{token}', [PasswordResetController::class, 'formulario'])->name('password.reset');
+    Route::post('/redefinir-senha', [PasswordResetController::class, 'redefinir'])->name('password.update');
+});
