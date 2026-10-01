@@ -1,0 +1,89 @@
+.boletins-header h1 {
+    color: var(--lk-text);
+    font-family: 'Poppins', sans-serif;
+    font-size: 1.4rem;
+    font-weight: 700;
+}
+
+.boletins-table-card {
+    overflow: hidden;
+}
+
+.boletins-table-card .table thead th {
+    white-space: nowrap;
+}
+
+.boletins-table-card .table tbody td {
+    vertical-align: middle;
+}
+
+.boletim-empty {
+    color: var(--lk-text-muted);
+}
+
+.boletim-empty i {
+    display: block;
+    margin-bottom: .5rem;
+    color: var(--lk-text-muted);
+    font-size: 2rem;
+}
+
+.boletim-empty span {
+    display: block;
+}
+
+.boletim-detail-value {
+    min-height: 2.75rem;
+    padding: .65rem .8rem;
+    border: 1px solid #dfe4ef;
+    border-radius: .5rem;
+    background: #fbfcff;
+    color: var(--lk-text);
+    font-weight: 600;
+}
+
+.boletim-detail-text {
+    padding: 1rem 1.1rem;
+    border: 1px solid var(--lk-border);
+    border-radius: .5rem;
+    background: #fbfcff;
+    color: var(--lk-text-body);
+    line-height: 1.7;
+}
+
+.boletim-pdf-panel {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    padding: 1rem;
+    border: 1px solid var(--lk-border);
+    border-radius: .5rem;
+    background: #fbfcff;
+}
+
+.boletim-meta {
+    padding-top: 1.25rem;
+    border-top: 1px solid #e6eaf2;
+}
+
+.boletim-meta-label {
+    display: block;
+    margin-bottom: .25rem;
+    color: var(--lk-text-label);
+    font-size: .78rem;
+    font-weight: 700;
+    letter-spacing: .03em;
+    text-transform: uppercase;
+}
+
+.boletim-meta-value {
+    color: var(--lk-text-body);
+}
+
+@media (max-width: 767.98px) {
+    .boletim-pdf-panel {
+        align-items: stretch;
+        flex-direction: column;
+    }
+}

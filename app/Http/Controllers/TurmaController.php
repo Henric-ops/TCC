@@ -9,9 +9,17 @@ class TurmaController extends Controller
 {
     public function index()
     {
-        $turmas = Auth::user()->turmas()->withCount('alunos')->orderBy('nome')->get();
+        $turmas = Auth::user()->turmas()
+            ->with('escola')
+            ->withCount('alunos')
+            ->orderBy('nome')
+            ->get();
 
-        return view('turmas.minhas', compact('turmas'));
+        $turmasPorEscola = $turmas
+            ->groupBy('escola_id')
+            ->sortBy(fn($turmasDaEscola) => $turmasDaEscola->first()->escola->nome);
+
+        return view('turmas.minhas', compact('turmas', 'turmasPorEscola'));
     }
 
     public function show(Turma $turma)

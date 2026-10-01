@@ -30,41 +30,49 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @forelse($turmas as $turma)
-                        <tr>
-                            <td>
-                                <div class="d-flex align-items-center gap-3">
-                                    <span class="turma-avatar" aria-hidden="true">
-                                        <i class="bi bi-people-fill"></i>
-                                    </span>
-                                    <strong>{{ $turma->nome }}</strong>
-                                </div>
-                            </td>
-                            <td>
-                                <span class="turma-year">
-                                    <i class="bi bi-calendar3" aria-hidden="true"></i>
-                                    {{ $turma->ano }}
-                                </span>
-                            </td>
-                            <td>
-                                <span class="badge bg-primary-subtle text-primary-emphasis turma-badge">
-                                    <i class="bi bi-clock" aria-hidden="true"></i>
-                                    {{ $turma->periodo }}
-                                </span>
-                            </td>
-                            <td>
-                                <span class="turma-student-count">
-                                    <i class="bi bi-person-fill" aria-hidden="true"></i>
-                                    <strong>{{ $turma->alunos_count }}</strong>
-                                    {{ $turma->alunos_count === 1 ? 'aluno' : 'alunos' }}
-                                </span>
-                            </td>
-                            <td class="text-end text-nowrap">
-                                <a href="{{ route('turmas.minha', $turma) }}" class="usuario-button usuario-button-primary">
-                                    Ver alunos
-                                </a>
-                            </td>
+                    @forelse($turmasPorEscola as $turmasDaEscola)
+                        <tr class="table-light">
+                            <th colspan="5" scope="colgroup" class="text-start">
+                                <i class="bi bi-building" aria-hidden="true"></i>
+                                {{ $turmasDaEscola->first()->escola->nome }}
+                            </th>
                         </tr>
+                        @foreach($turmasDaEscola as $turma)
+                            <tr>
+                                <td>
+                                    <div class="d-flex align-items-center gap-3">
+                                        <span class="turma-avatar" aria-hidden="true">
+                                            <i class="bi bi-people-fill"></i>
+                                        </span>
+                                        <strong>{{ $turma->nome }}</strong>
+                                    </div>
+                                </td>
+                                <td>
+                                    <span class="turma-year">
+                                        <i class="bi bi-calendar3" aria-hidden="true"></i>
+                                        {{ $turma->ano }}
+                                    </span>
+                                </td>
+                                <td>
+                                    <span class="badge bg-primary-subtle text-primary-emphasis turma-badge">
+                                        <i class="bi bi-clock" aria-hidden="true"></i>
+                                        {{ $turma->periodo }}
+                                    </span>
+                                </td>
+                                <td>
+                                    <span class="turma-student-count">
+                                        <i class="bi bi-person-fill" aria-hidden="true"></i>
+                                        <strong>{{ $turma->alunos_count }}</strong>
+                                        {{ $turma->alunos_count === 1 ? 'aluno' : 'alunos' }}
+                                    </span>
+                                </td>
+                                <td class="text-end text-nowrap">
+                                    <a href="{{ route('turmas.minha', $turma) }}" class="usuario-button usuario-button-primary">
+                                        Ver alunos
+                                    </a>
+                                </td>
+                            </tr>
+                        @endforeach
                     @empty
                         <tr>
                             <td colspan="5" class="text-center py-5">

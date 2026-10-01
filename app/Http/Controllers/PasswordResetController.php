@@ -12,7 +12,7 @@ class PasswordResetController extends Controller
         return view('auth.esqueci-senha');
     }
 
-    public function enviarLink(Request $request)
+    public function enviarLink(Request $request)// método para enviar o link de redefinição de senha
     {
         $request->validate(['email' => 'required|email']);
 
@@ -39,7 +39,7 @@ class PasswordResetController extends Controller
             'senha' => 'required|min:8|confirmed',
         ]);
 
-        // Password::reset() exige a chave 'password' internamente — mapeamos o seu campo 'senha' pra ela aqui
+        // Redefinir a senha do usuário usando o token fornecido via o método reset do Password Broker
         $status = Password::reset(
             [
                 'email' => $request->email,

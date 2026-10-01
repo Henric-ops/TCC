@@ -15,6 +15,7 @@ use App\Http\Controllers\RelatorioController;
 use App\Http\Controllers\Admin\EscolaController;
 use App\Http\Controllers\ComunicadosController;
 use App\Http\Controllers\PasswordResetController;
+use App\Http\Controllers\BoletimController;
 
 
 Route::get('/', function () {
@@ -195,6 +196,46 @@ Route::middleware(['auth', 'perfil:admin,professor'])//rota para envio de e-mail
             'enviar'
         ])->name('emails.enviar');
     });
+
+
+// Rotas de boletins para administradores e professores
+Route::middleware(['auth', 'perfil:admin,professor'])->group(function () {
+
+    Route::get('/boletins', [
+        BoletimController::class,
+        'index'
+    ])->name('boletins.index');
+
+    Route::get('/boletins/create', [
+        BoletimController::class,
+        'create'
+    ])->name('boletins.create');
+
+    Route::post('/boletins', [
+        BoletimController::class,
+        'store'
+    ])->name('boletins.store');
+
+    Route::get('/boletins/{boletim}', [
+        BoletimController::class,
+        'show'
+    ])->name('boletins.show');
+});
+
+
+// Rotas de boletins para responsáveis
+Route::middleware(['auth', 'perfil:responsavel'])->group(function () {
+
+    Route::get('/meus-boletins', [
+        BoletimController::class,
+        'meusBoletins'
+    ])->name('boletins.meus');
+
+    Route::get('/meus-boletins/{boletim}', [
+        BoletimController::class,
+        'meuBoletim'
+    ])->name('boletins.meu-detalhe');
+});
 
 
 

@@ -50,6 +50,8 @@
                     class="lk-nav-item {{ request()->routeIs('frequencia.selecionar') || request()->routeIs('frequencia.form') || request()->routeIs('frequencia.index') ? 'active' : '' }}">
                     <i class="bi bi-calendar-check"></i> Frequência
                 </a>
+
+
             @endif
 
             @if(auth()->user()->perfil === 'responsavel')
@@ -60,6 +62,11 @@
                 <a href="{{ route('frequencia.meus') }}"
                     class="lk-nav-item {{ request()->routeIs('frequencia.meus') ? 'active' : '' }}">
                     <i class="bi bi-calendar-check"></i> Frequência
+                </a>
+
+                <a href="{{ route('boletins.meus') }}"
+                    class="lk-nav-item {{ request()->routeIs('boletins.meus', 'boletins.meu-detalhe') ? 'active' : '' }}">
+                    <i class="bi bi-file-earmark-text"></i> Boletins
                 </a>
                 <a href="{{ route('relatorio.meu') }}"
                     class="lk-nav-item {{ request()->routeIs('relatorio.meu') ? 'active' : '' }}">
@@ -85,6 +92,11 @@
 
                 <a href="{{ url('/relatorios') }}" class="lk-nav-item {{ request()->is('relatorios*') ? 'active' : '' }}">
                     <i class="bi bi-bar-chart"></i> Relatórios
+                </a>
+
+                <a href="{{ route('boletins.index') }}"
+                    class="lk-nav-item {{ request()->routeIs('boletins.*') ? 'active' : '' }}">
+                    <i class="bi bi-file-earmark-text"></i> Boletins
                 </a>
             </div>
         @endif

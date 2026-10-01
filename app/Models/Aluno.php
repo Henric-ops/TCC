@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use App\Models\User;
 
 class Aluno extends Model
@@ -37,6 +38,10 @@ class Aluno extends Model
     public function mensagens()
     {
         return $this->hasMany(Mensagem::class);
+    }
+    public function boletins(): HasMany
+    {
+        return $this->hasMany(Boletim::class);
     }
 
     protected $casts = [

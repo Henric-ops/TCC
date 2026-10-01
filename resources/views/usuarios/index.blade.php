@@ -81,7 +81,7 @@
             <div class="freq-filtro-item alunos-filtro-item">
                 <label for="status">Status</label>
 
-                <select name="status" id="status" class="usuarios-filtro-select" onchange="this.form.submit()">
+                <select name="status" id="status" class="usuarios-filtro-select">
 
                     <option value="">Todos os status</option>
 
