@@ -7,6 +7,7 @@ use App\Models\Boletim;
 use App\Models\Turma;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Str;
 
 class BoletimController extends Controller
 {
@@ -275,7 +276,7 @@ class BoletimController extends Controller
         );
 
         return $pdf->download(
-            'boletim-' . \Str::slug($boletim->aluno->nome) . '.pdf'
+            'boletim-' . Str::slug($boletim->aluno->nome) . '.pdf'
         );
     }
 
@@ -309,7 +310,7 @@ class BoletimController extends Controller
         );
 
         return $pdf->download(
-            'boletim-' . \Str::slug($boletim->aluno->nome) . '.pdf'
+            'boletim-' . Str::slug($boletim->aluno->nome) . '.pdf'
         );
     }
 
