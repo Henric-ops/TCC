@@ -53,7 +53,7 @@
                     <div class="mb-4">
                         <h2 class="usuario-form-section mb-3">
                             <i class="bi bi-chat-left-text" aria-hidden="true"></i>
-                            Observação / Avaliação
+                            Avaliação
                         </h2>
                         <div class="boletim-detail-text">
                             {!! nl2br(e($boletim->observacao)) !!}

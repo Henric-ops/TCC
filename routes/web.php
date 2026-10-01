@@ -220,6 +220,11 @@ Route::middleware(['auth', 'perfil:admin,professor'])->group(function () {
         BoletimController::class,
         'show'
     ])->name('boletins.show');
+
+    Route::get('/boletins/{boletim}/pdf', [
+        BoletimController::class,
+        'pdf'
+    ])->name('boletins.pdf');
 });
 
 
@@ -235,6 +240,11 @@ Route::middleware(['auth', 'perfil:responsavel'])->group(function () {
         BoletimController::class,
         'meuBoletim'
     ])->name('boletins.meu-detalhe');
+
+    Route::get('/meus-boletins/{boletim}/pdf', [
+        BoletimController::class,
+        'pdfResponsavel'
+    ])->name('boletins.meu-pdf');
 });
 
 

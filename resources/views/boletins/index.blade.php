@@ -4,6 +4,7 @@
 
 @push('styles')
     <link rel="stylesheet" href="{{ asset('css/boletins.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/historico-frequencia.css') }}">
     <link rel="stylesheet" href="{{ asset('css/usuario-buttons.css') }}">
 @endpush
 
@@ -30,6 +31,35 @@
             </span>
         </div>
     @endif
+
+    <form method="GET" class="freq-filtros">
+        <div class="freq-filtro-item">
+            <label for="busca">Aluno</label>
+            <input type="text" id="busca" name="busca" value="{{ $busca }}" placeholder="Buscar por nome...">
+        </div>
+
+        <div class="freq-filtro-item">
+            <label for="turma_id">Turma</label>
+            <select name="turma_id" id="turma_id">
+                <option value="">Todas as turmas</option>
+                @foreach ($turmasPermitidas as $turma)
+                    <option value="{{ $turma->id }}" {{ (string) $turmaId === (string) $turma->id ? 'selected' : '' }}>
+                        {{ $turma->nome }}
+                    </option>
+                @endforeach
+            </select>
+        </div>
+
+        <button type="submit" class="usuario-button usuario-button-primary">
+            <i class="bi bi-search" aria-hidden="true"></i>
+            Buscar
+        </button>
+
+        <a href="{{ route('boletins.index') }}" class="usuario-button usuario-button-muted">
+            <i class="bi bi-x-lg" aria-hidden="true"></i>
+            Limpar
+        </a>
+    </form>
 
     <div class="card boletins-table-card">
 
@@ -99,10 +129,7 @@
                                 <div class="boletim-empty">
                                     <i class="bi bi-file-earmark-text" aria-hidden="true"></i>
                                     <span>Nenhum boletim cadastrado ainda.</span>
-                                    <a href="{{ route('boletins.create') }}" class="usuario-button usuario-button-primary mt-3">
-                                        <i class="bi bi-plus-lg" aria-hidden="true"></i>
-                                        Criar primeiro boletim
-                                    </a>
+
                                 </div>
                             </td>
                         </tr>

@@ -18,7 +18,15 @@ return new class extends Migration {
                 ->constrained('usuarios')
                 ->onDelete('cascade');
 
-            $table->string('periodo');
+            $table->year('ano');
+
+            $table->enum('tipo_periodo', [
+                'bimestre',
+                'trimestre',
+                'semestre'
+            ]);
+
+            $table->unsignedTinyInteger('numero_periodo');
 
             $table->text('observacao')->nullable();
 

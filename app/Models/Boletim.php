@@ -12,10 +12,28 @@ class Boletim extends Model
     protected $fillable = [
         'aluno_id',
         'usuario_id',
-        'periodo',
+        'ano',
+        'tipo_periodo',
+        'numero_periodo',
         'observacao',
         'arquivo_pdf',
     ];
+
+    protected $casts = [
+        'ano' => 'integer',
+        'numero_periodo' => 'integer',
+    ];
+
+    public function getPeriodoAttribute(): string
+    {
+        $nomes = [
+            'bimestre' => 'Bimestre',
+            'trimestre' => 'Trimestre',
+            'semestre' => 'Semestre',
+        ];
+
+        return $this->numero_periodo . 'º ' . ($nomes[$this->tipo_periodo] ?? 'Período');
+    }
 
     public function aluno(): BelongsTo
     {

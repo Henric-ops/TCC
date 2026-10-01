@@ -86,13 +86,15 @@
             </div>
         @endif
 
-        @if(auth()->user()->perfil === 'admin')
+        @if(in_array(auth()->user()->perfil, ['admin', 'professor']))
             <div class="lk-nav-section">
                 <span class="lk-nav-label">Análise</span>
 
-                <a href="{{ url('/relatorios') }}" class="lk-nav-item {{ request()->is('relatorios*') ? 'active' : '' }}">
-                    <i class="bi bi-bar-chart"></i> Relatórios
-                </a>
+                @if(auth()->user()->perfil === 'admin')
+                    <a href="{{ url('/relatorios') }}" class="lk-nav-item {{ request()->is('relatorios*') ? 'active' : '' }}">
+                        <i class="bi bi-bar-chart"></i> Relatórios
+                    </a>
+                @endif
 
                 <a href="{{ route('boletins.index') }}"
                     class="lk-nav-item {{ request()->routeIs('boletins.*') ? 'active' : '' }}">
