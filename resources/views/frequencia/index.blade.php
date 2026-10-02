@@ -3,16 +3,44 @@
 @section('title', 'Histórico de frequência')
 
 @push('styles')
+    <link rel="stylesheet" href="{{ asset('css/usuario-buttons.css') }}">
     <link rel="stylesheet" href="{{ asset('css/historico-frequencia.css') }}">
 @endpush
 
 @section('content')
+    @php
+        $todosTurmas = $turmasTotais->map(fn($turma) => ['id' => $turma->id, 'nome' => $turma->nome, 'escola_id' => $turma->escola_id])->values()->all();
+    @endphp
+
+    <script>
+        window.frequenciaFiltrosData = {
+            turmasPorEscola: @json($turmasPorEscola ?? []),
+            alunosPorTurma: @json($alunosPorTurma ?? []),
+            todasTurmas: @json($todosTurmas ?? []),
+            turmaAtual: '{{ (string) $turmaId ?: '' }}',
+            alunoAtual: '{{ (string) $alunoId ?: '' }}'
+        };
+    </script>
+    <script src="{{ asset('js/frequencia-filtros.js') }}"></script>
+
     <h1 class="freq-title">Histórico de frequência</h1>
 
     <form method="GET" class="freq-filtros">
         <div class="freq-filtro-item">
-            <label>Turma</label>
-            <select name="turma_id" onchange="this.form.submit()">
+            <label for="escola_id">Escola</label>
+            <select name="escola_id" id="escola_id">
+                <option value="">Todas as escolas</option>
+                @foreach($escolasPermitidas as $escola)
+                    <option value="{{ $escola->id }}" {{ (string) $escolaId === (string) $escola->id ? 'selected' : '' }}>
+                        {{ $escola->nome }}
+                    </option>
+                @endforeach
+            </select>
+        </div>
+
+        <div class="freq-filtro-item">
+            <label for="turma_id">Turma</label>
+            <select name="turma_id" id="turma_id">
                 <option value="">Todas</option>
                 @foreach($turmasPermitidas as $turma)
                     <option value="{{ $turma->id }}" {{ (string) $turmaId === (string) $turma->id ? 'selected' : '' }}>
@@ -23,8 +51,8 @@
         </div>
 
         <div class="freq-filtro-item">
-            <label>Aluno</label>
-            <select name="aluno_id" onchange="this.form.submit()">
+            <label for="aluno_id">Aluno</label>
+            <select name="aluno_id" id="aluno_id">
                 <option value="">Todos (ver por dia)</option>
                 @foreach($alunosParaFiltro as $aluno)
                     <option value="{{ $aluno->id }}" {{ (string) $alunoId === (string) $aluno->id ? 'selected' : '' }}>
@@ -46,13 +74,24 @@
         @else
             <div class="freq-filtro-item">
                 <label>Data</label>
-                <input type="date" name="data" value="{{ $data }}" onchange="this.form.submit()">
+                <input type="date" name="data" value="{{ $data ?? now()->format('Y-m-d') }}" onchange="this.form.submit()">
             </div>
         @endif
+
+
+
+        <button type="submit" class="usuario-button usuario-button-primary">
+            <i class="bi bi-search" aria-hidden="true"></i>
+            Buscar
+        </button>
+
+        <a href="{{ route('frequencia.index') }}" class="usuario-button usuario-button-muted">
+            <i class="bi bi-x-lg" aria-hidden="true"></i>
+            Limpar
+        </a>
     </form>
 
     @if($alunoId)
-        {{-- Histórico do aluno selecionado --}}
         <div class="freq-panel">
             @if($registros->isEmpty())
                 <div class="freq-empty">Nenhum registro nesse período.</div>
@@ -88,7 +127,6 @@
         </div>
         <div class="mt-3">{{ $registros->links() }}</div>
     @else
-        {{-- Visão do dia, por turma --}}
         <div class="freq-panel">
             @if($resumo->isEmpty())
                 <div class="freq-empty">Nenhum registro nesse dia.</div>

@@ -3,6 +3,8 @@
 @section('title', 'Frequência - Selecionar turma')
 
 @push('styles')
+    <link rel="stylesheet" href="{{ asset('css/usuario-buttons.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/historico-frequencia.css') }}">
     <link rel="stylesheet" href="{{ asset('css/frequencia.css') }}">
 @endpush
 
@@ -10,6 +12,31 @@
     <div class="frequencia-header">
         <h1>Frequência</h1>
     </div>
+
+    <form method="GET" class="freq-filtros">
+        <div class="freq-filtro-item">
+            <label for="escola_id">Escola</label>
+            <select name="escola_id" id="escola_id">
+                <option value="">Todas as escolas</option>
+
+                @foreach($escolas as $escola)
+                    <option value="{{ $escola->id }}" {{ (string) $escolaId === (string) $escola->id ? 'selected' : '' }}>
+                        {{ $escola->nome }}
+                    </option>
+                @endforeach
+            </select>
+        </div>
+
+        <button type="submit" class="usuario-button usuario-button-primary">
+            <i class="bi bi-search" aria-hidden="true"></i>
+            Buscar
+        </button>
+
+        <a href="{{ route('frequencia.selecionar') }}" class="usuario-button usuario-button-muted">
+            <i class="bi bi-x-lg" aria-hidden="true"></i>
+            Limpar
+        </a>
+    </form>
 
     @if(session('erro'))
         <div class="alert alert-danger d-flex align-items-center gap-2" role="alert">

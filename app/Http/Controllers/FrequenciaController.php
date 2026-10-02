@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Escola;
 use App\Models\Frequencia;
 use App\Models\Turma;
 use Illuminate\Http\Request;
@@ -11,11 +12,20 @@ use Illuminate\Support\Facades\Auth;
 
 class FrequenciaController extends Controller
 {
-    public function selecionarTurma()
+    public function selecionarTurma(Request $request)
     {
-        $turmas = $this->turmasPermitidas(Auth::user());
+        $user = Auth::user();
+        $escolaId = $request->query('escola_id');
 
-        return view('frequencia.selecionar-turma', compact('turmas'));
+        $turmasPermitidas = $this->turmasPermitidas($user);
+
+        $turmas = $turmasPermitidas
+            ->when($escolaId, fn($collection) => $collection->where('escola_id', $escolaId))
+            ->values();
+
+        $escolas = $this->escolasPermitidas($user);
+
+        return view('frequencia.selecionar-turma', compact('turmas', 'escolas', 'escolaId'));
     }
     public function form(Request $request)
     {
@@ -73,18 +83,47 @@ class FrequenciaController extends Controller
     public function index(Request $request)//método para exibir a visão do dia ou o histórico de um aluno específico
     {
         $user = Auth::user();
-        $turmasPermitidas = $this->turmasPermitidas($user);
-
+        $escolaId = $request->input('escola_id');
         $alunoId = $request->input('aluno_id');
         $turmaId = $request->input('turma_id');
 
-        $alunosPermitidos = Aluno::whereIn('id', function ($q) use ($turmasPermitidas) {
-            $q->select('aluno_id')->from('turma_aluno')->whereIn('turma_id', $turmasPermitidas->pluck('id'));
+        $escolasPermitidas = $this->escolasPermitidas($user);
+        $turmasTotais = $this->turmasPermitidas($user);
+
+        $turmasPermitidas = $turmasTotais
+            ->when($escolaId, fn($query) => $query->where('escola_id', $escolaId))
+            ->values();
+
+        if ($turmaId && !$turmasPermitidas->contains('id', $turmaId)) {
+            $turmaId = null;
+        }
+
+        $alunosPermitidos = Aluno::whereIn('id', function ($q) use ($turmasTotais) {
+            $q->select('aluno_id')->from('turma_aluno')->whereIn('turma_id', $turmasTotais->pluck('id'));
         })->orderBy('nome')->get();
 
-        if ($turmaId) {
-            abort_unless($turmasPermitidas->contains('id', $turmaId), 403);
+        $turmasPorEscola = $turmasTotais
+            ->groupBy('escola_id')
+            ->map(fn($turmas) => $turmas->map(fn($turma) => [
+                'id' => $turma->id,
+                'nome' => $turma->nome,
+            ])->values()->all())
+            ->all();
 
+        $alunosPorTurma = [];
+        foreach ($turmasTotais as $turma) {
+            $alunosPorTurma[$turma->id] = $turma->alunos()
+                ->orderBy('nome')
+                ->get()
+                ->map(fn($aluno) => [
+                    'id' => $aluno->id,
+                    'nome' => $aluno->nome,
+                ])
+                ->values()
+                ->all();
+        }
+
+        if ($turmaId) {
             $alunosParaFiltro = Turma::findOrFail($turmaId)
                 ->alunos()
                 ->orderBy('nome')
@@ -93,10 +132,12 @@ class FrequenciaController extends Controller
             $alunosParaFiltro = $alunosPermitidos;
         }
 
+        if ($alunoId && !$alunosParaFiltro->contains('id', $alunoId)) {
+            $alunoId = null;
+        }
+
         //busca o histórico de frequência de um aluno específico
         if ($alunoId) {
-            abort_unless($alunosParaFiltro->contains('id', $alunoId), 403);
-
             $registros = Frequencia::with('turma')
                 ->where('aluno_id', $alunoId)
                 ->when($turmaId, fn($q) => $q->where('turma_id', $turmaId))
@@ -109,8 +150,13 @@ class FrequenciaController extends Controller
                 'registros',
                 'alunosParaFiltro',
                 'turmasPermitidas',
+                'escolasPermitidas',
                 'alunoId',
-                'turmaId'
+                'turmaId',
+                'escolaId',
+                'turmasPorEscola',
+                'alunosPorTurma',
+                'turmasTotais'
             ));
         }
 
@@ -134,9 +180,14 @@ class FrequenciaController extends Controller
             'resumo',
             'alunosParaFiltro',
             'turmasPermitidas',
+            'escolasPermitidas',
             'alunoId',
             'turmaId',
-            'data'
+            'escolaId',
+            'data',
+            'turmasPorEscola',
+            'alunosPorTurma',
+            'turmasTotais'
         ));
     }
 
@@ -169,5 +220,21 @@ class FrequenciaController extends Controller
         }
 
         return $user->turmas()->orderBy('nome')->get();
+    }
+
+    private function escolasPermitidas($user)
+    {
+        if ($user->perfil === 'admin') {
+            return Escola::orderBy('nome')->get();
+        }
+
+        $escolaIds = $this->turmasPermitidas($user)
+            ->pluck('escola_id')
+            ->filter()
+            ->unique();
+
+        return Escola::whereIn('id', $escolaIds)
+            ->orderBy('nome')
+            ->get();
     }
 }

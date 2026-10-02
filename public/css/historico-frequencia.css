@@ -69,8 +69,9 @@
 }
 
 .freq-filtros {
-    background: #fff;
-    border: 1px solid #EEF0F7;
+    background: linear-gradient(135deg, #ffffff 0%, #f8faff 100%);
+    border: 1px solid #E8ECF5;
+    border-left: 4px solid #4C7DF5;
     border-radius: 14px;
     padding: 16px 20px;
     box-shadow: 0 2px 10px rgba(30, 40, 90, .05);
@@ -85,7 +86,9 @@
     display: flex;
     flex-direction: column;
     gap: 6px;
-    min-width: 160px;
+    min-width: 200px;
+    flex: 1;
+    max-width: 280px;
 }
 
 .freq-filtro-item label {
@@ -93,24 +96,31 @@
     font-weight: 700;
     text-transform: uppercase;
     letter-spacing: .03em;
-    color: #A0A8C0;
+    color: #6B7280;
 }
 
 .freq-filtro-item select,
 .freq-filtro-item input {
+    min-height: 2.75rem;
     border: 1.5px solid #E4E7F2;
-    border-radius: 9px;
+    border-radius: 10px;
     padding: 8px 12px;
     font-size: .85rem;
     color: #333A54;
     background: #fff;
     outline: none;
-    transition: border-color .15s ease;
+    transition: border-color .15s ease, box-shadow .15s ease, background-color .15s ease;
 }
 
 .freq-filtro-item select:focus,
 .freq-filtro-item input:focus {
     border-color: #4C7DF5;
+    box-shadow: 0 0 0 .2rem rgba(76, 125, 245, .12);
+}
+
+.freq-filtros .freq-btn {
+    min-height: 2.75rem;
+    align-self: flex-end;
 }
 
 .freq-panel {

@@ -140,6 +140,111 @@
     margin-bottom: .5rem;
 }
 
+.freq-filtros {
+    background: linear-gradient(135deg, #ffffff 0%, #f8faff 100%);
+    border: 1px solid #E8ECF5;
+    border-left: 4px solid #4C7DF5;
+    border-radius: 14px;
+    padding: 16px 20px;
+    box-shadow: 0 2px 10px rgba(30, 40, 90, .05);
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px;
+    align-items: end;
+    margin-bottom: 24px;
+}
+
+.freq-filtro-item {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    min-width: 200px;
+    flex: 1;
+    max-width: 280px;
+}
+
+.freq-filtro-item label {
+    font-size: .72rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: .03em;
+    color: #6B7280;
+}
+
+.freq-filtro-item select,
+.freq-filtro-item input {
+    min-height: 2.75rem;
+    border: 1.5px solid #E4E7F2;
+    border-radius: 10px;
+    padding: 8px 12px;
+    font-size: .85rem;
+    color: #333A54;
+    background: #fff;
+    outline: none;
+    transition: border-color .15s ease, box-shadow .15s ease, background-color .15s ease;
+}
+
+.freq-filtro-item select:focus,
+.freq-filtro-item input:focus {
+    border-color: #4C7DF5;
+    box-shadow: 0 0 0 .2rem rgba(76, 125, 245, .12);
+}
+
+.freq-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    border: 1px solid transparent;
+    border-radius: 8px;
+    padding: 9px 14px;
+    font-family: inherit;
+    font-size: .78rem;
+    font-weight: 600;
+    line-height: 1.2;
+    text-decoration: none;
+    cursor: pointer;
+    transition: transform .15s ease, background-color .15s ease, border-color .15s ease, color .15s ease, box-shadow .15s ease;
+}
+
+.freq-btn:hover {
+    transform: translateY(-1px);
+}
+
+.freq-btn:focus-visible {
+    outline: 3px solid rgba(76, 125, 245, .25);
+    outline-offset: 2px;
+}
+
+.freq-btn-primary {
+    min-height: 2.75rem;
+    background: #4C7DF5;
+    color: #fff;
+    box-shadow: 0 4px 10px rgba(76, 125, 245, .2);
+}
+
+.freq-btn-primary:hover {
+    background: #3D68DD;
+    color: #fff;
+}
+
+.freq-btn-edit {
+    min-height: 2.75rem;
+    border-color: #DCE5FF;
+    background: #F5F7FF;
+    color: #3D68DD;
+}
+
+.freq-btn-edit:hover {
+    border-color: #BFCFFF;
+    background: #EAF0FF;
+    color: #315BCB;
+}
+
+.freq-filtros .freq-btn {
+    align-self: flex-end;
+}
+
 .frequencia-card {
     background: var(--lk-surface);
     border: 1px solid var(--lk-border);
