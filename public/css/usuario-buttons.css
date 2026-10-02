@@ -44,6 +44,21 @@
     box-shadow: 0 .2rem .45rem rgba(38, 43, 61, .12);
 }
 
+.usuario-button-success,
+.usuario-action-success {
+    border-color: #cfead8;
+    background: #f4fff8;
+    color: #248a57;
+}
+
+.usuario-button-success:hover,
+.usuario-action-success:hover {
+    border-color: #67c592;
+    background: #eafaf0;
+    color: #1e774b;
+    box-shadow: 0 .2rem .45rem rgba(38, 43, 61, .12);
+}
+
 .usuario-button-muted {
     border-color: #d6dce8;
     background: #fff;

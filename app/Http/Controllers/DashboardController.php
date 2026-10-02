@@ -9,6 +9,7 @@ use App\Models\User;
 use App\Models\Frequencia;
 use App\Models\RegistroDiario;
 use App\Models\Mensagem;
+use App\Models\Escola;
 
 class DashboardController extends Controller
 {
@@ -49,6 +50,8 @@ class DashboardController extends Controller
             ->where('status', 'aprovado')
             ->count();
 
+        $totalEscolas = Escola::count();
+
         $pendentes = User::where('status', 'pendente')
             ->orderBy('created_at')
             ->take(5)
@@ -72,6 +75,7 @@ class DashboardController extends Controller
             'totalAlunos',
             'totalProfessores',
             'totalResponsaveis',
+            'totalEscolas',
             'pendentes',
             'totalPendentes',
             'registrosHoje',
@@ -123,7 +127,15 @@ class DashboardController extends Controller
     {
         $user = Auth::user();
 
-        $filhos = $user->alunosResponsavel()->with('turmas')->get();
+        if (!$user) {
+            return redirect()->route('login');
+        }
+
+        $filhos = collect();
+
+        if (method_exists($user, 'alunosResponsavel')) {
+            $filhos = $user->alunosResponsavel()->with('turmas')->get();
+        }
 
         $hoje = now()->format('Y-m-d');
 

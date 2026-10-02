@@ -55,6 +55,11 @@ class UsuarioController extends Controller
             ->where('perfil', 'responsavel')
             ->count();
 
+
+        $totalEscolas = (clone $baseQuery)
+            ->where('perfil', 'escola')
+            ->count();
+
         return view('usuarios.index', compact(
             'usuarios',
             'totalUsuarios',

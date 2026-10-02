@@ -14,7 +14,7 @@
         </div>
     </div>
 
-    {{-- Resumo do dia --}}
+
     <div class="hoje-bar">
         <div class="hoje-item">
             <span class="hoje-valor">{{ $turmasComFrequenciaHoje }}/{{ $totalTurmas }}</span>
@@ -33,7 +33,7 @@
     </div>
 
     <div class="dash-columns">
-        {{-- Coluna esquerda: pendências + turmas --}}
+
         <div class="dash-col-main">
             @if($pendentes->isNotEmpty())
                 <div class="dash-panel mb-4">
@@ -98,6 +98,11 @@
                 <div class="numero-item">
                     <span>Responsáveis</span>
                     <strong>{{ $totalResponsaveis }}</strong>
+                </div>
+
+                <div class="numero-item">
+                    <span>Escolas</span>
+                    <strong>{{ $totalEscolas }}</strong>
                 </div>
             </div>
         </div>

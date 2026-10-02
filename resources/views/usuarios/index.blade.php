@@ -315,7 +315,7 @@
                                 @if($usuario->status === 'pendente')
 
                                     <a href="{{ route('admin.usuarios.verificar', $usuario) }}"
-                                        class="usuario-action usuario-action-primary" title="Validar cadastro"
+                                        class="usuario-action usuario-action-success" title="Validar cadastro"
                                         aria-label="Validar cadastro">
 
                                         <i class="bi bi-person-check-fill" aria-hidden="true"></i>

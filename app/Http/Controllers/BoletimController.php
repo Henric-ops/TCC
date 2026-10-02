@@ -105,7 +105,7 @@ class BoletimController extends Controller
         ));
     }
 
-    public function store(Request $request)// m
+    public function store(Request $request)
     {
         $user = Auth::user();
 

@@ -59,8 +59,7 @@
                             {!! nl2br(e($boletim->observacao)) !!}
                         </div>
                         <div class="d-flex justify-content-end mt-3">
-                            <a href="{{ route('boletins.meu-pdf', $boletim) }}"
-                                class="usuario-button usuario-button-primary">
+                            <a href="{{ route('boletins.meu-pdf', $boletim) }}" class="usuario-button usuario-button-primary">
                                 <i class="bi bi-download" aria-hidden="true"></i>
                                 Baixar avaliação
                             </a>
