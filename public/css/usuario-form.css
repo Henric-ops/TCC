@@ -42,7 +42,7 @@
 }
 
 .usuario-form-card {
-    overflow: hidden;
+    overflow: visible;
     border: 1px solid #dfe5f1;
     border-radius: .65rem;
     box-shadow: 0 .35rem 1.25rem rgba(38, 43, 61, .05);
@@ -64,6 +64,8 @@
 }
 
 .usuario-form-card .card-body {
+    position: relative;
+    z-index: 1;
     padding: 1.5rem;
 }
 
@@ -220,3 +222,186 @@
     color: #262b3d;
     font-size: .92rem;
 }
+
+.turma-multiselect {
+    position: relative;
+    width: 100%;
+}
+
+.turma-multiselect-trigger {
+    width: 100%;
+    min-height: 2.75rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: .75rem;
+    border: 1px solid #dfe4ef;
+    border-radius: .5rem;
+    background: #fff;
+    color: #262b3d;
+    padding: .7rem .9rem;
+    font-size: .94rem;
+    transition: border-color .15s ease, box-shadow .15s ease, background-color .15s ease;
+    text-align: left;
+}
+
+.turma-multiselect-trigger:hover,
+.turma-multiselect.open .turma-multiselect-trigger {
+    border-color: #9db7ff;
+    background: #f9fbff;
+    box-shadow: 0 0 0 .2rem rgba(76, 125, 245, .12);
+}
+
+.turma-multiselect-trigger i {
+    color: #4c7df5;
+    font-size: 1rem;
+    transition: transform .2s ease;
+}
+
+.turma-multiselect.open .turma-multiselect-trigger i {
+    transform: rotate(180deg);
+}
+
+.turma-dropdown {
+    position: absolute;
+    top: calc(100% + .5rem);
+    left: 0;
+    right: 0;
+    background: #fff;
+    border: 1px solid #dfe4ef;
+    border-radius: .75rem;
+    box-shadow: 0 1rem 2rem rgba(38, 43, 61, .12);
+    z-index: 40;
+    overflow: visible;
+    max-height: none;
+}
+
+.turma-search {
+    display: flex;
+    align-items: center;
+    gap: .6rem;
+    padding: .8rem .9rem;
+    border-bottom: 1px solid #edf1f7;
+    background: #f8faff;
+}
+
+.turma-search i {
+    color: #8a93a8;
+    font-size: .9rem;
+}
+
+.turma-search input {
+    width: 100%;
+    border: none;
+    background: transparent;
+    color: #262b3d;
+    outline: none;
+    font-size: .92rem;
+}
+
+.turma-search input::placeholder {
+    color: #8a93a8;
+}
+
+.turma-options {
+    max-height: 240px;
+    overflow-y: auto;
+    overflow-x: hidden;
+    background: #fff;
+}
+
+.turma-option {
+    display: flex;
+    align-items: center;
+    gap: .75rem;
+    padding: .8rem .9rem;
+    border-bottom: 1px solid #f1f4fa;
+    cursor: pointer;
+    transition: background-color .15s ease;
+    min-width: 0;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.turma-option:hover {
+    background: #f5f8ff;
+}
+
+.turma-option:last-child {
+    border-bottom: none;
+}
+
+.turma-checkbox {
+    position: absolute;
+    opacity: 0;
+    pointer-events: none;
+}
+
+.turma-option-check {
+    width: 1.1rem;
+    height: 1.1rem;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border: 1.5px solid #b7c3dc;
+    border-radius: .35rem;
+    background: #fff;
+    color: transparent;
+    flex-shrink: 0;
+    transition: all .15s ease;
+}
+
+.turma-option .turma-checkbox:checked+.turma-option-check {
+    background: #4c7df5;
+    border-color: #4c7df5;
+    color: #fff;
+}
+
+.turma-option .turma-checkbox:focus+.turma-option-check {
+    box-shadow: 0 0 0 .2rem rgba(76, 125, 245, .15);
+}
+
+.turma-option-info {
+    display: flex;
+    flex-direction: column;
+    gap: .2rem;
+    min-width: 0;
+    flex: 1;
+    overflow: hidden;
+}
+
+.turma-option-nome {
+    color: #262b3d;
+    font-size: .92rem;
+    font-weight: 600;
+    white-space: normal;
+    overflow-wrap: anywhere;
+}
+
+.turma-option-periodo {
+    color: #6b7280;
+    font-size: .76rem;
+}
+
+.turma-empty {
+    display: none;
+    padding: 1rem;
+    text-align: center;
+    color: #6b7280;
+    font-size: .86rem;
+}
+
+.turma-dropdown-footer {
+    border-top: 1px solid #edf1f7;
+    background: #f9fbff;
+    padding: .7rem .9rem;
+    color: #4c7df5;
+    font-size: .8rem;
+    font-weight: 600;
+}
+
+@media (max-width: 767.98px) {
+    .turma-dropdown {
+        position: static;
+        margin-top: .5rem;
+    }

@@ -56,7 +56,9 @@ class AlunoController extends Controller
 
     public function store(StoreAlunoRequest $request)
     {
-        $this->validarTurmasDaEscola($request->escola_id, $request->input('turmas', []));
+        $turmasSelecionadas = $request->input('turmas', []);
+
+        $this->validarTurmasDaEscola($request->escola_id, $turmasSelecionadas);
 
         $aluno = Aluno::create([
             'escola_id' => $request->escola_id,
@@ -64,8 +66,8 @@ class AlunoController extends Controller
             'data_nascimento' => $request->data_nascimento,
         ]);
 
-        if ($request->filled('turmas')) {
-            $aluno->turmas()->attach($request->turmas);
+        if (!empty($turmasSelecionadas)) {
+            $aluno->turmas()->attach($turmasSelecionadas);
         }
 
         return redirect()->route('admin.alunos.index')->with('sucesso', 'Aluno cadastrado com sucesso.');
@@ -82,12 +84,14 @@ class AlunoController extends Controller
 
     public function update(UpdateAlunoRequest $request, Aluno $aluno)
     {
-        $this->validarTurmasDaEscola($request->escola_id, $request->input('turmas', []));
+        $turmasSelecionadas = $request->input('turmas', []);
+
+        $this->validarTurmasDaEscola($request->escola_id, $turmasSelecionadas);
 
         $dados = $request->only('escola_id', 'nome', 'data_nascimento');
 
         $aluno->update($dados);
-        $aluno->turmas()->sync($request->turmas ?? []);
+        $aluno->turmas()->sync($turmasSelecionadas);
 
         return redirect()->route('admin.alunos.index')->with('sucesso', 'Aluno atualizado com sucesso.');
     }
@@ -116,8 +120,12 @@ class AlunoController extends Controller
             return;
         }
 
+        if (count($turmaIds) > 1) {
+            abort(422, 'O aluno só pode estar em uma turma.');
+        }
+
         $foraDaEscola = Turma::whereIn('id', $turmaIds)->where('escola_id', '!=', $escolaId)->exists();
 
-        abort_if($foraDaEscola, 422, 'Uma ou mais turmas selecionadas não pertencem à escola escolhida.');
+        abort_if($foraDaEscola, 422, 'A turma selecionada não pertence à escola escolhida.');
     }
 }
