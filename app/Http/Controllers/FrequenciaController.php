@@ -193,8 +193,8 @@ class FrequenciaController extends Controller
 
     public function meusRegistros(Request $request)
     {
-        $alunoIds = Auth::user()->alunosResponsavel->pluck('id');
-        $filhos = Auth::user()->alunosResponsavel;
+        $alunoIds = auth()->user()->alunosResponsavel()->withTrashed()->pluck('alunos.id');
+        $filhos = auth()->user()->alunosResponsavel()->withTrashed()->get();
 
         $temFiltroData = $request->filled('inicio') || $request->filled('fim');
 

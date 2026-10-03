@@ -13,7 +13,7 @@ class RelatorioController extends Controller
 {
     public function meuRelatorio(Request $request)
     {
-        $filhos = Auth::user()->alunosResponsavel;
+        $filhos = Auth::user()->alunosResponsavel()->withTrashed()->get();
 
         $alunoId = $request->input('aluno_id', $filhos->first()?->id);
         $aluno = $filhos->firstWhere('id', $alunoId);
@@ -27,7 +27,7 @@ class RelatorioController extends Controller
 
     public function meuRelatorioPdf(Request $request)
     {
-        $filhos = Auth::user()->alunosResponsavel;
+        $filhos = Auth::user()->alunosResponsavel()->withTrashed()->get();
 
         $alunoId = $request->input('aluno_id', $filhos->first()?->id);
         $aluno = $filhos->firstWhere('id', $alunoId);

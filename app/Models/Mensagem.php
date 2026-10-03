@@ -22,27 +22,19 @@ class Mensagem extends Model
         'enviado_em' => 'datetime',
     ];
 
-    /**
-     * Usuário que enviou o e-mail.
-     */
+
     public function remetente()
     {
-        return $this->belongsTo(User::class, 'remetente_id');
+        return $this->belongsTo(User::class, 'remetente_id')->withTrashed();
     }
 
-    /**
-     * Usuário que receberá o e-mail.
-     */
     public function destinatario()
     {
-        return $this->belongsTo(User::class, 'destinatario_id');
+        return $this->belongsTo(User::class, 'destinatario_id')->withTrashed();
     }
 
-    /**
-     * Aluno relacionado ao e-mail.
-     */
     public function aluno()
     {
-        return $this->belongsTo(Aluno::class, 'aluno_id');
+        return $this->belongsTo(Aluno::class)->withTrashed();
     }
 }

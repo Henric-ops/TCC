@@ -18,12 +18,12 @@ class RegistroDiario extends Model
 
     public function aluno()
     {
-        return $this->belongsTo(Aluno::class);
+        return $this->belongsTo(Aluno::class)->withTrashed();
     }
 
     public function professor()
     {
-        return $this->belongsTo(User::class, 'professor_id');
+        return $this->belongsTo(User::class, 'professor_id')->withTrashed();
     }
 
     public function alimentacoes()

@@ -164,8 +164,9 @@ class RegistroDiarioController extends Controller
     }
     public function meusRegistros(Request $request)//método para exibir a lista de registros diários do responsável com filtros
     {
-        $alunoIds = Auth::user()->alunosResponsavel->pluck('id');
-        $filhos = Auth::user()->alunosResponsavel;
+        //pega os ids dos alunos relacionados ao responsável mesmo que estejam deletados
+        $alunoIds = auth()->user()->alunosResponsavel()->withTrashed()->pluck('alunos.id');
+        $filhos = auth()->user()->alunosResponsavel()->withTrashed()->get();
 
         $temFiltroData = $request->filled('inicio') || $request->filled('fim');
 

@@ -15,7 +15,7 @@ class Frequencia extends Model
 
     public function aluno()
     {
-        return $this->belongsTo(Aluno::class);
+        return $this->belongsTo(Aluno::class)->withTrashed();
     }
 
     public function turma()
@@ -25,6 +25,6 @@ class Frequencia extends Model
 
     public function registradoPor()
     {
-        return $this->belongsTo(User::class, 'registrado_por');
+        return $this->belongsTo(User::class, 'registrado_por')->withTrashed();
     }
 }
