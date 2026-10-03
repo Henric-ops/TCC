@@ -20,7 +20,9 @@
                 <label class="form-label small mb-1">Filho</label>
                 <select name="aluno_id" class="form-select form-select-sm" onchange="this.form.submit()">
                     @foreach($filhos as $filho)
-                        <option value="{{ $filho->id }}" {{ $filho->id === $aluno->id ? 'selected' : '' }}>{{ $filho->nome }}</option>
+                        <option value="{{ $filho->id }}" {{ $filho->id === $aluno->id ? 'selected' : '' }}>
+                            {{ $filho->nome }}{{ $filho->trashed() ? ' (desligado)' : '' }}
+                        </option>
                     @endforeach
                 </select>
             </div>

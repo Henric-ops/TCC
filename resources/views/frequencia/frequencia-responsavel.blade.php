@@ -16,7 +16,8 @@
                 <select name="aluno_id" onchange="this.form.submit()">
                     <option value="">Todos</option>
                     @foreach($filhos as $filho)
-                        <option value="{{ $filho->id }}" {{ request('aluno_id') == $filho->id ? 'selected' : '' }}>{{ $filho->nome }}
+                        <option value="{{ $filho->id }}" {{ request('aluno_id') == $filho->id ? 'selected' : '' }}>
+                            {{ $filho->nome }}{{ $filho->trashed() ? ' (desligado)' : '' }}
                         </option>
                     @endforeach
                 </select>
