@@ -8,6 +8,21 @@
 @endpush
 
 @section('content')
+    @php
+        $todosTurmas = $turmasTotais->map(fn($turma) => ['id' => $turma->id, 'nome' => $turma->nome, 'escola_id' => $turma->escola_id])->values()->all();
+    @endphp
+
+    <script>
+        window.frequenciaFiltrosData = {
+            turmasPorEscola: @json($turmasPorEscola ?? []),
+            alunosPorTurma: @json($alunosPorTurma ?? []),
+            todasTurmas: @json($todosTurmas ?? []),
+            turmaAtual: '{{ (string) $turmaId ?: '' }}',
+            alunoAtual: '{{ (string) $alunoId ?: '' }}'
+        };
+    </script>
+    <script src="{{ asset('js/frequencia-filtros.js') }}"></script>
+
     <div class="d-flex justify-content-between align-items-center mb-4">
         <h1 class="freq-title mb-0">Registros Diários</h1>
         <a href="{{ route('registros.selecionar-turma') }}" class="usuario-button usuario-button-primary">
@@ -21,8 +36,20 @@
 
     <form method="GET" class="freq-filtros">
         <div class="freq-filtro-item">
-            <label>Turma</label>
-            <select name="turma_id" onchange="this.form.submit()">
+            <label for="escola_id">Escola</label>
+            <select name="escola_id" id="escola_id">
+                <option value="">Todas as escolas</option>
+                @foreach($escolasPermitidas as $escola)
+                    <option value="{{ $escola->id }}" {{ (string) $escolaId === (string) $escola->id ? 'selected' : '' }}>
+                        {{ $escola->nome }}
+                    </option>
+                @endforeach
+            </select>
+        </div>
+
+        <div class="freq-filtro-item">
+            <label for="turma_id">Turma</label>
+            <select name="turma_id" id="turma_id">
                 <option value="">Todas</option>
                 @foreach($turmasPermitidas as $turma)
                     <option value="{{ $turma->id }}" {{ (string) $turmaId === (string) $turma->id ? 'selected' : '' }}>
@@ -31,9 +58,10 @@
                 @endforeach
             </select>
         </div>
+
         <div class="freq-filtro-item">
-            <label>Aluno</label>
-            <select name="aluno_id" onchange="this.form.submit()">
+            <label for="aluno_id">Aluno</label>
+            <select name="aluno_id" id="aluno_id">
                 <option value="">Todos</option>
                 @foreach($alunosParaFiltro as $aluno)
                     <option value="{{ $aluno->id }}" {{ (string) $alunoId === (string) $aluno->id ? 'selected' : '' }}>
@@ -42,14 +70,25 @@
                 @endforeach
             </select>
         </div>
+
         <div class="freq-filtro-item">
             <label>De</label>
-            <input type="date" name="inicio" value="{{ request('inicio') }}" onchange="this.form.submit()">
+            <input type="date" name="inicio" value="{{ request('inicio') }}">
         </div>
         <div class="freq-filtro-item">
             <label>Até</label>
-            <input type="date" name="fim" value="{{ request('fim') }}" onchange="this.form.submit()">
+            <input type="date" name="fim" value="{{ request('fim') }}">
         </div>
+
+        <button type="submit" class="usuario-button usuario-button-primary">
+            <i class="bi bi-search" aria-hidden="true"></i>
+            Buscar
+        </button>
+
+        <a href="{{ route('registros.index') }}" class="usuario-button usuario-button-muted">
+            <i class="bi bi-x-lg" aria-hidden="true"></i>
+            Limpar
+        </a>
     </form>
 
     <p class="text-muted small mb-3">

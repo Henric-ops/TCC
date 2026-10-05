@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreRegistroDiarioRequest;
 use App\Models\Aluno;
+use App\Models\Escola;
 use App\Models\RegistroDiario;
 use App\Models\Turma;
 use Illuminate\Http\Request;
@@ -15,17 +16,54 @@ class RegistroDiarioController extends Controller
     public function index(Request $request)//método para exibir a lista de registros diários com filtros
     {
         $user = Auth::user();
-        $turmasPermitidas = $this->turmasPermitidas($user);
-        $alunosPermitidos = $this->alunosPermitidos($user);
-
+        $escolaId = $request->input('escola_id');
         $turmaId = $request->input('turma_id');
         $alunoId = $request->input('aluno_id');
         $temFiltroData = $request->filled('inicio') || $request->filled('fim');
 
-        // se o filtro da turma for selecionado, então mostra apenas os alunos daquela turma, caso contrário, mostra todos os alunos permitidos
+        $escolasPermitidas = $this->escolasPermitidas($user);
+        $turmasTotais = $this->turmasPermitidas($user);
+
+        $turmasPermitidas = $turmasTotais
+            ->when($escolaId, fn($query) => $query->where('escola_id', $escolaId))
+            ->values();
+
+        if ($turmaId && !$turmasPermitidas->contains('id', $turmaId)) {
+            $turmaId = null;
+        }
+
+        $alunosPermitidos = Aluno::whereIn('id', function ($q) use ($turmasTotais) {
+            $q->select('aluno_id')->from('turma_aluno')->whereIn('turma_id', $turmasTotais->pluck('id'));
+        })->orderBy('nome')->get();
+
+        $turmasPorEscola = $turmasTotais
+            ->groupBy('escola_id')
+            ->map(fn($turmas) => $turmas->map(fn($turma) => [
+                'id' => $turma->id,
+                'nome' => $turma->nome,
+            ])->values()->all())
+            ->all();
+
+        $alunosPorTurma = [];
+        foreach ($turmasTotais as $turma) {
+            $alunosPorTurma[$turma->id] = $turma->alunos()
+                ->orderBy('nome')
+                ->get()
+                ->map(fn($aluno) => [
+                    'id' => $aluno->id,
+                    'nome' => $aluno->nome,
+                ])
+                ->values()
+                ->all();
+        }
+
         $alunosParaFiltro = $turmaId
             ? Turma::findOrFail($turmaId)->alunos()->orderBy('nome')->get()
             : $alunosPermitidos;
+
+        if ($alunoId && !$alunosParaFiltro->contains('id', $alunoId)) {
+            $alunoId = null;
+        }
 
         $query = RegistroDiario::with(['aluno', 'professor']);
 
@@ -36,6 +74,11 @@ class RegistroDiarioController extends Controller
         if ($turmaId) {
             abort_unless($turmasPermitidas->contains('id', $turmaId), 403);
             $query->whereIn('aluno_id', $alunosParaFiltro->pluck('id'));
+        } elseif ($escolaId) {
+            abort_unless($escolasPermitidas->contains('id', $escolaId), 403);
+            $query->whereIn('aluno_id', Aluno::whereIn('id', function ($q) use ($turmasPermitidas) {
+                $q->select('aluno_id')->from('turma_aluno')->whereIn('turma_id', $turmasPermitidas->pluck('id'));
+            })->pluck('id'));
         }
 
         if ($alunoId) {
@@ -54,11 +97,16 @@ class RegistroDiarioController extends Controller
 
         return view('registros.index', compact(
             'registros',
+            'escolasPermitidas',
             'turmasPermitidas',
             'alunosParaFiltro',
+            'escolaId',
             'turmaId',
             'alunoId',
-            'temFiltroData'
+            'temFiltroData',
+            'turmasPorEscola',
+            'alunosPorTurma',
+            'turmasTotais'
         ));
     }
     public function selecionarAluno(Request $request)
@@ -89,6 +137,23 @@ class RegistroDiarioController extends Controller
 
         return $user->turmas()->orderBy('nome')->get();
     }
+
+    private function escolasPermitidas($user)
+    {
+        if ($user->perfil === 'admin') {
+            return Escola::orderBy('nome')->get();
+        }
+
+        $escolaIds = $this->turmasPermitidas($user)
+            ->pluck('escola_id')
+            ->filter()
+            ->unique();
+
+        return Escola::whereIn('id', $escolaIds)
+            ->orderBy('nome')
+            ->get();
+    }
+
     public function create(Request $request)
     {
         $aluno = Aluno::find($request->query('aluno_id'));
