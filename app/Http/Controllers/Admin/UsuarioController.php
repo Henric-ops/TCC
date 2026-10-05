@@ -76,7 +76,7 @@ class UsuarioController extends Controller
         return view('usuarios.create', compact('escolas', 'alunos'));
     }
 
-    public function store(StoreUsuarioRequest $request)
+    public function store(StoreUsuarioRequest $request)// cria, vincula e valida se o aluno pertence a escola selecionada
     {
         if ($request->perfil === 'responsavel') {
             $this->validarAlunosDaEscola($request->escola_id, $request->input('alunos', []));
@@ -110,7 +110,8 @@ class UsuarioController extends Controller
         return view('usuarios.edit', compact('usuario', 'escolas', 'alunos', 'alunosVinculados'));
     }
 
-    public function aprovar(Request $request, User $usuario)//método para aprovar o usuário e vincular ao aluno ou turma
+    public function aprovar(Request $request, User $usuario)//método para aprovar o usuário e se for professr vincular a turma,
+    // se for responsável vincular ao aluno e validar se o aluno pertence a escola selecionada
     {
 
         $request->validate([

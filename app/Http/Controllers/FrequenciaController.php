@@ -12,7 +12,7 @@ use Illuminate\Support\Facades\Auth;
 
 class FrequenciaController extends Controller
 {
-    public function selecionarTurma(Request $request)
+    public function selecionarTurma(Request $request)// exibe a tela de seleção de turma para o professor ou admin
     {
         $user = Auth::user();
         $escolaId = $request->query('escola_id');
@@ -27,7 +27,7 @@ class FrequenciaController extends Controller
 
         return view('frequencia.selecionar-turma', compact('turmas', 'escolas', 'escolaId'));
     }
-    public function form(Request $request)
+    public function form(Request $request)//exibe o form para registrar a frequência de uma turma 
     {
         $turma = Turma::find($request->query('turma_id'));
 

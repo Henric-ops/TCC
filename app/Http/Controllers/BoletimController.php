@@ -11,6 +11,8 @@ use Illuminate\Support\Str;
 
 class BoletimController extends Controller
 {
+    // abort_unless é uma função própria do Laravel que se a condição não for atendida, interrompe a execução e retorna um erro
+//funciona como um if, mas de forma direta, evita a necessidade de escrever várias linhas de código para verificar a condição
     public function index(Request $request)
     {
         $user = Auth::user();

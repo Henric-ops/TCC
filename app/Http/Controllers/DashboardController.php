@@ -15,7 +15,6 @@ class DashboardController extends Controller
 {
     public function index()
     {
-        /** @var User|null $user */
         $user = Auth::user();
 
         if ($user?->perfil === 'admin') {
@@ -33,9 +32,8 @@ class DashboardController extends Controller
         return redirect()->route('login');
     }
 
-    public function admin()
+    public function admin()// exibe a dashboard do admin
     {
-        /** @var User $user */
         $user = Auth::user();
 
         $totalTurmas = Turma::count();
@@ -84,9 +82,8 @@ class DashboardController extends Controller
         ));
     }
 
-    public function professor()
+    public function professor()// exibe a dashboard do professor
     {
-        /** @var User $user */
         $user = Auth::user();
 
         $turmas = $user->turmas()
@@ -123,7 +120,7 @@ class DashboardController extends Controller
 
 
 
-    public function responsavel()
+    public function responsavel()// exibe a dashboard do responsável
     {
         $user = Auth::user();
 

@@ -11,7 +11,7 @@ use App\Models\Escola;
 
 class AlunoController extends Controller
 {
-    public function index()
+    public function index()// método para listar os alunos, com filtros de busca, escola e turma
     {
         $busca = request('busca');
         $escolaId = request('escola_id');
@@ -54,7 +54,7 @@ class AlunoController extends Controller
         return view('alunos.create', compact('escolas', 'turmas'));
     }
 
-    public function store(StoreAlunoRequest $request)
+    public function store(StoreAlunoRequest $request)//cria aluno, vincula e valida se a turma pertence a escola selecionada
     {
         $turmasSelecionadas = $request->input('turmas', []);
 

@@ -72,18 +72,28 @@ class RegistroDiarioController extends Controller
         }
 
         if ($turmaId) {
-            abort_unless($turmasPermitidas->contains('id', $turmaId), 403);
-            $query->whereIn('aluno_id', $alunosParaFiltro->pluck('id'));
-        } elseif ($escolaId) {
-            abort_unless($escolasPermitidas->contains('id', $escolaId), 403);
-            $query->whereIn('aluno_id', Aluno::whereIn('id', function ($q) use ($turmasPermitidas) {
-                $q->select('aluno_id')->from('turma_aluno')->whereIn('turma_id', $turmasPermitidas->pluck('id'));
-            })->pluck('id'));
-        }
+            if (!$turmasPermitidas->contains('id', $turmaId)) {
+                abort(403, 'Você não tem permissão para acessar esta turma.');
+            }
 
-        if ($alunoId) {
-            abort_unless($alunosPermitidos->contains('id', $alunoId), 403);
-            $query->where('aluno_id', $alunoId);
+            $query->whereIn(
+                'aluno_id',
+                $alunosParaFiltro->pluck('id')
+            );
+
+        } elseif ($escolaId) {
+            if (!$escolasPermitidas->contains('id', $escolaId)) {
+                abort(403, 'Você não tem permissão para acessar esta escola.');
+            }
+
+            $query->whereIn(
+                'aluno_id',
+                Aluno::whereIn('id', function ($q) use ($turmasPermitidas) {
+                    $q->select('aluno_id')
+                        ->from('turma_aluno')
+                        ->whereIn('turma_id', $turmasPermitidas->pluck('id'));
+                })->pluck('id')
+            );
         }
 
         $query->when($temFiltroData, function ($q) use ($request) {
