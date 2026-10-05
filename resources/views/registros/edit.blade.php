@@ -127,8 +127,10 @@
         <input type="hidden" name="coco" id="coco-input" value="{{ $cocoAtual }}">
 
         <div class="save-bar">
-            <span class="text-muted small"><i class="bi bi-shield-check"></i> Dados deste registro</span>
-            <button class="save-button" type="submit"><i class="bi bi-save2-fill me-1"></i> Atualizar registro</button>
+            <button class="save-button" type="submit"><i class="bi bi-save2-fill me-1"></i> Atualizar</button>
+            <a href="{{ route('registros.index') }}" class="save-button secondary" style="text-decoration:none;">
+                <i class="bi bi-arrow-left me-1"></i> Voltar
+            </a>
         </div>
     </form>
 

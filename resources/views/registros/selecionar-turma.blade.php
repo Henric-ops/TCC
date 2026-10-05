@@ -9,14 +9,21 @@
 @section('content')
     <div class="frequencia-header">
         <h1>Registro diário</h1>
-
-        <div class="frequencia-header-actions">
-            <span class="frequencia-total">
-                <strong>{{ $turmas->count() }}</strong>
-                {{ $turmas->count() === 1 ? 'turma' : 'turmas' }}
-            </span>
-        </div>
     </div>
+
+    <form method="GET" class="freq-filtros mb-4">
+        <div class="freq-filtro-item">
+            <label for="escola_id">Escola</label>
+            <select name="escola_id" id="escola_id" onchange="this.form.submit()">
+                <option value="">Todas as escolas</option>
+                @foreach($escolasPermitidas as $escola)
+                    <option value="{{ $escola->id }}" {{ (string) $escolaId === (string) $escola->id ? 'selected' : '' }}>
+                        {{ $escola->nome }}
+                    </option>
+                @endforeach
+            </select>
+        </div>
+    </form>
 
     <div class="card frequencia-table-card">
         <div class="table-responsive">
@@ -58,7 +65,7 @@
                             <td colspan="3" class="text-center py-5">
                                 <div class="frequencia-empty">
                                     <i class="bi bi-clipboard2-x" aria-hidden="true"></i>
-                                    <span>Nenhuma turma disponível.</span>
+                                    <span>Nenhuma turma disponível para esta escola.</span>
                                 </div>
                             </td>
                         </tr>

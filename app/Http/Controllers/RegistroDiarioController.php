@@ -122,20 +122,33 @@ class RegistroDiarioController extends Controller
         return view('registros.selecionar-aluno', compact('turma', 'alunos'));
     }
 
-    public function selecionarTurma()
+    public function selecionarTurma(Request $request)
     {
-        $turmas = $this->turmasPermitidas(Auth::user());
+        $user = Auth::user();
+        $escolaId = $request->input('escola_id');
 
-        return view('registros.selecionar-turma', compact('turmas'));
+        $escolasPermitidas = $this->escolasPermitidas($user);
+        $turmas = $this->turmasPermitidas($user)
+            ->when($escolaId, fn($query) => $query->where('escola_id', $escolaId))
+            ->orderBy('nome')
+            ->get();
+
+        return view('registros.selecionar-turma', compact('turmas', 'escolasPermitidas', 'escolaId'));
     }
+
+
 
     private function turmasPermitidas($user)
     {
         if ($user->perfil === 'admin') {
-            return Turma::orderBy('nome')->get();
+            return Turma::query();
         }
 
-        return $user->turmas()->orderBy('nome')->get();
+        if ($user->perfil === 'professor') {
+            return $user->turmas();
+        }
+
+        return Turma::query()->whereRaw('1 = 0');
     }
 
     private function escolasPermitidas($user)
