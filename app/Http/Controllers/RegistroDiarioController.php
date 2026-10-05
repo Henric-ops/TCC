@@ -22,8 +22,10 @@ class RegistroDiarioController extends Controller
         $temFiltroData = $request->filled('inicio') || $request->filled('fim');
 
         $escolasPermitidas = $this->escolasPermitidas($user);
-        $turmasTotais = $this->turmasPermitidas($user);
-
+        $turmasTotais = $this->turmasPermitidas($user)
+            ->with('alunos')
+            ->orderBy('nome')
+            ->get();
         $turmasPermitidas = $turmasTotais
             ->when($escolaId, fn($query) => $query->where('escola_id', $escolaId))
             ->values();

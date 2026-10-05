@@ -127,6 +127,11 @@ Route::middleware(['auth', 'perfil:admin,professor'])//rota para marcação de f
             FrequenciaController::class,
             'index'
         ])->name('frequencia.index');
+
+        Route::put('/frequencia/marcar', [
+            FrequenciaController::class,
+            'atualizar'
+        ])->name('frequencia.atualizar');
     });
 
 
