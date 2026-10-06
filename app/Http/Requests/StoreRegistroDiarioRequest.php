@@ -3,12 +3,13 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Support\Facades\Auth;
 
 class StoreRegistroDiarioRequest extends FormRequest
 {
     public function authorize(): bool
     {
-        return in_array(auth()->user()?->perfil, ['admin', 'professor']);
+        return in_array(Auth::user()?->perfil, ['admin', 'professor']);
     }
 
 

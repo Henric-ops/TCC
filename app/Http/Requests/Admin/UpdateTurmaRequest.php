@@ -3,13 +3,14 @@
 namespace App\Http\Requests\Admin;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Support\Facades\Auth;
 
 
 class UpdateTurmaRequest extends FormRequest
 {
     public function authorize(): bool
     {
-        return $this->user()->perfil === 'admin';
+        return Auth::user()?->perfil === 'admin';
     }
 
     public function rules(): array

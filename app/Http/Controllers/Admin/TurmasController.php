@@ -31,8 +31,7 @@ class TurmasController extends Controller
     public function create()
     {
         $escolas = Escola::orderBy('nome')->get();
-        $professores = User::where('perfil', 'professor')->where('status', 'aprovado')->orderBy('nome')->get();
-
+        $professores = User::where('perfil', 'professor')->where('status', 'aprovado')->with('escolas')->orderBy('nome')->get();
         return view('turmas.create', compact('escolas', 'professores'));
     }
 
@@ -57,7 +56,7 @@ class TurmasController extends Controller
     public function edit(Turma $turma)
     {
         $escolas = Escola::orderBy('nome')->get();
-        $professores = User::where('perfil', 'professor')->where('status', 'aprovado')->orderBy('nome')->get();
+        $professores = User::where('perfil', 'professor')->where('status', 'aprovado')->with('escolas')->orderBy('nome')->get();
         $professoresVinculados = $turma->professores->pluck('id')->toArray();
 
         return view('turmas.edit', compact('turma', 'escolas', 'professores', 'professoresVinculados'));
@@ -80,9 +79,11 @@ class TurmasController extends Controller
             return;
         }
 
-        $foraDaEscola = User::whereIn('id', $professorIds)->where('escola_id', '!=', $escolaId)->exists();
+        $qtdVinculados = User::whereIn('id', $professorIds)
+            ->whereHas('escolas', fn($q) => $q->where('escolas.id', $escolaId))
+            ->count();
 
-        abort_if($foraDaEscola, 422, 'Um ou mais professores selecionados não pertencem à escola escolhida.');
+        abort_if($qtdVinculados !== count($professorIds), 422, 'Um ou mais professores selecionados não atuam na escola escolhida.');
     }
 
     public function destroy(Turma $turma)

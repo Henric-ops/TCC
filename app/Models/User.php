@@ -28,6 +28,16 @@ class User extends Authenticatable
     {
         return $this->belongsTo(Escola::class);
     }
+
+    public function escolas()
+    {
+        return $this->belongsToMany(
+            Escola::class,
+            'escola_professor',
+            'usuario_id',
+            'escola_id'
+        );
+    }
     public function turmas()//método para obter as turmas vinculadas ao usuário
     {
         return $this->belongsToMany(

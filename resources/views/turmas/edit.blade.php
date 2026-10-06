@@ -6,7 +6,10 @@
     <link rel="stylesheet" href="{{ asset('css/usuario-form.css') }}">
     <link rel="stylesheet" href="{{ asset('css/usuario-buttons.css') }}">
     <link rel="stylesheet" href="{{ asset('css/turma-edit.css') }}">
+    
 @endpush
+    <script src="{{ asset('js/turma.js') }}" defer></script>
+
 
 @section('content')
     @php
@@ -137,7 +140,7 @@
                                                 ->implode('');
                                         @endphp
 
-                                        <label class="form-check usuario-form-checkbox" for="professor_{{ $professor->id }}" data-escola="{{ $professor->escola_id }}">
+                                        <label class="form-check usuario-form-checkbox" for="professor_{{ $professor->id }}" data-escolas="{{ $professor->escolas->pluck('id')->implode(',') }}">
                                             <input
                                                 class="form-check-input"
                                                 type="checkbox"
@@ -184,27 +187,4 @@
             </div>
         </div>
     </div>
-
-    <script>
-        const escolaSelect = document.getElementById('escola_id');
-        const professorLabels = document.querySelectorAll('.usuario-form-checkbox');
-
-        function filtrarProfessoresPorEscola() {
-            const escolaId = escolaSelect.value;
-
-            professorLabels.forEach((label) => {
-                const pertence = label.dataset.escola === escolaId;
-                const escondido = escolaId !== '' && !pertence;
-
-                label.style.display = escondido ? 'none' : '';
-
-                if (escondido) {
-                    label.querySelector('input[type=checkbox]').checked = false;
-                }
-            });
-        }
-
-        escolaSelect.addEventListener('change', filtrarProfessoresPorEscola);
-        filtrarProfessoresPorEscola();
-    </script>
 @endsection

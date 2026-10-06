@@ -127,7 +127,7 @@
                                                 ->implode('');
                                         @endphp
 
-                                        <label class="form-check usuario-form-checkbox" for="professor_{{ $professor->id }}" data-escola="{{ $professor->escola_id }}">
+                                        <label class="form-check usuario-form-checkbox" for="professor_{{ $professor->id }}" data-escolas="{{ $professor->escolas->pluck('id')->implode(',') }}">
                                             <input
                                                 class="form-check-input"
                                                 type="checkbox"

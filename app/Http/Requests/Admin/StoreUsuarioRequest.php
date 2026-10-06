@@ -3,13 +3,14 @@
 namespace App\Http\Requests\Admin;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\Rule;
 
 class StoreUsuarioRequest extends FormRequest
 {
     public function authorize(): bool
     {
-        return auth()->user()?->perfil === 'admin';
+        return Auth::user()?->perfil === 'admin';
     }
 
     public function rules(): array // metodo que define as regras de validação para o request
@@ -19,7 +20,9 @@ class StoreUsuarioRequest extends FormRequest
             'email' => 'required|email|unique:usuarios,email',
             'senha' => 'required|string|min:6',
             'perfil' => 'required|in:professor,responsavel',
-            'escola_id' => 'required|exists:escolas,id',
+            'escola_id' => 'required_unless:perfil,professor|nullable|exists:escolas,id',
+            'escolas' => 'required_if:perfil,professor|nullable|array',
+            'escolas.*' => 'exists:escolas,id',
             'alunos' => 'nullable|array',
             'alunos.*' => [
                 Rule::exists('alunos', 'id')->where(
@@ -29,6 +32,7 @@ class StoreUsuarioRequest extends FormRequest
             ],
             'parentesco' => 'nullable|string|max:100|required_if:perfil,responsavel',
         ];
+
     }
 
     public function messages(): array

@@ -92,20 +92,33 @@
                             @enderror
                         </div>
 
-                        <div class="col-md-6 mb-3 usuario-form-field">
-                            <label for="escola_id" class="form-label">Escola</label>
-                            <select name="escola_id" id="escola_id" class="form-select @error('escola_id') is-invalid @enderror" required>
-                                <option value="">Selecione a escola</option>
-                                @foreach($escolas as $escola)
-                                    <option value="{{ $escola->id }}" {{ old('escola_id') == $escola->id ? 'selected' : '' }}>
-                                        {{ $escola->nome }}
-                                    </option>
-                                @endforeach
-                            </select>
-                            @error('escola_id')
-                                <div class="invalid-feedback">{{ $message }}</div>
-                            @enderror
-                        </div>
+                      <div id="bloco-escola-unica" class="mb-3">
+    <label class="form-label">Escola</label>
+    <select name="escola_id" class="form-select @error('escola_id') is-invalid @enderror">
+        <option value="">Selecione</option>
+        @foreach($escolas as $escola)
+            <option value="{{ $escola->id }}" {{ old('escola_id', $usuario->escola_id ?? '') == $escola->id ? 'selected' : '' }}>
+                {{ $escola->nome }}
+            </option>
+        @endforeach
+    </select>
+    @error('escola_id')<div class="invalid-feedback">{{ $message }}</div>@enderror
+</div>
+
+<div id="bloco-professor" class="mb-3" style="display: none;">
+    <label class="form-label">Escolas em que atua</label>
+    <div class="usuario-form-checkbox-list mt-2">
+        @foreach($escolas as $escola)
+            <label class="form-check usuario-form-checkbox" for="escola_{{ $escola->id }}">
+                <input class="form-check-input" type="checkbox" name="escolas[]" value="{{ $escola->id }}"
+                    id="escola_{{ $escola->id }}"
+                    {{ in_array($escola->id, old('escolas', $escolasVinculadas ?? [])) ? 'checked' : '' }}>
+                <span>{{ $escola->nome }}</span>
+            </label>
+        @endforeach
+    </div>
+    @error('escolas')<div class="invalid-feedback d-block">{{ $message }}</div>@enderror
+</div>
                     </div>
 
                     <div id="bloco-responsavel" hidden>
@@ -169,5 +182,24 @@
                 </form>
             </div>
         </div>
+
+
+        <script>
+    const perfilSelect = document.getElementById('perfil');
+    const blocoResponsavel = document.getElementById('bloco-responsavel');
+    const blocoProfessor = document.getElementById('bloco-professor');
+    const blocoEscolaUnica = document.getElementById('bloco-escola-unica');
+
+    function toggleBlocos() {
+        const perfil = perfilSelect.value;
+
+        blocoResponsavel.style.display = perfil === 'responsavel' ? 'block' : 'none';
+        blocoProfessor.style.display = perfil === 'professor' ? 'block' : 'none';
+        blocoEscolaUnica.style.display = perfil === 'professor' ? 'none' : 'block';
+    }
+
+    perfilSelect.addEventListener('change', toggleBlocos);
+    toggleBlocos();
+</script>
     </div>
 @endsection

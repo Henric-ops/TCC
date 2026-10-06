@@ -83,13 +83,17 @@ class UsuarioController extends Controller
         }
 
         $usuario = User::create([
-            'escola_id' => $request->escola_id,
+            'escola_id' => $request->perfil === 'professor' ? null : $request->escola_id,
             'nome' => $request->nome,
             'email' => $request->email,
             'senha' => $request->senha,
             'perfil' => $request->perfil,
             'status' => 'aprovado',
         ]);
+
+        if ($request->perfil === 'professor') {
+            $usuario->escolas()->attach($request->input('escolas', []));
+        }
 
         if ($request->perfil === 'responsavel' && $request->filled('alunos')) {
             $pivotData = collect($request->alunos)->mapWithKeys(fn($alunoId) => [
@@ -106,8 +110,9 @@ class UsuarioController extends Controller
         $escolas = Escola::orderBy('nome')->get();
         $alunos = Aluno::orderBy('nome')->get();
         $alunosVinculados = $usuario->alunosResponsavel->pluck('id')->toArray();
+        $escolasVinculadas = $usuario->escolas->pluck('id')->toArray();
 
-        return view('usuarios.edit', compact('usuario', 'escolas', 'alunos', 'alunosVinculados'));
+        return view('usuarios.edit', compact('usuario', 'escolas', 'alunos', 'alunosVinculados', 'escolasVinculadas'));
     }
 
     public function aprovar(Request $request, User $usuario)//método para aprovar o usuário e se for professr vincular a turma,
@@ -211,7 +216,7 @@ class UsuarioController extends Controller
             $this->validarAlunosDaEscola($request->escola_id, $request->input('alunos', []));
         }
 
-        $usuario->escola_id = $request->escola_id;
+        $usuario->escola_id = $request->perfil === 'professor' ? null : $request->escola_id;
         $usuario->nome = $request->nome;
         $usuario->email = $request->email;
         $usuario->perfil = $request->perfil;
@@ -222,17 +227,16 @@ class UsuarioController extends Controller
 
         $usuario->save();
 
-        if ($request->perfil === 'responsavel') {
+        if ($request->perfil === 'professor') {
+            $usuario->escolas()->sync($request->input('escolas', []));
+            $usuario->alunosResponsavel()->detach();
+
+        } elseif ($request->perfil === 'responsavel') {
             $pivotData = collect($request->alunos ?? [])->mapWithKeys(fn($alunoId) => [
                 $alunoId => ['parentesco' => $request->parentesco],
             ]);
             $usuario->alunosResponsavel()->sync($pivotData);
-        } else {
-            $usuario->alunosResponsavel()->detach();
-        }
-
-        if ($request->perfil !== 'professor' || $escolaMudou) {
-            $usuario->turmas()->detach();
+            $usuario->escolas()->detach();
         }
 
         return redirect()->route('admin.usuarios.index')->with('sucesso', 'Usuário atualizado com sucesso.');
