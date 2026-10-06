@@ -125,8 +125,15 @@ class RegistroDiarioController extends Controller
     {
         $turma = Turma::find($request->query('turma_id'));
 
-        if (!$turma || !$this->turmasPermitidas(Auth::user())->contains('id', $turma->id)) {
-            return redirect()->route('registros.selecionar-turma')->with('erro', 'Selecione uma turma válida.');
+        if (
+            !$turma ||
+            !$this->turmasPermitidas(Auth::user())
+                ->whereKey($turma->id)
+                ->exists()
+        ) {
+            return redirect()
+                ->route('registros.selecionar-turma')
+                ->with('erro', 'Selecione uma turma válida.');
         }
 
         $alunos = $turma->alunos()->orderBy('nome')->get();

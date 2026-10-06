@@ -64,8 +64,6 @@ class TurmasController extends Controller
 
     public function update(UpdateTurmaRequest $request, Turma $turma)
     {
-        $this->validarProfessoresDaEscola($request->escola_id, $request->input('professores', []));
-
         $turma->update($request->only('escola_id', 'nome', 'ano', 'periodo'));
         $turma->professores()->sync($request->professores ?? []);
 

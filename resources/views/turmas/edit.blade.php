@@ -19,15 +19,9 @@
     <div class="usuario-form-page turma-edit-page">
         <div class="usuario-form-header">
             <div class="turma-edit-heading">
-                <a href="{{ route('admin.turmas.index') }}" class="usuario-button turma-edit-back">
-                    <i class="bi bi-arrow-left" aria-hidden="true"></i>
-                    Turmas
-                </a>
 
                 <div class="usuario-form-title">
-                    <span class="usuario-form-title-icon" aria-hidden="true">
-                        <i class="bi bi-pencil-square"></i>
-                    </span>
+                  
                     <div>
                         <h1 class="h4 mb-1">Editar turma</h1>
                         <p class="usuario-form-subtitle">Atualize os dados e os professores vinculados.</p>
@@ -35,13 +29,6 @@
                 </div>
             </div>
 
-            <div class="turma-edit-summary">
-                <i class="bi bi-people-fill turma-edit-summary-icon" aria-hidden="true"></i>
-                <div>
-                    <strong>{{ $turma->nome }}</strong>
-                    <small>{{ $turma->ano }} · {{ $turma->periodo }}</small>
-                </div>
-            </div>
         </div>
 
         <div class="card usuario-form-card">
@@ -65,23 +52,23 @@
                     </div>
                 @endif
 
-                <form action="{{ route('admin.turmas.update', $turma) }}" method="POST">
+                <form action="{{ route('admin.turmas.update', $turma) }}" method="POST" data-professores-sem-restricao-escola>
                     @csrf
                     @method('PUT')
 
                     <div class="row">
                       <div class="mb-3">
-    <label class="form-label">Escola</label>
-    <select name="escola_id" id="escola_id" class="form-select @error('escola_id') is-invalid @enderror">
-        <option value="">Selecione</option>
-        @foreach($escolas as $escola)
-            <option value="{{ $escola->id }}" {{ old('escola_id', $turma->escola_id ?? '') == $escola->id ? 'selected' : '' }}>
-                {{ $escola->nome }}
-            </option>
-        @endforeach
-    </select>
-    @error('escola_id')<div class="invalid-feedback">{{ $message }}</div>@enderror
-</div>
+                                <label class="form-label">Escola</label>
+                                <select name="escola_id" id="escola_id" class="form-select @error('escola_id') is-invalid @enderror">
+                                    <option value="">Selecione</option>
+                                    @foreach($escolas as $escola)
+                                        <option value="{{ $escola->id }}" {{ old('escola_id', $turma->escola_id ?? '') == $escola->id ? 'selected' : '' }}>
+                                            {{ $escola->nome }}
+                                        </option>
+                                    @endforeach
+                                </select>
+                                @error('escola_id')<div class="invalid-feedback">{{ $message }}</div>@enderror
+                            </div>
 
                         <div class="col-md-6 mb-3 usuario-form-field">
                             <label for="nome" class="form-label">Nome</label>
@@ -116,7 +103,7 @@
 
                         <div class="col-12 mb-3 usuario-form-field">
                             <div class="turma-edit-professores-header">
-                                <label class="form-label mb-0">Professores responsáveis</label>
+                                <label for="buscar-professor" class="form-label mb-0">Professores responsáveis</label>
                                 <span class="turma-edit-selected-count">
                                     {{ count($professoresSelecionados) }} selecionados
                                 </span>
@@ -129,18 +116,28 @@
                                     </small>
                                 </div>
                             @else
-                                <div class="usuario-form-checkbox-list mt-2">
+                                <div class="turma-professor-search mt-2">
+                                    <i class="bi bi-search" aria-hidden="true"></i>
+                                    <input
+                                        type="search"
+                                        id="buscar-professor"
+                                        placeholder="Buscar professor pelo nome"
+                                        autocomplete="off"
+                                    >
+                                </div>
+
+                                <div class="usuario-form-checkbox-list turma-professores-list mt-2">
                                     @foreach($professores as $professor)
                                         @php
                                             $professorSelecionado = in_array($professor->id, $professoresSelecionados);
-                                            $iniciais = collect(explode(' ', trim($professor->nome)))
-                                                ->filter()
-                                                ->take(2)
-                                                ->map(fn ($parte) => strtoupper(substr($parte, 0, 1)))
-                                                ->implode('');
                                         @endphp
 
-                                        <label class="form-check usuario-form-checkbox" for="professor_{{ $professor->id }}" data-escolas="{{ $professor->escolas->pluck('id')->implode(',') }}">
+                                        <label
+                                            class="form-check usuario-form-checkbox professor-item"
+                                            for="professor_{{ $professor->id }}"
+                                            data-nome="{{ strtolower($professor->nome) }}"
+                                            data-escolas="{{ $professor->escolas->pluck('id')->implode(',') }}"
+                                        >
                                             <input
                                                 class="form-check-input"
                                                 type="checkbox"
@@ -149,16 +146,8 @@
                                                 id="professor_{{ $professor->id }}"
                                                 {{ $professorSelecionado ? 'checked' : '' }}
                                             >
-                                            <span class="turma-edit-professor-avatar" aria-hidden="true">
-                                                {{ $iniciais }}
-                                            </span>
-                                            <span class="turma-edit-professor-info">
-                                                <strong>{{ $professor->nome }}</strong>
-                                                <small>Professor</small>
-                                            </span>
-                                            <span class="turma-edit-status {{ $professorSelecionado ? '' : 'is-available' }}">
-                                                <i class="bi {{ $professorSelecionado ? 'bi-check-lg' : 'bi-circle' }}" aria-hidden="true"></i>
-                                                {{ $professorSelecionado ? 'Selecionado' : 'Disponível' }}
+                                            <span class="turma-professor-name">
+                                                {{ $professor->nome }}
                                             </span>
                                         </label>
                                     @endforeach

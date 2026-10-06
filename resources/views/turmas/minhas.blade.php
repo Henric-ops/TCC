@@ -4,18 +4,39 @@
 
 @push('styles')
     <link rel="stylesheet" href="{{ asset('css/turmas.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/historico-frequencia.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/alunos.css') }}">
     <link rel="stylesheet" href="{{ asset('css/usuario-buttons.css') }}">
 @endpush
 
 @section('content')
     <div class="turmas-header d-flex justify-content-between align-items-center mb-4">
         <h1>Minhas Turmas</h1>
-
-        <span class="turmas-total">
-            <strong>{{ $turmas->count() }}</strong>
-            {{ $turmas->count() === 1 ? 'turma' : 'turmas' }}
-        </span>
     </div>
+
+    <form method="GET" class="freq-filtros alunos-filtros mb-4">
+        <div class="freq-filtro-item alunos-filtro-item">
+            <label for="escola_id">Escola</label>
+            <select name="escola_id" id="escola_id" class="alunos-filtro-escola">
+                <option value="">Todas as escolas</option>
+                @foreach($escolasPermitidas as $escola)
+                    <option value="{{ $escola->id }}" {{ (string) $escolaId === (string) $escola->id ? 'selected' : '' }}>
+                        {{ $escola->nome }}
+                    </option>
+                @endforeach
+            </select>
+        </div>
+
+        <button type="submit" class="usuario-button usuario-button-primary alunos-filtro-btn">
+            <i class="bi bi-search" aria-hidden="true"></i>
+            Buscar
+        </button>
+
+        <a href="{{ route('turmas.minhas') }}" class="usuario-button usuario-button-muted alunos-filtro-btn">
+            <i class="bi bi-x-lg" aria-hidden="true"></i>
+            Limpar
+        </a>
+    </form>
 
     <div class="card turmas-table-card">
         <div class="table-responsive">
@@ -31,12 +52,7 @@
                 </thead>
                 <tbody>
                     @forelse($turmasPorEscola as $turmasDaEscola)
-                        <tr class="table-light">
-                            <th colspan="5" scope="colgroup" class="text-start">
-                                <i class="bi bi-building" aria-hidden="true"></i>
-                                {{ $turmasDaEscola->first()->escola->nome }}
-                            </th>
-                        </tr>
+
                         @foreach($turmasDaEscola as $turma)
                             <tr>
                                 <td>
