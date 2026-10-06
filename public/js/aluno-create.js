@@ -206,3 +206,37 @@ document.addEventListener("DOMContentLoaded", function () {
 
     atualizarSelecionadas();
 });
+
+document.addEventListener("DOMContentLoaded", function () {
+    const form = document.querySelector(".aluno-form-page form");
+    const escolaSelect = document.getElementById("escola_id");
+    const trigger = document.getElementById("turmaTrigger");
+
+    if (!form || !escolaSelect || !trigger) {
+        return;
+    }
+
+    form.addEventListener("submit", function (event) {
+        const escolaValida = escolaSelect.value !== "";
+        const turmaSelecionada = document.querySelector(
+            'input[name="turmas[]"]:checked',
+        );
+
+        if (!escolaValida || !turmaSelecionada) {
+            event.preventDefault();
+
+            if (!escolaValida) {
+                escolaSelect.focus();
+                escolaSelect.classList.add("is-invalid");
+            }
+
+            if (!turmaSelecionada) {
+                trigger.style.borderColor = "#dc3545";
+                trigger.style.boxShadow =
+                    "0 0 0 0.2rem rgba(220, 53, 69, 0.15)";
+                trigger.setAttribute("aria-invalid", "true");
+                trigger.scrollIntoView({ behavior: "smooth", block: "center" });
+            }
+        }
+    });
+});

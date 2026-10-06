@@ -25,13 +25,17 @@ document.addEventListener("DOMContentLoaded", () => {
             label.style.display = "";
 
             // Mantém vinculados disponíveis para que possam ser desmarcados.
-            input.disabled = !permiteProfessoresDeOutrasEscolas && escolaId !== "" && !pertence;
+            input.disabled =
+                !permiteProfessoresDeOutrasEscolas &&
+                escolaId !== "" &&
+                !pertence;
         });
     }
 
     escolaSelect.addEventListener("change", atualizarProfessoresPorEscola);
     professorLabels.forEach((label) => {
-        label.querySelector('input[type="checkbox"]')
+        label
+            .querySelector('input[type="checkbox"]')
             .addEventListener("change", atualizarProfessoresPorEscola);
     });
 

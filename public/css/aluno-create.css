@@ -1,0 +1,174 @@
+.aluno-form-page {
+    max-width: 940px;
+    margin: 0 auto;
+}
+
+.aluno-create-header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 1rem;
+    margin-bottom: 1.25rem;
+}
+
+.aluno-create-title {
+    margin: 0;
+    color: #263445;
+    font-size: 1.5rem;
+    font-weight: 600;
+    line-height: 1.3;
+}
+
+.aluno-create-subtitle {
+    margin: .35rem 0 0;
+    color: #687586;
+    font-size: .9rem;
+}
+
+.aluno-create-header .usuario-button {
+    flex: 0 0 auto;
+}
+
+.aluno-create-card {
+    overflow: visible;
+    border: 1px solid #dce2e8;
+    border-radius: 7px;
+    background: #fff;
+    box-shadow: none;
+}
+
+.aluno-create-card .card-body {
+    padding: 1.5rem;
+}
+
+.aluno-create-section-heading h2 {
+    margin: 0;
+    color: #303c4b;
+    font-size: 1rem;
+    font-weight: 600;
+}
+
+.aluno-create-divider {
+    height: 1px;
+    margin: 1rem 0 1.35rem;
+    background: #e5e9ee;
+}
+
+.aluno-create-fields {
+    --bs-gutter-x: 1.25rem;
+    --bs-gutter-y: 1rem;
+}
+
+.aluno-form-page .usuario-form-field {
+    margin-bottom: 0 !important;
+}
+
+.aluno-form-page .usuario-form-field .form-label {
+    margin-bottom: .4rem;
+    color: #4b5868;
+    font-size: .86rem;
+    font-weight: 500;
+    letter-spacing: 0;
+    text-transform: none;
+}
+
+.aluno-form-page .usuario-form-field .form-control,
+.aluno-form-page .usuario-form-field .form-select,
+.aluno-form-page .turma-multiselect-trigger {
+    min-height: 2.7rem;
+    border: 1px solid #d5dce5;
+    border-radius: 5px;
+    background-color: #fff;
+    color: #2d3948;
+    font-size: .9rem;
+    box-shadow: none;
+    transition: border-color .15s ease, box-shadow .15s ease;
+}
+
+.aluno-form-page .usuario-form-field .form-control:focus,
+.aluno-form-page .usuario-form-field .form-select:focus,
+.aluno-form-page .turma-multiselect-trigger:focus-visible {
+    border-color: #78a5dc;
+    box-shadow: 0 0 0 3px rgba(55, 119, 190, .1);
+    outline: 0;
+}
+
+.aluno-form-page .turma-multiselect-trigger:hover,
+.aluno-form-page .turma-multiselect.open .turma-multiselect-trigger {
+    border-color: #b8cce4;
+    background: #fff;
+    box-shadow: none;
+}
+
+.aluno-form-page .turma-multiselect.open .turma-multiselect-trigger {
+    border-color: #78a5dc;
+}
+
+.aluno-form-page .turma-multiselect-trigger i {
+    color: #527eaf;
+}
+
+.aluno-form-page .turma-dropdown {
+    border-color: #dce2e8;
+    border-radius: 5px;
+    box-shadow: 0 5px 14px rgba(35, 49, 66, .1);
+}
+
+.aluno-form-page .turma-search {
+    background: #fff;
+}
+
+.aluno-form-page .turma-option:hover {
+    background: #f5f8fc;
+}
+
+.aluno-form-page .turma-dropdown-footer {
+    background: #fff;
+    color: #527eaf;
+}
+
+.aluno-form-page .usuario-form-actions {
+    justify-content: flex-end;
+    gap: .65rem;
+    margin-top: 1.4rem;
+    padding-top: 1.1rem;
+    border-top: 1px solid #e5e9ee;
+}
+
+@media (max-width: 767.98px) {
+    .aluno-form-page .card-body {
+        padding: 1.15rem;
+    }
+
+    .aluno-create-fields {
+        --bs-gutter-x: 1rem;
+        --bs-gutter-y: .9rem;
+    }
+
+    .aluno-form-page .usuario-form-actions {
+        justify-content: flex-end;
+    }
+
+    .aluno-form-page .usuario-form-actions .usuario-button {
+        flex: 0 1 auto;
+    }
+}
+
+@media (max-width: 420px) {
+    .aluno-create-header {
+        align-items: flex-start;
+    }
+
+    .aluno-create-title {
+        font-size: 1.35rem;
+    }
+
+    .aluno-create-subtitle {
+        max-width: 15rem;
+        font-size: .84rem;
+    }
+
+    .aluno-create-header .usuario-button {
+        padding-inline: .65rem;
+    }
+}
