@@ -181,10 +181,12 @@
                             E-mail
                         </th>
 
-                        <th>
-                            <i class="bi bi-person-badge" aria-hidden="true"></i>
-                            Perfil
-                        </th>
+                        @if(!request('perfil'))
+                            <th>
+                                <i class="bi bi-person-badge" aria-hidden="true"></i>
+                                Perfil
+                            </th>
+                        @endif
 
                         <th>
                             <i class="bi bi-activity" aria-hidden="true"></i>
@@ -233,31 +235,21 @@
 
 
 
-                            <td>
-
-                                @if($usuario->perfil === 'professor')
-
-                                    <span class="badge bg-info-subtle text-info-emphasis usuario-badge">
-
-                                        <i class="bi bi-mortarboard-fill" aria-hidden="true"></i>
-
-                                        Professor
-
-                                    </span>
-
-                                @elseif($usuario->perfil === 'responsavel')
-
-                                    <span class="badge bg-secondary-subtle text-secondary-emphasis usuario-badge">
-
-                                        <i class="bi bi-person-heart" aria-hidden="true"></i>
-
-                                        Responsável
-
-                                    </span>
-
-                                @endif
-
-                            </td>
+                            @if(!request('perfil'))
+                                <td>
+                                    @if($usuario->perfil === 'professor')
+                                        <span class="badge bg-info-subtle text-info-emphasis usuario-badge">
+                                            <i class="bi bi-mortarboard-fill" aria-hidden="true"></i>
+                                            Professor
+                                        </span>
+                                    @elseif($usuario->perfil === 'responsavel')
+                                        <span class="badge bg-secondary-subtle text-secondary-emphasis usuario-badge">
+                                            <i class="bi bi-person-heart" aria-hidden="true"></i>
+                                            Responsável
+                                        </span>
+                                    @endif
+                                </td>
+                            @endif
 
 
 
@@ -354,7 +346,7 @@
 
                         <tr>
 
-                            <td colspan="5" class="text-center py-5">
+                            <td colspan="{{ request('perfil') ? 4 : 5 }}" class="text-center py-5">
 
                                 <div class="usuario-empty">
 
