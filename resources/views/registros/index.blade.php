@@ -115,19 +115,25 @@
                             <td>{{ $registro->data->format('d/m/Y') }}</td>
                             <td>{{ $registro->professor->nome }}</td>
                             <td class="text-end">
-                                <div class="freq-actions">
-                                    <a href="{{ route('registros.edit', $registro) }}" class="freq-btn freq-btn-edit">
-                                        <i class="bi bi-pencil-square" aria-hidden="true"></i> Editar
+                                @if(auth()->user()->perfil === 'admin' || $registro->professor_id === auth()->id())
+                                    <a href="{{ route('registros.edit', $registro) }}" class="usuario-action usuario-action-primary"
+                                        title="Editar registro" aria-label="Editar registro">
+                                        <i class="bi bi-pencil-square" aria-hidden="true"></i>
+                                        <span>Editar</span>
                                     </a>
                                     <form action="{{ route('registros.destroy', $registro) }}" method="POST" class="d-inline"
                                         onsubmit="return confirm('Remover este registro?')">
                                         @csrf
                                         @method('DELETE')
-                                        <button type="submit" class="freq-btn freq-btn-delete">
-                                            <i class="bi bi-trash3" aria-hidden="true"></i> Excluir
+                                        <button type="submit" class="usuario-action usuario-action-danger" title="Excluir registro"
+                                            aria-label="Excluir registro">
+                                            <i class="bi bi-trash3" aria-hidden="true"></i>
+                                            <span>Excluir</span>
                                         </button>
                                     </form>
-                                </div>
+                                @else
+                                    <span class="text-muted small">Feito por outro professor</span>
+                                @endif
                             </td>
                         </tr>
                     @endforeach
