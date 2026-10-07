@@ -51,13 +51,6 @@
                     </div>
 
                     <div class="col-md-6 mb-3 verificar-field">
-                        <label class="form-label">Escola</label>
-
-                        <input type="text" class="form-control" value="{{ $usuario->escola?->nome ?? 'Não vinculada' }}"
-                            disabled>
-                    </div>
-
-                    <div class="col-md-6 mb-3 verificar-field">
                         <label class="form-label">Perfil</label>
 
                         <input type="text" class="form-control text-capitalize" value="{{ $usuario->perfil }}" disabled>
