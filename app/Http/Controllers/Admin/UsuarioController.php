@@ -115,19 +115,8 @@ class UsuarioController extends Controller
         return view('usuarios.edit', compact('usuario', 'escolas', 'alunos', 'alunosVinculados', 'escolasVinculadas'));
     }
 
-    public function aprovar(Request $request, User $usuario)//método para aprovar o usuário e se for professr vincular a turma,
-    // se for responsável vincular ao aluno e validar se o aluno pertence a escola selecionada
+    public function aprovar(Request $request, User $usuario)//método para aprovar o usuário e vincular aluno ou turma
     {
-
-        $request->validate([
-            'alunos' => $usuario->perfil === 'responsavel' ? 'required|array|min:1' : 'nullable|array',
-            'alunos.*' => 'exists:alunos,id',
-            'parentesco' => $usuario->perfil === 'responsavel' ? 'required|string|max:100' : 'nullable',
-        ]);
-
-        if ($usuario->perfil === 'responsavel') {
-            $this->validarAlunosDaEscola($usuario->escola_id, $request->input('alunos', []));
-        }
         if ($usuario->status !== 'pendente') {
             return redirect()
                 ->route('admin.usuarios.index')
@@ -142,14 +131,6 @@ class UsuarioController extends Controller
             ]);
 
             $aluno = Aluno::findOrFail($request->aluno_id);
-
-            if ((int) $aluno->escola_id !== (int) $usuario->escola_id) {
-                return back()
-                    ->withErrors([
-                        'aluno_id' => 'O aluno selecionado pertence a outra escola.'
-                    ])
-                    ->withInput();
-            }
 
             $usuario->alunosResponsavel()->sync([
                 $aluno->id => [
@@ -243,11 +224,9 @@ class UsuarioController extends Controller
     }
 
 
-    public function verificar(User $usuario)//método para verificar o usuário e exibir os alunos e turmas da escola
+    public function verificar(User $usuario)//método para verificar o usuário e exibir alunos e turmas disponíveis
     {
-        $alunos = Aluno::where('escola_id', $usuario->escola_id)
-            ->orderBy('nome')
-            ->get();
+        $alunos = Aluno::orderBy('nome')->get();
 
         $turmas = \App\Models\Turma::where('escola_id', $usuario->escola_id)
             ->orderBy('nome')
