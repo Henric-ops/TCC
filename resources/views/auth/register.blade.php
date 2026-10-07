@@ -79,26 +79,13 @@
                     </div>
                 </div>
 
-                <div class="field-row">
-                    <div class="field">
-                        <label for="perfil">Perfil</label>
-                        <select id="perfil" name="perfil" required>
-                            <option value="">Selecione</option>
-                            <option value="professor" {{ old('perfil', request('perfil')) === 'professor' ? 'selected' : '' }}>Professor</option>
-                            <option value="responsavel" {{ old('perfil', request('perfil')) === 'responsavel' ? 'selected' : '' }}>Responsável</option>
-                        </select>
-                    </div>
-                    <div class="field">
-                        <label for="escola_id">Escola</label>
-                        <select id="escola_id" name="escola_id" required>
-                            <option value="">Selecione sua escola</option>
-                            @foreach($escolas as $escola)
-                                <option value="{{ $escola->id }}" {{ old('escola_id') == $escola->id ? 'selected' : '' }}>
-                                    {{ $escola->nome }}
-                                </option>
-                            @endforeach
-                        </select>
-                    </div>
+                <div class="field">
+                    <label for="perfil">Perfil</label>
+                    <select id="perfil" name="perfil" required>
+                        <option value="">Selecione</option>
+                        <option value="professor" {{ old('perfil', request('perfil')) === 'professor' ? 'selected' : '' }}>Professor</option>
+                        <option value="responsavel" {{ old('perfil', request('perfil')) === 'responsavel' ? 'selected' : '' }}>Responsável</option>
+                    </select>
                 </div>
 
                 <button type="submit" class="submit-btn">
