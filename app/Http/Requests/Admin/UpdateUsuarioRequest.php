@@ -24,12 +24,7 @@ class UpdateUsuarioRequest extends FormRequest
             'escolas' => 'required_if:perfil,professor|nullable|array',
             'escolas.*' => 'exists:escolas,id',
             'alunos' => 'nullable|array',
-            'alunos.*' => [
-                Rule::exists('alunos', 'id')->where(
-                    fn($query) =>
-                        $query->where('escola_id', $this->input('escola_id'))
-                ),
-            ],
+            'alunos.*' => 'exists:alunos,id',
             'parentesco' => 'nullable|string|max:100|required_if:perfil,responsavel',
         ];
 

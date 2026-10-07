@@ -76,12 +76,8 @@ class UsuarioController extends Controller
         return view('usuarios.create', compact('escolas', 'alunos'));
     }
 
-    public function store(StoreUsuarioRequest $request)// cria, vincula e valida se o aluno pertence a escola selecionada
+    public function store(StoreUsuarioRequest $request)// cria e vincula usuário a alunos ou escolas
     {
-        if ($request->perfil === 'responsavel') {
-            $this->validarAlunosDaEscola($request->escola_id, $request->input('alunos', []));
-        }
-
         $usuario = User::create([
             'escola_id' => $request->perfil === 'professor' ? null : $request->escola_id,
             'nome' => $request->nome,
@@ -186,12 +182,6 @@ class UsuarioController extends Controller
 
     public function update(UpdateUsuarioRequest $request, User $usuario)
     {
-        $escolaMudou = (int) $usuario->escola_id !== (int) $request->escola_id;
-
-        if ($request->perfil === 'responsavel') {
-            $this->validarAlunosDaEscola($request->escola_id, $request->input('alunos', []));
-        }
-
         $usuario->escola_id = $request->perfil === 'professor' ? null : $request->escola_id;
         $usuario->nome = $request->nome;
         $usuario->email = $request->email;
@@ -239,17 +229,5 @@ class UsuarioController extends Controller
         $usuario->delete();
 
         return redirect()->route('admin.usuarios.index')->with('sucesso', 'Usuário removido. O histórico dele continua preservado.');
-    }
-
-
-    private function validarAlunosDaEscola($escolaId, array $alunoIds): void
-    {
-        if (empty($alunoIds)) {
-            return;
-        }
-
-        $foraDaEscola = Aluno::whereIn('id', $alunoIds)->where('escola_id', '!=', $escolaId)->exists();
-
-        abort_if($foraDaEscola, 422, 'Um ou mais alunos selecionados não pertencem à escola escolhida.');
     }
 }
