@@ -122,31 +122,30 @@ class UsuarioController extends Controller
         if ($usuario->perfil === 'responsavel') {
 
             $request->validate([
-                'aluno_id' => ['required', 'exists:alunos,id'],
+                'alunos' => ['required', 'array', 'min:1'],
+                'alunos.*' => ['required', 'integer', 'distinct', 'exists:alunos,id'],
                 'parentesco' => ['required', 'string', 'max:100'],
             ]);
 
-            $aluno = Aluno::findOrFail($request->aluno_id);
-
-            $usuario->alunosResponsavel()->sync([
-                $aluno->id => [
+            $vinculos = collect($request->alunos)->mapWithKeys(fn($alunoId) => [
+                $alunoId => [
                     'parentesco' => $request->parentesco,
                 ],
             ]);
+            $usuario->alunosResponsavel()->sync($vinculos);
 
         } elseif ($usuario->perfil === 'professor') {
 
             $request->validate([
-                'turma_id' => ['required', 'exists:turmas,id'],
+                'turmas' => ['required', 'array', 'min:1'],
+                'turmas.*' => ['required', 'integer', 'distinct', 'exists:turmas,id'],
             ]);
 
-            $turma = \App\Models\Turma::findOrFail($request->turma_id);
+            $turmasSelecionadas = \App\Models\Turma::whereIn('id', $request->turmas)->get();
 
-            $usuario->turmas()->sync([
-                $turma->id,
-            ]);
+            $usuario->turmas()->sync($turmasSelecionadas->modelKeys());
             $usuario->escolas()->syncWithoutDetaching([
-                $turma->escola_id,
+                ...$turmasSelecionadas->pluck('escola_id')->unique()->all(),
             ]);
 
         } else {

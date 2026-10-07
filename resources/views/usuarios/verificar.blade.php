@@ -53,7 +53,8 @@
                     <div class="col-md-6 mb-3 verificar-field">
                         <label class="form-label">Escola</label>
 
-                        <input type="text" class="form-control" value="{{ $usuario->escola->nome }}" disabled>
+                        <input type="text" class="form-control" value="{{ $usuario->escola?->nome ?? 'Não vinculada' }}"
+                            disabled>
                     </div>
 
                     <div class="col-md-6 mb-3 verificar-field">
@@ -80,25 +81,29 @@
 
                         <div class="mb-3 verificar-field">
 
-                            <label class="form-label">
-                                Aluno
+                            <label class="form-label" for="alunos">
+                                Alunos
                             </label>
 
-                            <select name="aluno_id" class="form-select @error('aluno_id') is-invalid @enderror" required>
+                            <input type="search" class="form-control mb-2" id="buscar-aluno"
+                                placeholder="Buscar aluno" autocomplete="off" data-aluno-search>
 
-                                <option value="">
-                                    Selecione o aluno
-                                </option>
-
+                            <div class="border rounded p-3" style="max-height: 15rem; overflow-y: auto;">
                                 @foreach($alunos as $aluno)
-                                    <option value="{{ $aluno->id }}" {{ old('aluno_id') == $aluno->id ? 'selected' : '' }}>
-                                        {{ $aluno->nome }}
-                                    </option>
+                                    <div class="form-check" data-aluno-option>
+                                        <input class="form-check-input @error('alunos') is-invalid @enderror"
+                                            type="checkbox" name="alunos[]" value="{{ $aluno->id }}"
+                                            id="aluno_{{ $aluno->id }}"
+                                            {{ in_array($aluno->id, old('alunos', [])) ? 'checked' : '' }}>
+                                        <label class="form-check-label" for="aluno_{{ $aluno->id }}">
+                                            {{ $aluno->nome }}
+                                        </label>
+                                    </div>
                                 @endforeach
+                                <p class="text-muted mb-0 d-none" data-aluno-empty>Nenhum aluno encontrado.</p>
+                            </div>
 
-                            </select>
-
-                            @error('aluno_id')
+                            @error('alunos')
                                 <div class="invalid-feedback">
                                     {{ $message }}
                                 </div>
@@ -173,27 +178,40 @@
 
                         <div class="mb-3 verificar-field">
 
-                            <label class="form-label">
-                                Turma
+                            <label class="form-label" for="filtro-escola-turma">
+                                Escola
                             </label>
 
-                            <select name="turma_id" class="form-select @error('turma_id') is-invalid @enderror" required>
-
-                                <option value="">
-                                    Selecione a turma
-                                </option>
-
-                                @foreach($turmas as $turma)
-
-                                    <option value="{{ $turma->id }}">
-                                        {{ $turma->nome }} - {{ $turma->escola->nome }}
-                                    </option>
-
+                            <select id="filtro-escola-turma" class="form-select mb-2" data-turma-school-filter>
+                                <option value="">Todas as escolas</option>
+                                @foreach($turmas->pluck('escola')->unique('id')->sortBy('nome') as $escola)
+                                    <option value="{{ $escola->id }}">{{ $escola->nome }}</option>
                                 @endforeach
-
                             </select>
 
-                            @error('turma_id')
+                            <label class="form-label" for="buscar-turma">
+                                Turmas
+                            </label>
+
+                            <input type="search" class="form-control mb-2" id="buscar-turma"
+                                placeholder="Buscar turma" autocomplete="off" data-turma-search>
+
+                            <div class="border rounded p-3" style="max-height: 15rem; overflow-y: auto;">
+                                @foreach($turmas as $turma)
+                                    <div class="form-check" data-turma-option data-school-id="{{ $turma->escola_id }}">
+                                        <input class="form-check-input @error('turmas') is-invalid @enderror"
+                                            type="checkbox" name="turmas[]" value="{{ $turma->id }}"
+                                            id="turma_{{ $turma->id }}"
+                                            {{ in_array($turma->id, old('turmas', [])) ? 'checked' : '' }}>
+                                        <label class="form-check-label" for="turma_{{ $turma->id }}">
+                                            {{ $turma->nome }} - {{ $turma->escola->nome }}
+                                        </label>
+                                    </div>
+                                @endforeach
+                                <p class="text-muted mb-0 d-none" data-turma-empty>Nenhuma turma encontrada.</p>
+                            </div>
+
+                            @error('turmas')
                                 <div class="invalid-feedback">
                                     {{ $message }}
                                 </div>
