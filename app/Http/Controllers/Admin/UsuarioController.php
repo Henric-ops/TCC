@@ -146,16 +146,11 @@ class UsuarioController extends Controller
 
             $turma = \App\Models\Turma::findOrFail($request->turma_id);
 
-            if ((int) $turma->escola_id !== (int) $usuario->escola_id) {
-                return back()
-                    ->withErrors([
-                        'turma_id' => 'A turma selecionada pertence a outra escola.'
-                    ])
-                    ->withInput();
-            }
-
             $usuario->turmas()->sync([
                 $turma->id,
+            ]);
+            $usuario->escolas()->syncWithoutDetaching([
+                $turma->escola_id,
             ]);
 
         } else {
@@ -228,7 +223,7 @@ class UsuarioController extends Controller
     {
         $alunos = Aluno::orderBy('nome')->get();
 
-        $turmas = \App\Models\Turma::where('escola_id', $usuario->escola_id)
+        $turmas = \App\Models\Turma::with('escola')
             ->orderBy('nome')
             ->get();
 

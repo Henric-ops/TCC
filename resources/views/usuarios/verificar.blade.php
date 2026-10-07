@@ -186,7 +186,7 @@
                                 @foreach($turmas as $turma)
 
                                     <option value="{{ $turma->id }}">
-                                        {{ $turma->nome }}
+                                        {{ $turma->nome }} - {{ $turma->escola->nome }}
                                     </option>
 
                                 @endforeach
