@@ -132,7 +132,7 @@
                                         </button>
                                     </form>
                                 @else
-                                    <span class="text-muted small">Feito por outro professor</span>
+                                    <span class="text-muted small">Sem permissão</span>
                                 @endif
                             </td>
                         </tr>

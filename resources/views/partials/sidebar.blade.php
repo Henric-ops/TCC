@@ -91,7 +91,8 @@
                 <span class="lk-nav-label">Análise</span>
 
                 @if(auth()->user()->perfil === 'admin')
-                    <a href="{{ url('/relatorios') }}" class="lk-nav-item {{ request()->is('relatorios*') ? 'active' : '' }}">
+                    <a href="{{ route('admin.relatorios.index') }}"
+                        class="lk-nav-item {{ request()->routeIs('admin.relatorios.*') ? 'active' : '' }}">
                         <i class="bi bi-bar-chart"></i> Relatórios
                     </a>
                 @endif
