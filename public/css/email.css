@@ -356,3 +356,157 @@
     }
 
 }
+
+.email-eyebrow,
+.section-title i,
+.notice-icon,
+.email-notice strong {
+    color: #3D68DD;
+}
+
+.email-header-icon,
+.email-card-icon {
+    border-radius: 10px;
+    background: #EAF0FF;
+    color: #3D68DD;
+}
+
+.email-alert {
+    border-radius: 8px;
+}
+
+.email-card {
+    border-color: #E8ECF5;
+    border-radius: 14px;
+    box-shadow: 0 2px 10px rgba(30, 40, 90, .05);
+}
+
+.email-card-header {
+    padding: 18px 24px;
+    background: #FAFBFE;
+}
+
+.email-section {
+    padding: 24px 24px 5px;
+}
+
+.section-title {
+    color: #1B2141;
+}
+
+.input-wrapper select,
+.form-group input {
+    border-radius: 8px;
+}
+
+.input-wrapper input {
+    padding-left: 40px;
+}
+
+.input-wrapper select:focus,
+.form-group input:focus,
+.editor-wrapper textarea:focus {
+    border-color: #4C7DF5;
+    box-shadow: 0 0 0 3px rgba(76, 125, 245, .12);
+}
+
+.responsavel-info {
+    background: #F3F6FF;
+    color: #3D68DD;
+}
+
+.search-status {
+    margin-top: 6px;
+    color: #7b8190;
+    font-size: .72rem;
+}
+
+.email-notice {
+    border-color: #DCE5FF;
+    border-radius: 8px;
+    background: #F5F7FF;
+}
+
+.btn-cancel,
+.btn-send {
+    border-radius: 8px;
+}
+
+.btn-send {
+    background: #4C7DF5;
+    box-shadow: 0 4px 10px rgba(76, 125, 245, .2);
+}
+
+.btn-send:hover {
+    background: #3D68DD;
+    box-shadow: 0 6px 14px rgba(76, 125, 245, .23);
+}
+
+@media (max-width: 768px) {
+
+    .email-card-header,
+    .email-section {
+        padding-left: 18px;
+        padding-right: 18px;
+    }
+}
+
+.autocomplete-wrapper {
+    z-index: 5;
+}
+
+.student-suggestions {
+    position: absolute;
+    top: calc(100% + 6px);
+    right: 0;
+    left: 0;
+    z-index: 20;
+    max-height: 18rem;
+    overflow-y: auto;
+    border: 1px solid #DCE5FF;
+    border-radius: 8px;
+    background: #fff;
+    box-shadow: 0 8px 20px rgba(30, 40, 90, .12);
+}
+
+.student-suggestions[hidden] {
+    display: none;
+}
+
+.student-suggestion {
+    display: flex;
+    width: 100%;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 10px 14px;
+    border: 0;
+    border-bottom: 1px solid #F1F2F8;
+    background: #fff;
+    color: #333A54;
+    font: inherit;
+    text-align: left;
+    cursor: pointer;
+}
+
+.student-suggestion:last-child {
+    border-bottom: 0;
+}
+
+.student-suggestion:hover,
+.student-suggestion.is-active {
+    background: #F5F7FF;
+    color: #315BCB;
+}
+
+.student-suggestion-school {
+    flex: 0 0 auto;
+    color: #7b8190;
+    font-size: .72rem;
+}
+
+.student-suggestion-empty {
+    padding: 10px 14px;
+    color: #7b8190;
+    font-size: .82rem;
+}

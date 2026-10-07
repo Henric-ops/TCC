@@ -20,6 +20,8 @@ class EmailController extends Controller
         $alunosEmail = $alunos->map(function ($aluno) {
             return [
                 'id' => $aluno->id,
+                'nome' => $aluno->nome,
+                'escola' => $aluno->escola?->nome,
                 'responsaveis' => $aluno->responsaveis->map(function ($responsavel) {
                     return [
                         'id' => $responsavel->id,
@@ -30,7 +32,7 @@ class EmailController extends Controller
             ];
         })->values();
 
-        return view('emails.create', compact('alunos', 'alunosEmail'));
+        return view('emails.create', compact('alunosEmail'));
     }
 
     public function enviar(Request $request)
@@ -99,11 +101,11 @@ class EmailController extends Controller
     private function alunosPermitidos($user)//função para verificar se o usuário é admin ou professor, e retorna os alunos permitidos
     {
         if ($user->perfil === 'admin') {
-            return Aluno::with('responsaveis')->orderBy('nome')->get();
+            return Aluno::with(['responsaveis', 'escola'])->orderBy('nome')->get();
         }
 
         return Turma::whereHas('professores', fn($q) => $q->where('usuario_id', $user->id))
-            ->with('alunos.responsaveis')
+            ->with(['alunos.responsaveis', 'alunos.escola'])
             ->get()
             ->pluck('alunos')
             ->flatten()

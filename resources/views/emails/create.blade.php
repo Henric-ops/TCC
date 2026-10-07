@@ -1,23 +1,23 @@
 @extends('layout.app')
 
-@section('title', 'Enviar e-mail')
+@section('title', 'Enviar comunicado')
 
 @section('content')
 
     <link rel="stylesheet" href="{{ asset('css/email.css') }}">
     <div class="email-page">
 
-        {{-- Cabeçalho --}}
+
         <div class="email-header">
 
             <div>
 
                 <h1>
-                    Enviar e-mail
+                    Enviar comunicado
                 </h1>
                 <p>
-                    Preencha os dados abaixo para enviar uma mensagem.
-
+                    Selecione o aluno e escreva uma mensagem para o responsável.
+                </p>
             </div>
 
             <div class="email-header-icon">
@@ -64,11 +64,7 @@
                 </div>
 
                 <div>
-                    <h2>Novo e-mail</h2>
-
-                    <p>
-                        Preencha os dados abaixo para enviar uma mensagem.
-                    </p>
+                    <h2>Nova mensagem</h2>
                 </div>
 
             </div>
@@ -91,31 +87,23 @@
                     <!-- Aluno -->
                     <div class="form-group">
 
-                        <label for="aluno_id">
+                        <label for="buscar_aluno">
                             Aluno
                             <span>*</span>
                         </label>
 
-                        <div class="input-wrapper">
+                        <div class="input-wrapper autocomplete-wrapper">
+                            <i class="bi bi-search"></i>
+                            <input type="search" id="buscar_aluno" class="@error('aluno_id') is-invalid @enderror"
+                                placeholder="Digite o nome do aluno" autocomplete="off" required role="combobox"
+                                aria-autocomplete="list" aria-expanded="false" aria-controls="alunoSugestoes"
+                                data-student-search>
+                            <input type="hidden" name="aluno_id" id="aluno_id" value="{{ old('aluno_id') }}">
+                            <div id="alunoSugestoes" class="student-suggestions" role="listbox" hidden></div>
+                        </div>
 
-                            <i class="bi bi-person"></i>
-
-                            <select name="aluno_id" id="aluno_id" class="@error('aluno_id') is-invalid @enderror" required>
-
-                                <option value="">
-                                    Selecione o aluno
-                                </option>
-
-                                @foreach($alunos as $aluno)
-
-                                    <option value="{{ $aluno->id }}" {{ old('aluno_id') == $aluno->id ? 'selected' : '' }}>
-                                        {{ $aluno->nome }}
-                                    </option>
-
-                                @endforeach
-
-                            </select>
-
+                        <div id="resultadoBuscaAluno" class="search-status" aria-live="polite">
+                            Digite para buscar e selecione um aluno nas sugestões.
                         </div>
 
                         @error('aluno_id')
@@ -247,6 +235,7 @@
     </div>
     <script>
         window.alunosEmail = @json($alunosEmail);
+        window.oldAlunoEmail = @json(old('aluno_id'));
         window.oldResponsavelEmail = @json(old('destinatario_id'));
     </script>
 
