@@ -73,14 +73,7 @@
                             <i class="bi bi-person" aria-hidden="true"></i>
                             Aluno
                         </th>
-                        <th>
-                            <i class="bi bi-calendar3" aria-hidden="true"></i>
-                            Período
-                        </th>
-                        <th>
-                            <i class="bi bi-person-badge" aria-hidden="true"></i>
-                            Responsável pelo registro
-                        </th>
+
                         <th>
                             <i class="bi bi-file-earmark-check" aria-hidden="true"></i>
                             Conteúdo
@@ -96,9 +89,14 @@
                 <tbody>
                     @forelse ($boletins as $boletim)
                         <tr>
-                            <td><strong>{{ $boletim->aluno->nome }}</strong></td>
-                            <td>{{ $boletim->periodo }}</td>
-                            <td>{{ $boletim->usuario->nome }}</td>
+                            <td>
+                                <strong>
+                                    {{ $boletim->aluno?->nome ?? 'Aluno não disponível' }}
+                                </strong>
+                                @if ($boletim->aluno?->trashed())
+                                    <span class="badge bg-secondary-subtle text-secondary-emphasis ms-1">Desligado</span>
+                                @endif
+                            </td>
                             <td>
                                 @if ($boletim->observacao && ($boletim->documento || $boletim->arquivo_pdf))
                                     <span class="badge bg-success-subtle text-success-emphasis">
@@ -119,8 +117,18 @@
                                 <a href="{{ route('boletins.show', $boletim) }}" class="usuario-action usuario-action-primary"
                                     title="Visualizar boletim" aria-label="Visualizar boletim">
                                     <i class="bi bi-eye" aria-hidden="true"></i>
-                                    <span>Visualizar</span>
+                                    <span>Ver</span>
                                 </a>
+                                <form method="POST" action="{{ route('boletins.destroy', $boletim) }}" class="d-inline"
+                                    onsubmit="return confirm('Tem certeza que deseja excluir este boletim?')">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="submit" class="usuario-action usuario-action-danger" title="Excluir boletim"
+                                        aria-label="Excluir boletim">
+                                        <i class="bi bi-trash" aria-hidden="true"></i>
+                                        <span>Excluir</span>
+                                    </button>
+                                </form>
                             </td>
                         </tr>
                     @empty

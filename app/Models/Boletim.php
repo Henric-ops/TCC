@@ -38,7 +38,7 @@ class Boletim extends Model
 
     public function aluno(): BelongsTo
     {
-        return $this->belongsTo(Aluno::class);
+        return $this->belongsTo(Aluno::class)->withTrashed();
     }
 
     public function usuario(): BelongsTo

@@ -24,7 +24,6 @@ class BoletimController extends Controller
             403
         );
 
-        $alunosPermitidos = $this->alunosPermitidos($user);
         $busca = $request->input('busca');
         $turmaId = $request->input('turma_id');
 
@@ -45,7 +44,10 @@ class BoletimController extends Controller
             'usuario',
             'documento:id,boletim_id,nome_original,tamanho',
         ])
-            ->whereIn('aluno_id', $alunosPermitidos->pluck('id'))
+            ->when(
+                $user->perfil === 'professor',
+                fn($query) => $query->where('usuario_id', $user->id)
+            )
             ->when($busca, function ($query) use ($busca) {
                 $query->whereHas('aluno', function ($alunoQuery) use ($busca) {
                     $alunoQuery->where('nome', 'like', '%' . $busca . '%');
@@ -212,7 +214,9 @@ class BoletimController extends Controller
 
         abort_unless($user->perfil === 'responsavel', 403);
 
-        $alunosIds = $user->alunosResponsavel->pluck('id');
+        $alunosIds = $user->alunosResponsavel()
+            ->withTrashed()
+            ->pluck('alunos.id');
 
         $boletins = Boletim::with([
             'aluno.escola',
@@ -231,17 +235,7 @@ class BoletimController extends Controller
     {
         $user = Auth::user();
 
-        abort_unless(
-            in_array($user->perfil, ['admin', 'professor']),
-            403
-        );
-
-        $alunosPermitidos = $this->alunosPermitidos($user);
-
-        abort_unless(
-            $alunosPermitidos->contains('id', $boletim->aluno_id),
-            403
-        );
+        abort_unless($this->podeAcessarComoEquipe($user, $boletim), 403);
 
         $boletim->load([
             'aluno.escola',
@@ -253,13 +247,28 @@ class BoletimController extends Controller
         return view('boletins.show', compact('boletim'));
     }
 
+    public function destroy(Boletim $boletim)
+    {
+        $user = Auth::user();
+
+        abort_unless($this->podeAcessarComoEquipe($user, $boletim), 403);
+
+        $boletim->delete();
+
+        return redirect()
+            ->route('boletins.index')
+            ->with('sucesso', 'Boletim excluído com sucesso.');
+    }
+
     public function meuBoletim(Boletim $boletim)
     {
         $user = Auth::user();
 
         abort_unless($user->perfil === 'responsavel', 403);
 
-        $alunosIds = $user->alunosResponsavel->pluck('id');
+        $alunosIds = $user->alunosResponsavel()
+            ->withTrashed()
+            ->pluck('alunos.id');
 
         abort_unless(
             $alunosIds->contains($boletim->aluno_id),
@@ -280,17 +289,7 @@ class BoletimController extends Controller
     {
         $user = Auth::user();
 
-        abort_unless(
-            in_array($user->perfil, ['admin', 'professor']),
-            403
-        );
-
-        $alunosPermitidos = $this->alunosPermitidos($user);
-
-        abort_unless(
-            $alunosPermitidos->contains('id', $boletim->aluno_id),
-            403
-        );
+        abort_unless($this->podeAcessarComoEquipe($user, $boletim), 403);
 
         $boletim->load([
             'aluno.escola',
@@ -319,7 +318,9 @@ class BoletimController extends Controller
 
         abort_unless($user->perfil === 'responsavel', 403);
 
-        $alunosIds = $user->alunosResponsavel->pluck('id');
+        $alunosIds = $user->alunosResponsavel()
+            ->withTrashed()
+            ->pluck('alunos.id');
 
         abort_unless(
             $alunosIds->contains($boletim->aluno_id),
@@ -352,13 +353,12 @@ class BoletimController extends Controller
         $user = Auth::user();
 
         if (in_array($user->perfil, ['admin', 'professor'])) {
-
-            $permitido = $this->alunosPermitidos($user)
-                ->contains('id', $boletim->aluno_id);
+            $permitido = $this->podeAcessarComoEquipe($user, $boletim);
 
         } elseif ($user->perfil === 'responsavel') {
 
             $permitido = $user->alunosResponsavel()
+                ->withTrashed()
                 ->where('alunos.id', $boletim->aluno_id)
                 ->exists();
 
@@ -379,7 +379,7 @@ class BoletimController extends Controller
             200,
             [
                 'Content-Type' => 'application/pdf',
-                    'Content-Disposition' =>
+                'Content-Disposition' =>
                     ($request->boolean('download') ? 'attachment' : 'inline') .
                     '; filename="boletim-' . $boletim->id . '.pdf"',
                 'X-Content-Type-Options' => 'nosniff',
@@ -405,5 +405,14 @@ class BoletimController extends Controller
             ->unique('id')
             ->sortBy('nome')
             ->values();
+    }
+
+    private function podeAcessarComoEquipe($user, Boletim $boletim): bool
+    {
+        return $user->perfil === 'admin'
+            || (
+                $user->perfil === 'professor'
+                && (int) $boletim->usuario_id === (int) $user->id
+            );
     }
 }

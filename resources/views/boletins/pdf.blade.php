@@ -177,6 +177,9 @@
                 <span class="label">Aluno</span>
                 <span class="valor">
                     {{ $boletim->aluno->nome }}
+                    @if ($boletim->aluno->trashed())
+                        (Desligado)
+                    @endif
                 </span>
             </td>
 

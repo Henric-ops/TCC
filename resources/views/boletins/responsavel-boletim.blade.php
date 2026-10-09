@@ -30,7 +30,12 @@
                 <tbody>
                     @forelse ($boletins as $boletim)
                         <tr>
-                            <td><strong>{{ $boletim->aluno->nome }}</strong></td>
+                            <td>
+                                <strong>{{ $boletim->aluno->nome }}</strong>
+                                @if ($boletim->aluno->trashed())
+                                    <span class="badge bg-secondary-subtle text-secondary-emphasis ms-1">Desligado</span>
+                                @endif
+                            </td>
                             <td>{{ $boletim->periodo }}</td>
                             <td>
                                 @if ($boletim->observacao && ($boletim->documento || $boletim->arquivo_pdf))

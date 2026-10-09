@@ -67,6 +67,9 @@
 
                         <div class="boletim-detail-value">
                             {{ $boletim->aluno->nome }}
+                            @if ($boletim->aluno->trashed())
+                                <span class="badge bg-secondary-subtle text-secondary-emphasis ms-1">Desligado</span>
+                            @endif
                         </div>
 
                     </div>

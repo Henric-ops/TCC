@@ -237,9 +237,6 @@
 
         <h1>Relatório de Acompanhamento da Turma</h1>
 
-        <div class="subtitulo">
-            Educação Infantil
-        </div>
     </div>
 
 
@@ -301,14 +298,6 @@
             </tr>
         </table>
 
-        <div class="barra-titulo">
-            Percentual médio de presença
-        </div>
-
-        <div class="barra-fundo">
-            <div class="barra-progresso" style="width: {{ max(0, min(100, $mediaPresencaTurma)) }}%;">
-            </div>
-        </div>
     </div>
 
 

@@ -232,6 +232,11 @@ Route::middleware(['auth', 'perfil:admin,professor'])->group(function () {
         'store'
     ])->name('boletins.store');
 
+    Route::delete('/boletins/{boletim}', [
+        BoletimController::class,
+        'destroy'
+    ])->name('boletins.destroy');
+
     Route::get('/boletins/{boletim}', [
         BoletimController::class,
         'show'
