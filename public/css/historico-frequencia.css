@@ -234,6 +234,10 @@
     font-size: .9rem;
 }
 
+.registros-mobile-results {
+    display: none;
+}
+
 @media (max-width: 767.98px) {
     .registros-index-header {
         align-items: stretch !important;
@@ -349,5 +353,153 @@
 
     .registros-row-actions .usuario-action {
         min-height: 2.75rem;
+    }
+
+    .registros-desktop-results {
+        display: none;
+    }
+
+    .registros-mobile-results {
+        display: grid;
+        gap: 1rem;
+    }
+
+    .registro-result-card {
+        padding: 1rem;
+        border: 1px solid #edf0f6;
+        border-radius: 18px;
+        background: #fff;
+        box-shadow: 0 8px 22px rgba(30, 40, 90, .07);
+    }
+
+    .registro-result-heading {
+        display: grid;
+        grid-template-columns: 3.25rem minmax(0, 1fr) auto;
+        align-items: center;
+        gap: .7rem;
+    }
+
+    .registro-result-avatar {
+        display: inline-flex;
+        width: 3.25rem;
+        height: 3.25rem;
+        align-items: center;
+        justify-content: center;
+        border-radius: 50%;
+        background: #eaf1ff;
+        color: #4c7df5;
+        font-size: 1.45rem;
+    }
+
+    .registro-result-identity {
+        min-width: 0;
+    }
+
+    .registro-result-identity h2 {
+        overflow-wrap: anywhere;
+        margin: 0 0 .35rem;
+        color: #1b2141;
+        font-size: 1.03rem;
+        font-weight: 700;
+        line-height: 1.25;
+    }
+
+    .registro-result-teacher {
+        display: flex;
+        align-items: flex-start;
+        gap: .4rem;
+        color: #333a54;
+        font-size: .82rem;
+        line-height: 1.4;
+        overflow-wrap: anywhere;
+    }
+
+    .registro-result-teacher>i {
+        flex: 0 0 auto;
+        color: #687386;
+        font-size: 1rem;
+    }
+
+    .registro-result-teacher-label {
+        color: #8992a9;
+        font-weight: 600;
+    }
+
+    .registro-result-date {
+        display: inline-flex;
+        min-height: 2.75rem;
+        align-items: center;
+        gap: .4rem;
+        padding: .4rem .6rem;
+        border-radius: 10px;
+        background: #f1f5ff;
+        color: #315fc3;
+        font-size: .8rem;
+        font-weight: 600;
+        white-space: nowrap;
+    }
+
+    .registro-result-date i {
+        font-size: .95rem;
+    }
+
+    .registro-result-actions {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: .55rem;
+        margin-top: 1rem;
+    }
+
+    .registro-result-actions form {
+        min-width: 0;
+        margin: 0;
+    }
+
+    .registro-result-actions .usuario-action {
+        width: 100%;
+        min-height: 2.75rem;
+        font-size: .88rem;
+    }
+
+    .registro-result-locked {
+        display: flex;
+        min-height: 3.75rem;
+        align-items: center;
+        gap: .8rem;
+        margin-top: 1rem;
+        padding: .8rem 1rem;
+        border-radius: 12px;
+        background: #f1f3f7;
+        color: #59677d;
+        font-size: .84rem;
+        line-height: 1.4;
+    }
+
+    .registro-result-locked i {
+        flex: 0 0 auto;
+        font-size: 1.15rem;
+    }
+}
+
+@media (max-width: 380px) {
+    .registro-result-card {
+        padding: .85rem;
+    }
+
+    .registro-result-heading {
+        grid-template-columns: 2.8rem minmax(0, 1fr);
+    }
+
+    .registro-result-avatar {
+        width: 2.8rem;
+        height: 2.8rem;
+        grid-row: span 2;
+        font-size: 1.25rem;
+    }
+
+    .registro-result-date {
+        grid-column: 2;
+        justify-self: start;
+        margin-top: .2rem;
     }
 }

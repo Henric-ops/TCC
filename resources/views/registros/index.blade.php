@@ -24,7 +24,7 @@
     <script src="{{ asset('js/frequencia-filtros.js') }}"></script>
 
     <div class="registros-index-header d-flex justify-content-between align-items-center mb-4">
-        <h1 class="freq-title mb-0">Registros Diários</h1>
+        <h1 class="freq-title mb-0">{{ $temFiltroData ? 'Resultados da busca' : 'Registros Diários' }}</h1>
         <a href="{{ route('registros.selecionar-turma') }}" class="usuario-button usuario-button-primary">
             <i class="bi bi-plus-lg" aria-hidden="true"></i> Novo registro
         </a>
@@ -91,15 +91,15 @@
         </a>
     </form>
 
-    <p class="text-muted small mb-3">
+    <p class="registros-results-subtitle text-muted small mb-3">
         {{ $temFiltroData ? 'Mostrando período selecionado.' : 'Mostrando apenas hoje — use os filtros para ver outras datas.' }}
     </p>
 
-    <div class="freq-panel">
+    <div class="freq-panel {{ $registros->isNotEmpty() ? 'registros-desktop-results' : '' }}">
         @if($registros->isEmpty())
             <div class="freq-empty">Nenhum registro encontrado.</div>
         @else
-            <table class="freq-table freq-history-table registros-history-table">
+            <table class="freq-table registros-desktop-table">
                 <thead>
                     <tr>
                         <th>Aluno</th>
@@ -143,6 +143,55 @@
             </table>
         @endif
     </div>
+
+    @if($registros->isNotEmpty())
+        <div class="registros-mobile-results">
+            @foreach($registros as $registro)
+                <article class="registro-result-card">
+                    <div class="registro-result-heading">
+                        <span class="registro-result-avatar" aria-hidden="true">
+                            <i class="bi bi-person-fill"></i>
+                        </span>
+                        <div class="registro-result-identity">
+                            <h2>{{ $registro->aluno->nome }}</h2>
+                            <div class="registro-result-teacher">
+                                <i class="bi bi-mortarboard" aria-hidden="true"></i>
+                                <span><span class="registro-result-teacher-label">Professor:</span>
+                                    {{ $registro->professor->nome }}</span>
+                            </div>
+                        </div>
+                        <time class="registro-result-date" datetime="{{ $registro->data->format('Y-m-d') }}">
+                            <i class="bi bi-calendar3" aria-hidden="true"></i>
+                            {{ $registro->data->format('d/m/Y') }}
+                        </time>
+                    </div>
+
+                    @if(auth()->user()->perfil === 'admin' || $registro->professor_id === auth()->id())
+                        <div class="registro-result-actions">
+                            <a href="{{ route('registros.edit', $registro) }}" class="usuario-action usuario-action-primary">
+                                <i class="bi bi-pencil-square" aria-hidden="true"></i>
+                                <span>Editar</span>
+                            </a>
+                            <form action="{{ route('registros.destroy', $registro) }}" method="POST"
+                                onsubmit="return confirm('Remover este registro?')">
+                                @csrf
+                                @method('DELETE')
+                                <button type="submit" class="usuario-action usuario-action-danger">
+                                    <i class="bi bi-trash3" aria-hidden="true"></i>
+                                    <span>Excluir</span>
+                                </button>
+                            </form>
+                        </div>
+                    @else
+                        <div class="registro-result-locked">
+                            <i class="bi bi-lock" aria-hidden="true"></i>
+                            <span>Sem permissão para editar ou excluir.</span>
+                        </div>
+                    @endif
+                </article>
+            @endforeach
+        </div>
+    @endif
 
     <div class="mt-3">{{ $registros->appends(request()->query())->links() }}</div>
 @endsection
