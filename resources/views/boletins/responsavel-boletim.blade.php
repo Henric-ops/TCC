@@ -33,11 +33,11 @@
                             <td><strong>{{ $boletim->aluno->nome }}</strong></td>
                             <td>{{ $boletim->periodo }}</td>
                             <td>
-                                @if ($boletim->observacao && $boletim->arquivo_pdf)
+                                @if ($boletim->observacao && ($boletim->documento || $boletim->arquivo_pdf))
                                     <span class="badge bg-success-subtle text-success-emphasis">Avaliação + PDF</span>
                                 @elseif ($boletim->observacao)
                                     <span class="badge bg-primary-subtle text-primary-emphasis">Avaliação</span>
-                                @elseif ($boletim->arquivo_pdf)
+                                @elseif ($boletim->documento || $boletim->arquivo_pdf)
                                     <span class="badge bg-secondary-subtle text-secondary-emphasis">PDF</span>
                                 @endif
                             </td>

@@ -50,6 +50,11 @@ Route::middleware('auth')->group(function () {//rotas para usuários autenticado
     Route::post('/logout', [LoginController::class, 'logout'])
         ->name('logout');
 
+    Route::get('/boletins/{boletim}/documento', [
+        BoletimController::class,
+        'documento'
+    ])->name('boletins.documento');
+
     Route::get('/admin/dashboard', [DashboardController::class, 'admin'])
         ->name('admin.dashboard');
 
@@ -237,6 +242,7 @@ Route::middleware(['auth', 'perfil:admin,professor'])->group(function () {
         BoletimController::class,
         'pdf'
     ])->name('boletins.pdf');
+
 });
 
 

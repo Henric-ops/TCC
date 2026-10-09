@@ -51,7 +51,7 @@
                 </div>
             @endif
 
-            @if ($boletim->arquivo_pdf)
+            @if ($boletim->documento || $boletim->arquivo_pdf)
                 <div class="mb-4">
                     <h2 class="usuario-form-section mb-3">
                         <i class="bi bi-file-earmark-pdf" aria-hidden="true"></i>
@@ -63,16 +63,29 @@
                             <small class="d-block text-muted">Documento disponibilizado pela escola.</small>
                         </div>
                         <div class="d-flex flex-wrap gap-2">
-                            <a href="{{ asset('storage/' . $boletim->arquivo_pdf) }}" target="_blank"
-                                class="usuario-button usuario-button-primary">
-                                <i class="bi bi-eye" aria-hidden="true"></i>
-                                Visualizar PDF
-                            </a>
-                            <a href="{{ asset('storage/' . $boletim->arquivo_pdf) }}" download
-                                class="usuario-button usuario-button-primary">
-                                <i class="bi bi-download" aria-hidden="true"></i>
-                                Baixar PDF
-                            </a>
+                            @if ($boletim->documento)
+                                <a href="{{ route('boletins.documento', $boletim) }}" target="_blank" rel="noopener"
+                                    class="usuario-button usuario-button-primary">
+                                    <i class="bi bi-eye" aria-hidden="true"></i>
+                                    Visualizar PDF
+                                </a>
+                                <a href="{{ route('boletins.documento', ['boletim' => $boletim, 'download' => 1]) }}"
+                                    class="usuario-button usuario-button-primary">
+                                    <i class="bi bi-download" aria-hidden="true"></i>
+                                    Baixar PDF
+                                </a>
+                            @else
+                                <a href="{{ asset('storage/' . $boletim->arquivo_pdf) }}" target="_blank" rel="noopener"
+                                    class="usuario-button usuario-button-primary">
+                                    <i class="bi bi-eye" aria-hidden="true"></i>
+                                    Visualizar PDF
+                                </a>
+                                <a href="{{ asset('storage/' . $boletim->arquivo_pdf) }}" download
+                                    class="usuario-button usuario-button-primary">
+                                    <i class="bi bi-download" aria-hidden="true"></i>
+                                    Baixar PDF
+                                </a>
+                            @endif
                         </div>
                     </div>
                 </div>

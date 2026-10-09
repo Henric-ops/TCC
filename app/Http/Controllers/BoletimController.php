@@ -8,6 +8,8 @@ use App\Models\Turma;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\DB;
+use PDO;
 
 class BoletimController extends Controller
 {
@@ -40,7 +42,8 @@ class BoletimController extends Controller
         $boletins = Boletim::with([
             'aluno.escola',
             'aluno.turmas',
-            'usuario'
+            'usuario',
+            'documento:id,boletim_id,nome_original,tamanho',
         ])
             ->whereIn('aluno_id', $alunosPermitidos->pluck('id'))
             ->when($busca, function ($query) use ($busca) {
@@ -153,31 +156,56 @@ class BoletimController extends Controller
                 ]);
         }
 
-        $caminhoPdf = null;
+        DB::transaction(function () use ($request, $user) {
 
-        if ($request->hasFile('arquivo_pdf')) {
-            $caminhoPdf = $request
-                ->file('arquivo_pdf')
-                ->store('boletins', 'public');
-        }
+            $boletim = Boletim::create([
+                'aluno_id' => $request->aluno_id,
+                'usuario_id' => $user->id,
+                'ano' => now()->year,
+                'tipo_periodo' => $request->tipo_periodo,
+                'numero_periodo' => $request->numero_periodo,
+                'observacao' => $request->observacao,
+                'arquivo_pdf' => null,
+            ]);
 
-        $ano = now()->year;
+            if ($request->hasFile('arquivo_pdf')) {
+                $arquivo = $request->file('arquivo_pdf');
 
-        Boletim::create([
-            'aluno_id' => $request->aluno_id,
-            'usuario_id' => $user->id,
-            'ano' => $ano,
-            'tipo_periodo' => $request->tipo_periodo,
-            'numero_periodo' => $request->numero_periodo,
-            'observacao' => $request->observacao,
-            'arquivo_pdf' => $caminhoPdf,
-        ]);
+                // Lê o PDF temporário sem salvá-lo no diretório
+                $conteudo = file_get_contents($arquivo->getRealPath());
+
+                if ($conteudo === false) {
+                    throw new \RuntimeException('Não foi possível ler o PDF.');
+                }
+
+                // Usa parâmetros binários para inserir o LONGBLOB
+                $pdo = DB::connection()->getPdo();
+
+                $sql = 'INSERT INTO boletim_documentos
+                    (boletim_id, nome_original, mime, tamanho,
+                     conteudo, created_at, updated_at)
+                    VALUES (?, ?, ?, ?, ?, ?, ?)';
+
+                $stmt = $pdo->prepare($sql);
+
+                $data = now()->toDateTimeString();
+
+                $stmt->bindValue(1, $boletim->id, PDO::PARAM_INT);
+                $stmt->bindValue(2, $arquivo->getClientOriginalName());
+                $stmt->bindValue(3, 'application/pdf');
+                $stmt->bindValue(4, $arquivo->getSize(), PDO::PARAM_INT);
+                $stmt->bindValue(5, $conteudo, PDO::PARAM_LOB);
+                $stmt->bindValue(6, $data);
+                $stmt->bindValue(7, $data);
+
+                $stmt->execute();
+            }
+        });
 
         return redirect()
             ->route('boletins.index')
             ->with('sucesso', 'Boletim cadastrado com sucesso.');
     }
-
     public function meusBoletins()
     {
         $user = Auth::user();
@@ -189,7 +217,8 @@ class BoletimController extends Controller
         $boletins = Boletim::with([
             'aluno.escola',
             'aluno.turmas',
-            'usuario'
+            'usuario',
+            'documento:id,boletim_id,nome_original,tamanho',
         ])
             ->whereIn('aluno_id', $alunosIds)
             ->latest()
@@ -217,7 +246,8 @@ class BoletimController extends Controller
         $boletim->load([
             'aluno.escola',
             'aluno.turmas',
-            'usuario'
+            'usuario',
+            'documento:id,boletim_id,nome_original,tamanho',
         ]);
 
         return view('boletins.show', compact('boletim'));
@@ -239,7 +269,8 @@ class BoletimController extends Controller
         $boletim->load([
             'aluno.escola',
             'aluno.turmas',
-            'usuario'
+            'usuario',
+            'documento:id,boletim_id,nome_original,tamanho',
         ]);
 
         return view('boletins.responsavel-ver-boletim', compact('boletim'));
@@ -313,6 +344,47 @@ class BoletimController extends Controller
 
         return $pdf->download(
             'boletim-' . Str::slug($boletim->aluno->nome) . '.pdf'
+        );
+    }
+
+    public function documento(Request $request, Boletim $boletim)
+    {
+        $user = Auth::user();
+
+        if (in_array($user->perfil, ['admin', 'professor'])) {
+
+            $permitido = $this->alunosPermitidos($user)
+                ->contains('id', $boletim->aluno_id);
+
+        } elseif ($user->perfil === 'responsavel') {
+
+            $permitido = $user->alunosResponsavel()
+                ->where('alunos.id', $boletim->aluno_id)
+                ->exists();
+
+        } else {
+            $permitido = false;
+        }
+
+        abort_unless($permitido, 403);
+
+        $documento = $boletim->documento;
+
+        abort_unless($documento, 404);
+
+        return response()->stream(
+            function () use ($documento) {
+                echo $documento->conteudo;
+            },
+            200,
+            [
+                'Content-Type' => 'application/pdf',
+                    'Content-Disposition' =>
+                    ($request->boolean('download') ? 'attachment' : 'inline') .
+                    '; filename="boletim-' . $boletim->id . '.pdf"',
+                'X-Content-Type-Options' => 'nosniff',
+                'Cache-Control' => 'private, no-store',
+            ]
         );
     }
 
