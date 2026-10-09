@@ -57,7 +57,6 @@
 
             <div class="card-body">
 
-                {{-- Dados do aluno --}}
                 <div class="row">
 
                     <div class="col-md-4 mb-3 usuario-form-field">
@@ -136,7 +135,6 @@
                 <hr>
 
 
-                {{-- Avaliação escrita --}}
                 @if ($boletim->observacao)
 
                     <div class="mb-4">
@@ -238,7 +236,7 @@
                 @endif
 
 
-                {{-- Caso não exista nenhum conteúdo --}}
+
                 @if (!$boletim->observacao && !$boletim->documento && !$boletim->arquivo_pdf)
 
                     <div class="alert alert-warning">
@@ -253,7 +251,7 @@
                 @endif
 
 
-                {{-- Informações de registro --}}
+
                 <div class="boletim-meta">
 
                     <div class="row">
