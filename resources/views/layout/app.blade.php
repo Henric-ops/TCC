@@ -67,6 +67,11 @@
             overflow: hidden;
         }
 
+        .lk-mobile-bar,
+        .lk-sidebar-backdrop {
+            display: none;
+        }
+
         .lk-sidebar nav {
             flex: 1;
         }
@@ -314,11 +319,119 @@
                 margin-bottom: 1.25rem;
             }
         }
+
+        @media (max-width: 991.98px) {
+            body {
+                overflow: auto;
+            }
+
+            .lk-layout {
+                display: block;
+                min-height: 100vh;
+                padding-left: 0;
+            }
+
+            .lk-mobile-bar {
+                position: fixed;
+                z-index: 1040;
+                inset: 0 0 auto;
+                display: flex;
+                height: 58px;
+                align-items: center;
+                gap: .75rem;
+                padding: 0 1rem;
+                border-bottom: 1px solid var(--lk-border);
+                background: var(--lk-surface);
+                box-shadow: 0 2px 8px rgba(30, 40, 90, .08);
+            }
+
+            .lk-mobile-menu-toggle {
+                display: inline-flex;
+                width: 40px;
+                height: 40px;
+                flex-shrink: 0;
+                align-items: center;
+                justify-content: center;
+                border: 1px solid var(--lk-border);
+                border-radius: 8px;
+                background: var(--lk-surface);
+                color: var(--lk-text);
+                font-size: 1.2rem;
+            }
+
+            .lk-mobile-brand {
+                display: inline-flex;
+                min-width: 0;
+                align-items: center;
+                gap: .55rem;
+                color: var(--lk-text);
+                font-weight: 700;
+                text-decoration: none;
+            }
+
+            .lk-mobile-brand img {
+                width: 34px;
+                height: 34px;
+                object-fit: contain;
+            }
+
+            .lk-sidebar {
+                z-index: 1060;
+                width: min(290px, 86vw);
+                height: 100vh;
+                height: 100dvh;
+                overflow-y: auto;
+                overscroll-behavior: contain;
+                transform: translateX(-105%);
+                transition: transform .22s ease;
+                box-shadow: 8px 0 24px rgba(13, 20, 48, .2);
+            }
+
+            .lk-sidebar.is-open {
+                transform: translateX(0);
+            }
+
+            .lk-sidebar-backdrop:not([hidden]) {
+                position: fixed;
+                z-index: 1050;
+                inset: 0;
+                display: block;
+                width: 100%;
+                height: 100%;
+                border: 0;
+                background: rgba(18, 24, 48, .48);
+            }
+
+            .lk-content {
+                width: 100%;
+                height: auto;
+                min-height: 100vh;
+                overflow: visible;
+                padding: 78px 1rem 1.5rem;
+            }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            .lk-sidebar {
+                transition: none;
+            }
+        }
     </style>
     @stack('styles')
 </head>
 
 <body>
+    <header class="lk-mobile-bar">
+        <button type="button" class="lk-mobile-menu-toggle" id="lk-mobile-menu-toggle" aria-label="Abrir menu"
+            aria-controls="lk-sidebar" aria-expanded="false">
+            <i class="bi bi-list" aria-hidden="true"></i>
+        </button>
+        <a href="{{ route('dashboard') }}" class="lk-mobile-brand">
+            <img src="{{ asset('img/LogoSemFundo.png') }}" alt="">
+            <span>LumiKids</span>
+        </a>
+    </header>
+    <button type="button" class="lk-sidebar-backdrop" id="lk-sidebar-backdrop" aria-label="Fechar menu" hidden></button>
     <div class="lk-layout">
         @include('partials.sidebar')
         <main class="lk-content">
@@ -327,6 +440,32 @@
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        (() => {
+            const sidebar = document.getElementById('lk-sidebar');
+            const toggle = document.getElementById('lk-mobile-menu-toggle');
+            const backdrop = document.getElementById('lk-sidebar-backdrop');
+
+            function setMenuOpen(open) {
+                sidebar.classList.toggle('is-open', open);
+                backdrop.hidden = !open;
+                toggle.setAttribute('aria-expanded', String(open));
+                toggle.setAttribute('aria-label', open ? 'Fechar menu' : 'Abrir menu');
+                toggle.querySelector('i').className = open ? 'bi bi-x-lg' : 'bi bi-list';
+            }
+
+            toggle.addEventListener('click', () => {
+                setMenuOpen(!sidebar.classList.contains('is-open'));
+            });
+            backdrop.addEventListener('click', () => setMenuOpen(false));
+            sidebar.querySelectorAll('a').forEach((link) => {
+                link.addEventListener('click', () => setMenuOpen(false));
+            });
+            document.addEventListener('keydown', (event) => {
+                if (event.key === 'Escape') setMenuOpen(false);
+            });
+        })();
+    </script>
     @stack('scripts')
 </body>
 

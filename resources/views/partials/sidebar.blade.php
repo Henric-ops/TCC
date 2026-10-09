@@ -1,4 +1,4 @@
-<aside class="lk-sidebar">
+<aside class="lk-sidebar" id="lk-sidebar" aria-label="Navegação principal">
     <div class="lk-sidebar-header">
         <img src="{{ asset('img/LogoSemFundo.png') }}" alt="Logo LumiKids" class="lk-logo-image">
         <div>
