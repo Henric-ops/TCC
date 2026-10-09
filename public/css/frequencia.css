@@ -536,7 +536,60 @@
     }
 
     .frequencia-table-card .table {
-        min-width: 650px;
+        min-width: 0;
+    }
+
+    .frequencia-table-card .table thead {
+        display: none;
+    }
+
+    .frequencia-table-card .table,
+    .frequencia-table-card .table tbody,
+    .frequencia-table-card .table tr {
+        display: block;
+        width: 100%;
+    }
+
+    .frequencia-table-card .table tbody tr {
+        padding: .35rem 1rem;
+        border-bottom: 1px solid var(--lk-border-soft);
+    }
+
+    .frequencia-table-card .table tbody tr:last-child {
+        border-bottom: 0;
+    }
+
+    .frequencia-table-card .table tbody td {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: .75rem;
+        padding: .65rem 0;
+        border: 0;
+        text-align: right;
+    }
+
+    .frequencia-table-card .table tbody td::before {
+        content: attr(data-label);
+        flex: 0 0 5.75rem;
+        color: var(--lk-text-label);
+        font-size: .68rem;
+        font-weight: 700;
+        text-align: left;
+        text-transform: uppercase;
+    }
+
+    .frequencia-table-card .table tbody td[colspan] {
+        justify-content: center;
+        text-align: center;
+    }
+
+    .frequencia-table-card .table tbody td[colspan]::before {
+        display: none;
+    }
+
+    .frequencia-table-card .frequencia-action {
+        min-height: 2.75rem;
     }
 
     .freq-student {
@@ -554,6 +607,12 @@
 
     .freq-option {
         width: 100%;
+        height: 2.75rem;
+    }
+
+    .freq-form-actions .usuario-button {
+        flex: 1 1 100%;
+        min-height: 2.75rem;
     }
 
 

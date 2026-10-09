@@ -96,7 +96,7 @@
             @if($registros->isEmpty())
                 <div class="freq-empty">Nenhum registro nesse período.</div>
             @else
-                <table class="freq-table">
+                <table class="freq-table freq-history-table">
                     <thead>
                         <tr>
                             <th>Turma</th>
@@ -107,9 +107,9 @@
                     <tbody>
                         @foreach($registros as $registro)
                             <tr>
-                                <td>{{ $registro->turma->nome }}</td>
-                                <td>{{ $registro->data->format('d/m/Y') }}</td>
-                                <td>
+                                <td data-label="Turma">{{ $registro->turma->nome }}</td>
+                                <td data-label="Data">{{ $registro->data->format('d/m/Y') }}</td>
+                                <td data-label="Status">
                                     @if($registro->presente)
                                         <span class="status-pill ok">Presente</span>
                                     @else
@@ -131,7 +131,7 @@
             @if($resumo->isEmpty())
                 <div class="freq-empty">Nenhum registro nesse dia.</div>
             @else
-                <table class="freq-table">
+                <table class="freq-table freq-history-table">
                     <thead>
                         <tr>
                             <th>Turma</th>
@@ -145,17 +145,17 @@
                         @foreach($resumo as $dia)
                             @php $naoMarcados = $dia->turma->alunos_count - $dia->total; @endphp
                             <tr>
-                                <td>{{ $dia->turma->nome }}</td>
-                                <td><span class="status-pill ok">{{ $dia->presentes }}</span></td>
-                                <td><span class="status-pill falta">{{ $dia->total - $dia->presentes }}</span></td>
-                                <td>
+                                <td data-label="Turma">{{ $dia->turma->nome }}</td>
+                                <td data-label="Presentes"><span class="status-pill ok">{{ $dia->presentes }}</span></td>
+                                <td data-label="Faltas"><span class="status-pill falta">{{ $dia->total - $dia->presentes }}</span></td>
+                                <td data-label="Não marcados">
                                     @if($naoMarcados > 0)
                                         <span class="status-pill pendente">{{ $naoMarcados }}</span>
                                     @else
                                         <span class="text-muted">—</span>
                                     @endif
                                 </td>
-                                <td class="text-end">
+                                <td class="text-end" data-label="Ação">
                                     <a href="{{ route('frequencia.form', ['turma_id' => $dia->turma_id, 'data' => $dia->data]) }}"
                                         class="btn-ver">
                                         Ver / editar

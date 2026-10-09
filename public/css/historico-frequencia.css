@@ -233,3 +233,85 @@
     padding: 48px 20px;
     font-size: .9rem;
 }
+
+@media (max-width: 767.98px) {
+    .freq-filtros {
+        align-items: stretch;
+        flex-direction: column;
+        gap: .85rem;
+        padding: 1rem;
+    }
+
+    .freq-filtro-item {
+        min-width: 0;
+        width: 100%;
+        max-width: none;
+        flex: 1 1 auto;
+    }
+
+    .freq-filtros>.usuario-button,
+    .freq-filtros>.freq-btn {
+        width: 100%;
+        min-height: 2.75rem;
+    }
+
+    .freq-history-table,
+    .freq-history-table tbody,
+    .freq-history-table tr,
+    .freq-history-table td {
+        display: block;
+        width: 100%;
+    }
+
+    .freq-history-table thead {
+        display: none;
+    }
+
+    .freq-history-table tr {
+        padding: .35rem 1rem;
+        border-top: 1px solid #F4F5FA;
+    }
+
+    .freq-history-table tr:first-child {
+        border-top: 0;
+    }
+
+    .freq-history-table td,
+    .freq-history-table td.text-end {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: .75rem;
+        padding: .65rem 0;
+        border: 0;
+        text-align: right;
+    }
+
+    .freq-history-table td::before {
+        content: attr(data-label);
+        flex: 0 0 6.5rem;
+        color: #6B7280;
+        font-size: .68rem;
+        font-weight: 700;
+        text-align: left;
+        text-transform: uppercase;
+    }
+
+    .freq-history-table td[data-label="Status"] {
+        flex-wrap: wrap;
+    }
+
+    .freq-history-table td[colspan] {
+        display: block;
+        text-align: center;
+    }
+
+    .freq-history-table td[colspan]::before {
+        display: none;
+    }
+
+    .freq-history-table .btn-ver {
+        min-height: 2.75rem;
+        justify-content: center;
+    }
+}

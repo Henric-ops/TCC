@@ -58,7 +58,7 @@
                 <tbody>
                     @forelse($turmas as $turma)
                         <tr>
-                            <td>
+                            <td data-label="Turma">
                                 <div class="d-flex align-items-center gap-3">
                                     <span class="turma-avatar" aria-hidden="true">
                                         <i class="bi bi-people-fill"></i>
@@ -66,13 +66,13 @@
                                     <strong>{{ $turma->nome }}</strong>
                                 </div>
                             </td>
-                            <td>
+                            <td data-label="Período">
                                 <span class="badge bg-primary-subtle text-primary-emphasis turma-badge">
                                     <i class="bi bi-clock" aria-hidden="true"></i>
                                     {{ $turma->periodo }}
                                 </span>
                             </td>
-                            <td class="text-end text-nowrap">
+                            <td class="text-end text-nowrap" data-label="Ação">
                                 <a href="{{ route('frequencia.form', ['turma_id' => $turma->id]) }}" class="frequencia-action">
                                     <i class="bi bi-check2-circle" aria-hidden="true"></i>
                                     <span>Registrar</span>
