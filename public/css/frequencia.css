@@ -140,6 +140,20 @@
     margin-bottom: .5rem;
 }
 
+.frequencia-mobile-classes {
+    display: none;
+}
+
+.frequencia-history-footer {
+    margin-top: 1rem;
+}
+
+.frequencia-history-cta {
+    display: inline-flex;
+    align-items: center;
+    gap: .6rem;
+}
+
 .freq-filtros {
     background: linear-gradient(135deg, #ffffff 0%, #f8faff 100%);
     border: 1px solid #E8ECF5;
@@ -615,6 +629,156 @@
         min-height: 2.75rem;
     }
 
+    .frequencia-select-page .frequencia-header h1 {
+        font-size: 1.55rem;
+    }
+
+    .frequencia-select-filtros {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: .85rem .65rem;
+        padding: 1rem;
+        border: 1px solid var(--lk-border);
+        border-left: 1px solid var(--lk-border);
+        border-radius: 16px;
+        background: #fff;
+        box-shadow: 0 6px 18px rgba(30, 40, 90, .07);
+    }
+
+    .frequencia-select-filtros .freq-filtro-item {
+        grid-column: 1 / -1;
+    }
+
+    .frequencia-select-filtros>.usuario-button {
+        width: 100%;
+        min-height: 3rem;
+        white-space: nowrap;
+    }
+
+    .frequencia-desktop-classes {
+        display: none;
+    }
+
+    .frequencia-mobile-classes {
+        display: grid;
+        gap: 1rem;
+    }
+
+    .frequencia-class-card {
+        padding: 1rem;
+        border: 1px solid #edf0f6;
+        border-radius: 18px;
+        background: #fff;
+        box-shadow: 0 8px 22px rgba(30, 40, 90, .07);
+    }
+
+    .frequencia-class-summary {
+        display: grid;
+        grid-template-columns: 4rem minmax(0, 1fr) 1rem;
+        align-items: center;
+        gap: .75rem;
+    }
+
+    .frequencia-class-icon {
+        display: inline-flex;
+        width: 4rem;
+        height: 4rem;
+        align-items: center;
+        justify-content: center;
+        border-radius: 14px;
+        background: #eaf1ff;
+        color: #1454b8;
+        font-size: 1.65rem;
+    }
+
+    .frequencia-class-info {
+        min-width: 0;
+    }
+
+    .frequencia-class-info h2 {
+        overflow-wrap: anywhere;
+        margin: 0 0 .4rem;
+        color: #1b2d50;
+        font-size: 1.05rem;
+        font-weight: 700;
+        line-height: 1.25;
+    }
+
+    .frequencia-class-period {
+        display: inline-flex;
+        min-height: 2rem;
+        align-items: center;
+        gap: .35rem;
+        padding: .25rem .65rem;
+        border-radius: 999px;
+        background: #eaf1ff;
+        color: #315fc3;
+        font-size: .8rem;
+        line-height: 1.25;
+    }
+
+    .frequencia-class-period strong {
+        color: #174a9e;
+    }
+
+    .frequencia-class-chevron {
+        color: #1b2d50;
+        font-size: 1.1rem;
+    }
+
+    .frequencia-class-cta {
+        display: flex;
+        width: 100%;
+        min-height: 3rem;
+        align-items: center;
+        justify-content: center;
+        gap: .6rem;
+        margin-top: .9rem;
+        padding: .65rem 1rem;
+    }
+
+    .frequencia-history-footer {
+        margin-top: 1.1rem;
+    }
+
+    .frequencia-history-cta {
+        display: flex;
+        min-height: 3.5rem;
+        justify-content: space-between;
+        width: 100%;
+        padding: .75rem 1rem;
+        border-color: #aec5fa;
+        border-radius: 14px;
+        background: #fff;
+        color: #315fc3;
+        font-size: .9rem;
+        font-weight: 700;
+    }
+
+    .frequencia-history-cta span {
+        flex: 1;
+    }
 
 
+}
+
+@media (max-width: 380px) {
+    .frequencia-class-card {
+        padding: .85rem;
+    }
+
+    .frequencia-class-summary {
+        grid-template-columns: 3.5rem minmax(0, 1fr) .9rem;
+        gap: .6rem;
+    }
+
+    .frequencia-class-icon {
+        width: 3.5rem;
+        height: 3.5rem;
+        font-size: 1.45rem;
+    }
+
+    .frequencia-class-period {
+        font-size: .74rem;
+    }
 }

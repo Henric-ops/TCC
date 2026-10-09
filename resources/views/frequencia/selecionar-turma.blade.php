@@ -9,92 +9,124 @@
 @endpush
 
 @section('content')
-    <div class="frequencia-header">
-        <h1>Frequência</h1>
-    </div>
-
-    <form method="GET" class="freq-filtros">
-        <div class="freq-filtro-item">
-            <label for="escola_id">Escola</label>
-            <select name="escola_id" id="escola_id">
-                <option value="">Todas as escolas</option>
-
-                @foreach($escolas as $escola)
-                    <option value="{{ $escola->id }}" {{ (string) $escolaId === (string) $escola->id ? 'selected' : '' }}>
-                        {{ $escola->nome }}
-                    </option>
-                @endforeach
-            </select>
+    <main class="frequencia-select-page">
+        <div class="frequencia-header">
+            <h1>Frequência</h1>
         </div>
 
-        <button type="submit" class="usuario-button usuario-button-primary">
-            <i class="bi bi-search" aria-hidden="true"></i>
-            Buscar
-        </button>
+        <form method="GET" class="freq-filtros frequencia-select-filtros">
+            <div class="freq-filtro-item">
+                <label for="escola_id">Escola</label>
+                <select name="escola_id" id="escola_id">
+                    <option value="">Todas as escolas</option>
 
-        <a href="{{ route('frequencia.selecionar') }}" class="usuario-button usuario-button-muted">
-            <i class="bi bi-x-lg" aria-hidden="true"></i>
-            Limpar
-        </a>
-    </form>
+                    @foreach($escolas as $escola)
+                        <option value="{{ $escola->id }}" {{ (string) $escolaId === (string) $escola->id ? 'selected' : '' }}>
+                            {{ $escola->nome }}
+                        </option>
+                    @endforeach
+                </select>
+            </div>
 
-    @if(session('erro'))
-        <div class="alert alert-danger d-flex align-items-center gap-2" role="alert">
-            <i class="bi bi-exclamation-triangle-fill" aria-hidden="true"></i>
-            {{ session('erro') }}
-        </div>
-    @endif
+            <button type="submit" class="usuario-button usuario-button-primary">
+                <i class="bi bi-search" aria-hidden="true"></i>
+                Buscar
+            </button>
 
-    <div class="card frequencia-table-card">
-        <div class="table-responsive">
-            <table class="table table-hover align-middle mb-0">
-                <thead>
-                    <tr>
-                        <th><i class="bi bi-people" aria-hidden="true"></i> Turma</th>
-                        <th><i class="bi bi-clock" aria-hidden="true"></i> Período</th>
-                        <th class="text-end">Ação</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @forelse($turmas as $turma)
-                        <tr>
-                            <td data-label="Turma">
-                                <div class="d-flex align-items-center gap-3">
-                                    <span class="turma-avatar" aria-hidden="true">
-                                        <i class="bi bi-people-fill"></i>
-                                    </span>
-                                    <strong>{{ $turma->nome }}</strong>
-                                </div>
-                            </td>
-                            <td data-label="Período">
-                                <span class="badge bg-primary-subtle text-primary-emphasis turma-badge">
+            <a href="{{ route('frequencia.selecionar') }}" class="usuario-button usuario-button-muted">
+                <i class="bi bi-x-lg" aria-hidden="true"></i>
+                Limpar
+            </a>
+        </form>
+
+        @if(session('erro'))
+            <div class="alert alert-danger d-flex align-items-center gap-2" role="alert">
+                <i class="bi bi-exclamation-triangle-fill" aria-hidden="true"></i>
+                {{ session('erro') }}
+            </div>
+        @endif
+
+        @if($turmas->isEmpty())
+            <div class="card frequencia-table-card">
+                <div class="frequencia-empty">
+                    <i class="bi bi-clipboard2-x" aria-hidden="true"></i>
+                    <span>Nenhuma turma disponível.</span>
+                </div>
+            </div>
+        @else
+            <div class="card frequencia-table-card frequencia-desktop-classes">
+                <div class="table-responsive">
+                    <table class="table table-hover align-middle mb-0">
+                        <thead>
+                            <tr>
+                                <th><i class="bi bi-people" aria-hidden="true"></i> Turma</th>
+                                <th><i class="bi bi-clock" aria-hidden="true"></i> Período</th>
+                                <th class="text-end">Ação</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach($turmas as $turma)
+                                <tr>
+                                    <td>
+                                        <div class="d-flex align-items-center gap-3">
+                                            <span class="turma-avatar" aria-hidden="true">
+                                                <i class="bi bi-people-fill"></i>
+                                            </span>
+                                            <strong>{{ $turma->nome }}</strong>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <span class="badge bg-primary-subtle text-primary-emphasis turma-badge">
+                                            <i class="bi bi-clock" aria-hidden="true"></i>
+                                            {{ $turma->periodo }}
+                                        </span>
+                                    </td>
+                                    <td class="text-end text-nowrap">
+                                        <a href="{{ route('frequencia.form', ['turma_id' => $turma->id]) }}"
+                                            class="frequencia-action">
+                                            <i class="bi bi-check2-circle" aria-hidden="true"></i>
+                                            <span>Registrar</span>
+                                        </a>
+                                    </td>
+                                </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div class="frequencia-mobile-classes">
+                @foreach($turmas as $turma)
+                    <article class="frequencia-class-card">
+                        <div class="frequencia-class-summary">
+                            <span class="frequencia-class-icon" aria-hidden="true">
+                                <i class="bi bi-people-fill"></i>
+                            </span>
+                            <div class="frequencia-class-info">
+                                <h2>{{ $turma->nome }}</h2>
+                                <span class="frequencia-class-period">
                                     <i class="bi bi-clock" aria-hidden="true"></i>
-                                    {{ $turma->periodo }}
+                                    <span>Período: <strong>{{ $turma->periodo }}</strong></span>
                                 </span>
-                            </td>
-                            <td class="text-end text-nowrap" data-label="Ação">
-                                <a href="{{ route('frequencia.form', ['turma_id' => $turma->id]) }}" class="frequencia-action">
-                                    <i class="bi bi-check2-circle" aria-hidden="true"></i>
-                                    <span>Registrar</span>
-                                </a>
-                            </td>
-                        </tr>
-                    @empty
-                        <tr>
-                            <td colspan="3" class="text-center py-5">
-                                <div class="frequencia-empty">
-                                    <i class="bi bi-clipboard2-x" aria-hidden="true"></i>
-                                    <span>Nenhuma turma disponível.</span>
-                                </div>
-                            </td>
-                        </tr>
-                    @endforelse
-                </tbody>
-            </table>
-        </div>
-    </div>
+                            </div>
+                            <i class="bi bi-chevron-right frequencia-class-chevron" aria-hidden="true"></i>
+                        </div>
+                        <a href="{{ route('frequencia.form', ['turma_id' => $turma->id]) }}"
+                            class="frequencia-action frequencia-class-cta">
+                            <i class="bi bi-check2-circle" aria-hidden="true"></i>
+                            <span>Registrar</span>
+                        </a>
+                    </article>
+                @endforeach
+            </div>
+        @endif
 
-    <div class="mt-3">
-        <a href="{{ route('frequencia.index') }}" class="freq-link">Ver histórico de frequência</a>
-    </div>
+        <div class="frequencia-history-footer">
+            <a href="{{ route('frequencia.index') }}" class="freq-link frequencia-history-cta">
+                <i class="bi bi-file-earmark-text" aria-hidden="true"></i>
+                <span>Ver histórico de frequência</span>
+                <i class="bi bi-chevron-right" aria-hidden="true"></i>
+            </a>
+        </div>
+    </main>
 @endsection
