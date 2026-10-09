@@ -9,6 +9,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Turma;
 use App\Models\Aluno;
+use App\Models\Escola;
 
 class RelatorioController extends Controller
 {
@@ -197,6 +198,7 @@ class RelatorioController extends Controller
 
     public function index()
     {
+        $escolas = Escola::orderBy('nome')->get();
         $turmas = Turma::orderBy('nome')->get();
 
         $alunos = Aluno::with('turmas')
@@ -205,83 +207,89 @@ class RelatorioController extends Controller
 
         return view(
             'admin.relatorios.index',
-            compact('turmas', 'alunos')
+            compact('escolas', 'turmas', 'alunos')
         );
     }
 
-    public function relatorioTurma(Request $request)
+    public function relatorioTurmaPdf(Request $request)
     {
-        $turma = Turma::with('alunos')
-            ->findOrFail($request->input('turma_id'));
+        [$turma, $inicio, $fim, $linhas, $mediaPresencaTurma] =
+            $this->montarDadosTurma($request);
 
-        $linhas = collect();
-
-        foreach ($turma->alunos as $aluno) {
-
-            [$inicio, $fim, $dadosAluno] =
-                $this->montarDados($aluno, $request);
-
-            $linhas->push([
-                'aluno' => $aluno,
-
-                'percentualPresenca' =>
-                    $dadosAluno['percentualPresenca'],
-
-                'faltas' =>
-                    $dadosAluno['faltas'],
-
-                'totalRegistros' =>
-                    $dadosAluno['totalRegistros'],
-            ]);
-        }
-
-        $mediaPresencaTurma = $linhas->count() > 0
-            ? round($linhas->avg('percentualPresenca'))
-            : 0;
-
-        return view(
-            'admin.relatorios.turma',
-            compact(
-                'turma',
-                'inicio',
-                'fim',
-                'linhas',
-                'mediaPresencaTurma'
-            )
-        );
-    }
-
-    public function relatorioAluno(Request $request)
-    {
-        $aluno = Aluno::findOrFail(
-            $request->input('aluno_id')
+        $pdf = Pdf::loadView(
+            'admin.relatorios.turma-pdf',
+            compact('turma', 'inicio', 'fim', 'linhas', 'mediaPresencaTurma')
         );
 
-        [$inicio, $fim, $dados] =
-            $this->montarDados($aluno, $request);
-
-        return view(
-            'admin.relatorios.aluno',
-            compact('aluno', 'inicio', 'fim', 'dados')
-        );
+        return $pdf->download("relatorio-turma-{$turma->id}.pdf");
     }
 
     public function relatorioAlunoPdf(Request $request)
     {
-        $aluno = Aluno::findOrFail(
-            $request->input('aluno_id')
-        );
+        $aluno = $this->buscarAlunoDoRelatorio($request);
 
         [$inicio, $fim, $dados] =
             $this->montarDados($aluno, $request);
 
         $pdf = Pdf::loadView(
-            'relatorios.meu-relatorio-pdf',
+            'relatorios.relatorio-resp-pdf',
             compact('aluno', 'inicio', 'fim', 'dados')
         );
 
         return $pdf->download(
             "relatorio-{$aluno->nome}.pdf"
         );
+    }
+
+    private function montarDadosTurma(Request $request): array
+    {
+        $turmaQuery = Turma::with(['alunos', 'escola']);
+
+        if ($request->filled('escola_id')) {
+            $turmaQuery->where('escola_id', $request->input('escola_id'));
+        }
+
+        $turma = $turmaQuery->findOrFail($request->input('turma_id'));
+        $linhas = collect();
+
+        foreach ($turma->alunos as $aluno) {
+            [, , $dadosAluno] = $this->montarDados($aluno, $request);
+
+            $linhas->push([
+                'aluno' => $aluno,
+                'percentualPresenca' => $dadosAluno['percentualPresenca'],
+                'faltas' => $dadosAluno['faltas'],
+                'totalRegistros' => $dadosAluno['totalRegistros'],
+            ]);
+        }
+
+        $inicio = $request->input('inicio', now()->startOfMonth()->format('Y-m-d'));
+        $fim = $request->input('fim', now()->format('Y-m-d'));
+        $mediaPresencaTurma = $linhas->isNotEmpty()
+            ? round($linhas->avg('percentualPresenca'))
+            : 0;
+
+        return [$turma, $inicio, $fim, $linhas, $mediaPresencaTurma];
+    }
+
+    private function buscarAlunoDoRelatorio(Request $request): Aluno
+    {
+        $alunoQuery = Aluno::with('escola');
+
+        if ($request->filled('escola_id')) {
+            $alunoQuery->where('escola_id', $request->input('escola_id'));
+        }
+
+        if ($request->filled('turma_id')) {
+            $alunoQuery->whereHas('turmas', function ($query) use ($request) {
+                $query->where('turmas.id', $request->input('turma_id'));
+
+                if ($request->filled('escola_id')) {
+                    $query->where('turmas.escola_id', $request->input('escola_id'));
+                }
+            });
+        }
+
+        return $alunoQuery->findOrFail($request->input('aluno_id'));
     }
 }

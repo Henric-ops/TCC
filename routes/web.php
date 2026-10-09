@@ -104,8 +104,7 @@ Route::middleware(['auth', 'perfil:admin'])//rotas para administração do siste
 
         // Rotas para relatórios do admin
         Route::get('relatorios', [RelatorioController::class, 'index'])->name('relatorios.index');
-        Route::get('relatorios/turma', [RelatorioController::class, 'relatorioTurma'])->name('relatorios.turma');
-        Route::get('relatorios/aluno', [RelatorioController::class, 'relatorioAluno'])->name('relatorios.aluno');
+        Route::get('relatorios/turma/pdf', [RelatorioController::class, 'relatorioTurmaPdf'])->name('relatorios.turma.pdf');
         Route::get('relatorios/aluno/pdf', [RelatorioController::class, 'relatorioAlunoPdf'])->name('relatorios.aluno.pdf');
     });
 
