@@ -23,7 +23,7 @@
     </script>
     <script src="{{ asset('js/frequencia-filtros.js') }}"></script>
 
-    <div class="d-flex justify-content-between align-items-center mb-4">
+    <div class="registros-index-header d-flex justify-content-between align-items-center mb-4">
         <h1 class="freq-title mb-0">Registros Diários</h1>
         <a href="{{ route('registros.selecionar-turma') }}" class="usuario-button usuario-button-primary">
             <i class="bi bi-plus-lg" aria-hidden="true"></i> Novo registro
@@ -99,7 +99,7 @@
         @if($registros->isEmpty())
             <div class="freq-empty">Nenhum registro encontrado.</div>
         @else
-            <table class="freq-table">
+            <table class="freq-table freq-history-table registros-history-table">
                 <thead>
                     <tr>
                         <th>Aluno</th>
@@ -111,26 +111,28 @@
                 <tbody>
                     @foreach($registros as $registro)
                         <tr>
-                            <td>{{ $registro->aluno->nome }}</td>
-                            <td>{{ $registro->data->format('d/m/Y') }}</td>
-                            <td>{{ $registro->professor->nome }}</td>
-                            <td class="text-end">
+                            <td data-label="Aluno">{{ $registro->aluno->nome }}</td>
+                            <td data-label="Data">{{ $registro->data->format('d/m/Y') }}</td>
+                            <td data-label="Professor">{{ $registro->professor->nome }}</td>
+                            <td class="text-end" data-label="Ações">
                                 @if(auth()->user()->perfil === 'admin' || $registro->professor_id === auth()->id())
-                                    <a href="{{ route('registros.edit', $registro) }}" class="usuario-action usuario-action-primary"
-                                        title="Editar registro" aria-label="Editar registro">
-                                        <i class="bi bi-pencil-square" aria-hidden="true"></i>
-                                        <span>Editar</span>
-                                    </a>
-                                    <form action="{{ route('registros.destroy', $registro) }}" method="POST" class="d-inline"
-                                        onsubmit="return confirm('Remover este registro?')">
-                                        @csrf
-                                        @method('DELETE')
-                                        <button type="submit" class="usuario-action usuario-action-danger" title="Excluir registro"
-                                            aria-label="Excluir registro">
-                                            <i class="bi bi-trash3" aria-hidden="true"></i>
-                                            <span>Excluir</span>
-                                        </button>
-                                    </form>
+                                    <div class="registros-row-actions">
+                                        <a href="{{ route('registros.edit', $registro) }}" class="usuario-action usuario-action-primary"
+                                            title="Editar registro" aria-label="Editar registro">
+                                            <i class="bi bi-pencil-square" aria-hidden="true"></i>
+                                            <span>Editar</span>
+                                        </a>
+                                        <form action="{{ route('registros.destroy', $registro) }}" method="POST"
+                                            onsubmit="return confirm('Remover este registro?')">
+                                            @csrf
+                                            @method('DELETE')
+                                            <button type="submit" class="usuario-action usuario-action-danger" title="Excluir registro"
+                                                aria-label="Excluir registro">
+                                                <i class="bi bi-trash3" aria-hidden="true"></i>
+                                                <span>Excluir</span>
+                                            </button>
+                                        </form>
+                                    </div>
                                 @else
                                     <span class="text-muted small">Sem permissão</span>
                                 @endif

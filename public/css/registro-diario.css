@@ -137,6 +137,10 @@ body {
     .grid-top {
         grid-template-columns: 1fr;
     }
+
+    .registro-detail-grid {
+        grid-template-columns: 1fr;
+    }
 }
 
 .card {
@@ -216,6 +220,31 @@ body {
     .feed-row {
         grid-template-columns: 1fr;
         gap: 18px;
+    }
+
+    .col-headers,
+    .meal-row,
+    .liquids-row,
+    .liquid-item {
+        grid-template-columns: minmax(74px, 1.15fr) repeat(3, minmax(0, 1fr));
+    }
+
+    .radio {
+        width: 2rem;
+        height: 2rem;
+    }
+
+    .sono-btn {
+        min-height: 2.75rem;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: .4rem;
+    }
+
+    .counter button {
+        width: 44px;
+        height: 44px;
     }
 }
 

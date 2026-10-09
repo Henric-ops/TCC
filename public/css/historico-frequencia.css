@@ -235,6 +235,17 @@
 }
 
 @media (max-width: 767.98px) {
+    .registros-index-header {
+        align-items: stretch !important;
+        flex-direction: column;
+        gap: .85rem;
+    }
+
+    .registros-index-header>.usuario-button {
+        width: 100%;
+        min-height: 2.75rem;
+    }
+
     .freq-filtros {
         align-items: stretch;
         flex-direction: column;
@@ -313,5 +324,30 @@
     .freq-history-table .btn-ver {
         min-height: 2.75rem;
         justify-content: center;
+    }
+
+    .registros-history-table td[data-label="Ações"] {
+        display: block;
+        text-align: left;
+    }
+
+    .registros-history-table td[data-label="Ações"]::before {
+        display: block;
+        margin-bottom: .5rem;
+    }
+
+    .registros-row-actions {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: .5rem;
+    }
+
+    .registros-row-actions form,
+    .registros-row-actions .usuario-action {
+        width: 100%;
+    }
+
+    .registros-row-actions .usuario-action {
+        min-height: 2.75rem;
     }
 }

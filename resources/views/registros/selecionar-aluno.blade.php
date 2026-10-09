@@ -37,7 +37,7 @@
                 <tbody>
                     @forelse($alunos as $aluno)
                         <tr>
-                            <td>
+                            <td data-label="Aluno">
                                 <div class="d-flex align-items-center gap-3">
                                     <span class="turma-avatar" aria-hidden="true">
                                         <i class="bi bi-person-fill"></i>
@@ -45,7 +45,7 @@
                                     <strong>{{ $aluno->nome }}</strong>
                                 </div>
                             </td>
-                            <td class="text-end text-nowrap">
+                            <td class="text-end text-nowrap" data-label="Ação">
                                 <a href="{{ route('registros.create', ['aluno_id' => $aluno->id]) }}" class="frequencia-action">
                                     <i class="bi bi-journal-plus" aria-hidden="true"></i>
                                     <span>Fazer registro</span>
