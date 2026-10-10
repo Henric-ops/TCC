@@ -421,28 +421,30 @@ body {
   padding-left: 18px;
 }
 
+
 @media (max-width: 760px) {
   body {
-    padding: 16px;
+    min-height: 100dvh;
+    padding: 8px;
+    align-items: center;
   }
 
   .login-page {
     flex-direction: column;
+    width: 100%;
     max-width: 440px;
     min-height: 0;
   }
 
-  /* o painel lateral vira um banner no topo, em vez de sumir */
   .login-side {
     display: flex;
     width: 100%;
     min-height: 0;
-    padding: 28px 24px;
+    padding: 16px 24px;
     align-items: center;
     justify-content: center;
   }
 
-  /* enfeites que só fazem sentido no layout lado a lado */
   .wave-divider,
   .decor-sparkle,
   .illustration-cloud,
@@ -469,6 +471,32 @@ body {
   }
 
   .login-main {
-    padding: 28px 24px 32px;
+    padding: 20px 24px 22px;
+  }
+
+  .welcome-sub {
+    margin-bottom: 14px;
+  }
+
+  .field {
+    margin-bottom: 10px;
+  }
+
+  .input-wrap input {
+    padding-top: 9px;
+    padding-bottom: 9px;
+  }
+
+  .forgot {
+    margin-bottom: 12px;
+  }
+
+  .divider {
+    margin-top: 14px;
+    margin-bottom: 12px;
+  }
+
+  .protected-note {
+    padding-top: 12px;
   }
 }
