@@ -67,6 +67,19 @@
     padding: 12px 16px;
 }
 
+.registro-hoje-status {
+    font-size: .88rem;
+    font-weight: 600;
+}
+
+.registro-hoje-status.registrado {
+    color: #198754;
+}
+
+.registro-hoje-status.pendente {
+    color: #6c757d;
+}
+
 .turma-empty {
     color: var(--lk-text-label);
 }

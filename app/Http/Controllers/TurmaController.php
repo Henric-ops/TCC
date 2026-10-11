@@ -39,7 +39,11 @@ class TurmaController extends Controller
     {
         abort_unless(Auth::user()->turmas->contains('id', $turma->id), 403);
 
-        $turma->load('alunos');
+        $turma->load([
+            'alunos.registrosDiarios' => fn($query) => $query
+                ->whereDate('data', today()->toDateString())
+                ->orderByDesc('id'),
+        ]);
 
         return view('turmas.minha', compact('turma'));
     }
