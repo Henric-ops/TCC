@@ -100,23 +100,21 @@
 .usuarios-table-card {
     overflow: hidden;
     border: 1px solid var(--lk-border);
-    border-radius: 16px;
-    box-shadow: 0 2px 10px rgba(30, 40, 90, .05);
+    border-radius: 6px;
+    box-shadow: none;
 }
 
 .usuarios-table-card .table {
-    --bs-table-hover-bg: var(--lk-surface-soft);
+    --bs-table-hover-bg: #f8f9fa;
 }
 
 .usuarios-table-card thead th {
-    background: var(--lk-surface-soft);
+    background: #f2f2f2;
     border-bottom: 1px solid var(--lk-border);
-    color: var(--lk-text-label);
-    font-size: .72rem;
-    font-weight: 700;
-    letter-spacing: .04em;
-    padding: 14px 22px;
-    text-transform: uppercase;
+    color: #555;
+    font-size: .78rem;
+    font-weight: 600;
+    padding: 12px 16px;
     white-space: nowrap;
 }
 
@@ -131,35 +129,13 @@
 .usuarios-table-card tbody td {
     border-top: 1px solid var(--lk-border-soft);
     color: var(--lk-text-body);
-    font-size: .9rem;
-    padding: 12px 22px;
-}
-
-.usuario-avatar {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    width: 2.55rem;
-    height: 2.55rem;
-    flex-shrink: 0;
-    border-radius: 50%;
-    background: var(--lk-primary-soft);
-    color: var(--lk-active-bg);
-    font-size: .9rem;
-    font-weight: 700;
+    font-size: .88rem;
+    padding: 12px 16px;
 }
 
 .usuario-email {
     color: var(--lk-text-label);
     font-size: .95rem;
-}
-
-.usuario-badge {
-    display: inline-flex;
-    align-items: center;
-    gap: .35rem;
-    font-size: .85rem;
-    font-weight: 600;
 }
 
 .usuario-action {

@@ -171,27 +171,15 @@
 
                     <tr>
 
-                        <th>
-                            <i class="bi bi-person" aria-hidden="true"></i>
-                            Nome
-                        </th>
+                        <th>Nome</th>
 
-                        <th>
-                            <i class="bi bi-envelope" aria-hidden="true"></i>
-                            E-mail
-                        </th>
+                        <th>E-mail</th>
 
                         @if(!request('perfil'))
-                            <th>
-                                <i class="bi bi-person-badge" aria-hidden="true"></i>
-                                Perfil
-                            </th>
+                            <th>Perfil</th>
                         @endif
 
-                        <th>
-                            <i class="bi bi-activity" aria-hidden="true"></i>
-                            Status
-                        </th>
+                        <th>Status</th>
 
                         <th class="text-end">
                             Ações
@@ -210,24 +198,12 @@
 
                             <td>
 
-                                <div class="d-flex align-items-center gap-3">
-
-                                    <span class="usuario-avatar" aria-hidden="true">
-                                        {{ strtoupper(substr($usuario->nome, 0, 1)) }}
-                                    </span>
-
-                                    <strong>
-                                        {{ $usuario->nome }}
-                                    </strong>
-
-                                </div>
+                                <strong>{{ $usuario->nome }}</strong>
 
                             </td>
 
 
                             <td class="usuario-email">
-
-                                <i class="bi bi-envelope me-1" aria-hidden="true"></i>
 
                                 {{ $usuario->email }}
 
@@ -238,15 +214,9 @@
                             @if(!request('perfil'))
                                 <td>
                                     @if($usuario->perfil === 'professor')
-                                        <span class="badge bg-info-subtle text-info-emphasis usuario-badge">
-                                            <i class="bi bi-mortarboard-fill" aria-hidden="true"></i>
-                                            Professor
-                                        </span>
+                                        Professor
                                     @elseif($usuario->perfil === 'responsavel')
-                                        <span class="badge bg-secondary-subtle text-secondary-emphasis usuario-badge">
-                                            <i class="bi bi-person-heart" aria-hidden="true"></i>
-                                            Responsável
-                                        </span>
+                                        Responsável
                                     @endif
                                 </td>
                             @endif
@@ -256,35 +226,11 @@
                             <td>
 
                                 @if($usuario->status === 'pendente')
-
-                                    <span class="badge bg-warning-subtle text-warning-emphasis usuario-badge">
-
-                                        <i class="bi bi-hourglass-split" aria-hidden="true"></i>
-
-                                        Pendente
-
-                                    </span>
-
+                                    Pendente
                                 @elseif($usuario->status === 'aprovado')
-
-                                    <span class="badge bg-success-subtle text-success-emphasis usuario-badge">
-
-                                        <i class="bi bi-check-circle-fill" aria-hidden="true"></i>
-
-                                        Aprovado
-
-                                    </span>
-
+                                    Aprovado
                                 @elseif($usuario->status === 'recusado')
-
-                                    <span class="badge bg-danger-subtle text-danger-emphasis usuario-badge">
-
-                                        <i class="bi bi-x-circle-fill" aria-hidden="true"></i>
-
-                                        Recusado
-
-                                    </span>
-
+                                    Recusado
                                 @endif
 
                             </td>
@@ -299,7 +245,6 @@
 
                                     <i class="bi bi-pencil-square" aria-hidden="true"></i>
 
-                                    <span>Editar</span>
 
                                 </a>
 
@@ -311,9 +256,6 @@
                                         aria-label="Validar cadastro">
 
                                         <i class="bi bi-person-check-fill" aria-hidden="true"></i>
-
-                                        <span>Validar</span>
-
                                     </a>
 
                                 @endif
@@ -330,8 +272,6 @@
                                         aria-label="Excluir usuário">
 
                                         <i class="bi bi-trash3" aria-hidden="true"></i>
-
-                                        <span>Excluir</span>
 
                                     </button>
 

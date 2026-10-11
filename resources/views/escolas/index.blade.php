@@ -38,10 +38,10 @@
             <table class="table table-hover align-middle mb-0">
                 <thead>
                     <tr>
-                        <th><i class="bi bi-building" aria-hidden="true"></i> Nome</th>
-                        <th><i class="bi bi-card-text" aria-hidden="true"></i> CNPJ</th>
-                        <th><i class="bi bi-telephone" aria-hidden="true"></i> Telefone</th>
-                        <th><i class="bi bi-envelope" aria-hidden="true"></i> E-mail</th>
+                        <th>Nome</th>
+                        <th>CNPJ</th>
+                        <th>Telefone</th>
+                        <th>E-mail</th>
                         <th class="text-end">Ações</th>
                     </tr>
                 </thead>
@@ -49,28 +49,16 @@
                     @forelse($escolas as $escola)
                         <tr>
                             <td>
-                                <div class="d-flex align-items-center gap-3">
-                                    <span class="escola-avatar" aria-hidden="true">
-                                        <i class="bi bi-building"></i>
-                                    </span>
-                                    <strong>{{ $escola->nome }}</strong>
-                                </div>
+                                <strong>{{ $escola->nome }}</strong>
                             </td>
                             <td>{{ $escola->cnpj }}</td>
-                            <td class="escola-contact">
-                                <i class="bi bi-telephone me-1" aria-hidden="true"></i>
-                                {{ $escola->telefone }}
-                            </td>
-                            <td class="escola-contact">
-                                <i class="bi bi-envelope me-1" aria-hidden="true"></i>
-                                {{ $escola->email }}
-                            </td>
+                            <td>{{ $escola->telefone }}</td>
+                            <td>{{ $escola->email }}</td>
                             <td class="text-end text-nowrap">
                                 <a href="{{ route('admin.escolas.edit', $escola) }}"
                                     class="usuario-action usuario-action-primary" title="Editar escola"
                                     aria-label="Editar escola">
                                     <i class="bi bi-pencil-square" aria-hidden="true"></i>
-                                    <span>Editar</span>
                                 </a>
                                 <form action="{{ route('admin.escolas.destroy', $escola) }}" method="POST" class="d-inline"
                                     onsubmit="return confirm('Remover esta escola?')">
@@ -79,7 +67,6 @@
                                     <button type="submit" class="usuario-action usuario-action-danger" title="Excluir escola"
                                         aria-label="Excluir escola">
                                         <i class="bi bi-trash3" aria-hidden="true"></i>
-                                        <span>Excluir</span>
                                     </button>
                                 </form>
                             </td>

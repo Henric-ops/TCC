@@ -12,7 +12,7 @@
 }
 
 .turmas-header h1 {
-    color: #122b59;
+    color: var(--lk-text);
     font-family: 'Poppins', sans-serif;
     font-size: 1.4rem;
     font-weight: 700;
@@ -34,23 +34,21 @@
 .turmas-table-card {
     overflow: hidden;
     border: 1px solid var(--lk-border);
-    border-radius: 16px;
-    box-shadow: 0 2px 10px rgba(30, 40, 90, .05);
+    border-radius: 6px;
+    box-shadow: none;
 }
 
 .turmas-table-card .table {
-    --bs-table-hover-bg: var(--lk-surface-soft);
+    --bs-table-hover-bg: #f8f9fa;
 }
 
 .turmas-table-card thead th {
-    background: var(--lk-surface-soft);
+    background: #f2f2f2;
     border-bottom: 1px solid var(--lk-border);
-    color: var(--lk-text-label);
-    font-size: .72rem;
-    font-weight: 700;
-    letter-spacing: .04em;
-    padding: 14px 22px;
-    text-transform: uppercase;
+    color: #555;
+    font-size: .78rem;
+    font-weight: 600;
+    padding: 12px 16px;
     white-space: nowrap;
 }
 
@@ -65,69 +63,12 @@
 .turmas-table-card tbody td {
     border-top: 1px solid var(--lk-border-soft);
     color: var(--lk-text-body);
-    font-size: .9rem;
-    padding: 12px 22px;
-}
-
-.turma-avatar {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    width: 2.55rem;
-    height: 2.55rem;
-    flex-shrink: 0;
-    border-radius: 50%;
-    background: #e2efff;
-    color: #1765c2;
-    font-size: .9rem;
-}
-
-.turma-year,
-.turma-student-count,
-.turma-badge {
-    display: inline-flex;
-    align-items: center;
-    gap: .4rem;
-}
-
-.turma-year,
-.turma-student-count {
-    color: #6481ac;
-}
-
-.turma-badge {
-    background: var(--lk-primary-soft);
-    color: var(--lk-active-bg);
-    font-size: .85rem;
-    font-weight: 600;
-}
-
-.turma-action {
-    min-height: 2rem;
-    padding: 6px 10px;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    gap: .3rem;
-    border-radius: 8px;
-    font-size: .82rem;
-    font-weight: 600;
-    text-decoration: none;
-    white-space: nowrap;
-    transition: transform .15s ease, box-shadow .15s ease, background .15s ease, color .15s ease;
-}
-
-.turma-action:hover {
-    transform: translateY(-1px);
-    box-shadow: 0 .2rem .45rem rgba(38, 43, 61, .12);
-}
-
-.turma-action i {
-    font-size: .95rem;
+    font-size: .88rem;
+    padding: 12px 16px;
 }
 
 .turma-empty {
-    color: #6481ac;
+    color: var(--lk-text-label);
 }
 
 .turma-empty i {
@@ -154,6 +95,6 @@
     }
 
     .turmas-table-card .table {
-        min-width: 650px;
+        min-width: 600px;
     }
 }

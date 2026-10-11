@@ -11,16 +11,12 @@
     <div class="turmas-header d-flex justify-content-between align-items-center mb-4">
         <div>
             <h1>{{ $turma->nome }}</h1>
-            <span class="badge bg-primary-subtle text-primary-emphasis turma-badge">
-                <i class="bi bi-clock" aria-hidden="true"></i>
-                {{ $turma->periodo }}
-            </span>
+
         </div>
 
         <div class="d-flex align-items-center gap-3">
             <span class="turmas-total">
-                <strong>{{ $turma->alunos->count() }}</strong>
-                {{ $turma->alunos->count() === 1 ? 'aluno' : 'alunos' }}
+
             </span>
             <a href="{{ route('turmas.minhas') }}" class="usuario-button usuario-button-muted">Voltar</a>
         </div>
@@ -31,31 +27,22 @@
             <table class="table table-hover align-middle mb-0">
                 <thead>
                     <tr>
-                        <th><i class="bi bi-person" aria-hidden="true"></i> Aluno</th>
-                        <th><i class="bi bi-calendar3" aria-hidden="true"></i> Idade</th>
+                        <th>Aluno</th>
+                        <th>Idade</th>
                         <th class="text-end">Ações</th>
                     </tr>
                 </thead>
                 <tbody>
                     @forelse($turma->alunos as $aluno)
                         <tr>
-                            <td>
-                                <div class="d-flex align-items-center gap-3">
-                                    <span class="turma-avatar" aria-hidden="true">
-                                        <i class="bi bi-person-fill"></i>
-                                    </span>
-                                    <strong>{{ $aluno->nome }}</strong>
-                                </div>
-                            </td>
-                            <td>
-                                <span class="turma-year">
-                                    <i class="bi bi-calendar3" aria-hidden="true"></i>
-                                    {{ $aluno->data_nascimento->age }} anos
-                                </span>
-                            </td>
+                            <td><strong>{{ $aluno->nome }}</strong></td>
+                            <td>{{ $aluno->data_nascimento->age }} anos</td>
                             <td class="text-end text-nowrap">
                                 <a href="{{ route('registros.create', ['aluno_id' => $aluno->id]) }}"
-                                    class="usuario-button usuario-button-primary">Registro diário</a>
+                                    class="usuario-button usuario-button-primary" title="Registrar" aria-label="Registrar">
+                                    <i class="bi bi-check2-circle" aria-hidden="true"></i>
+                                </a>
+
                             </td>
                         </tr>
                     @empty

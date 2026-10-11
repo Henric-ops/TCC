@@ -59,33 +59,20 @@
                     <table class="table table-hover align-middle mb-0">
                         <thead>
                             <tr>
-                                <th><i class="bi bi-people" aria-hidden="true"></i> Turma</th>
-                                <th><i class="bi bi-clock" aria-hidden="true"></i> Período</th>
+                                <th>Turma</th>
+                                <th>Período</th>
                                 <th class="text-end">Ação</th>
                             </tr>
                         </thead>
                         <tbody>
                             @foreach($turmas as $turma)
                                 <tr>
-                                    <td>
-                                        <div class="d-flex align-items-center gap-3">
-                                            <span class="turma-avatar" aria-hidden="true">
-                                                <i class="bi bi-people-fill"></i>
-                                            </span>
-                                            <strong>{{ $turma->nome }}</strong>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <span class="badge bg-primary-subtle text-primary-emphasis turma-badge">
-                                            <i class="bi bi-clock" aria-hidden="true"></i>
-                                            {{ $turma->periodo }}
-                                        </span>
-                                    </td>
+                                    <td><strong>{{ $turma->nome }}</strong></td>
+                                    <td>{{ $turma->periodo }}</td>
                                     <td class="text-end text-nowrap">
                                         <a href="{{ route('frequencia.form', ['turma_id' => $turma->id]) }}"
                                             class="frequencia-action">
                                             <i class="bi bi-check2-circle" aria-hidden="true"></i>
-                                            <span>Registrar</span>
                                         </a>
                                     </td>
                                 </tr>
@@ -124,7 +111,7 @@
         <div class="frequencia-history-footer">
             <a href="{{ route('frequencia.index') }}" class="freq-link frequencia-history-cta">
                 <i class="bi bi-file-earmark-text" aria-hidden="true"></i>
-                <span>Ver histórico de frequência</span>
+                <span>Ver histórico</span>
                 <i class="bi bi-chevron-right" aria-hidden="true"></i>
             </a>
         </div>

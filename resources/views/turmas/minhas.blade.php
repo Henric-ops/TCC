@@ -43,10 +43,10 @@
             <table class="table table-hover align-middle mb-0">
                 <thead>
                     <tr>
-                        <th><i class="bi bi-people" aria-hidden="true"></i> Nome</th>
-                        <th><i class="bi bi-calendar3" aria-hidden="true"></i> Ano</th>
-                        <th><i class="bi bi-clock" aria-hidden="true"></i> Período</th>
-                        <th><i class="bi bi-person" aria-hidden="true"></i> Alunos</th>
+                        <th>Nome</th>
+                        <th>Ano</th>
+                        <th>Período</th>
+                        <th>Alunos</th>
                         <th class="text-end">Ações</th>
                     </tr>
                 </thead>
@@ -55,37 +55,16 @@
 
                         @foreach($turmasDaEscola as $turma)
                             <tr>
-                                <td>
-                                    <div class="d-flex align-items-center gap-3">
-                                        <span class="turma-avatar" aria-hidden="true">
-                                            <i class="bi bi-people-fill"></i>
-                                        </span>
-                                        <strong>{{ $turma->nome }}</strong>
-                                    </div>
-                                </td>
-                                <td>
-                                    <span class="turma-year">
-                                        <i class="bi bi-calendar3" aria-hidden="true"></i>
-                                        {{ $turma->ano }}
-                                    </span>
-                                </td>
-                                <td>
-                                    <span class="badge bg-primary-subtle text-primary-emphasis turma-badge">
-                                        <i class="bi bi-clock" aria-hidden="true"></i>
-                                        {{ $turma->periodo }}
-                                    </span>
-                                </td>
-                                <td>
-                                    <span class="turma-student-count">
-                                        <i class="bi bi-person-fill" aria-hidden="true"></i>
-                                        <strong>{{ $turma->alunos_count }}</strong>
-                                        {{ $turma->alunos_count === 1 ? 'aluno' : 'alunos' }}
-                                    </span>
-                                </td>
+                                <td><strong>{{ $turma->nome }}</strong></td>
+                                <td>{{ $turma->ano }}</td>
+                                <td>{{ $turma->periodo }}</td>
+                                <td>{{ $turma->alunos_count }} {{ $turma->alunos_count === 1 ? 'aluno' : 'alunos' }}</td>
                                 <td class="text-end text-nowrap">
-                                    <a href="{{ route('turmas.minha', $turma) }}" class="usuario-button usuario-button-primary">
-                                        Ver alunos
+                                    <a href="{{ route('turmas.minha', $turma) }}" class="usuario-button usuario-button-primary"
+                                        title="Ver alunos" aria-label="Ver alunos">
+                                        <i class="bi bi-eye" aria-hidden="true"></i>
                                     </a>
+
                                 </td>
                             </tr>
                         @endforeach

@@ -30,21 +30,14 @@
             <table class="table table-hover align-middle mb-0">
                 <thead>
                     <tr>
-                        <th><i class="bi bi-person" aria-hidden="true"></i> Aluno</th>
+                        <th>Aluno</th>
                         <th class="text-end">Ação</th>
                     </tr>
                 </thead>
                 <tbody>
                     @forelse($alunos as $aluno)
                         <tr>
-                            <td data-label="Aluno">
-                                <div class="d-flex align-items-center gap-3">
-                                    <span class="turma-avatar" aria-hidden="true">
-                                        <i class="bi bi-person-fill"></i>
-                                    </span>
-                                    <strong>{{ $aluno->nome }}</strong>
-                                </div>
-                            </td>
+                            <td data-label="Aluno"><strong>{{ $aluno->nome }}</strong></td>
                             <td class="text-end text-nowrap" data-label="Ação">
                                 <a href="{{ route('registros.create', ['aluno_id' => $aluno->id]) }}" class="frequencia-action">
                                     <i class="bi bi-journal-plus" aria-hidden="true"></i>

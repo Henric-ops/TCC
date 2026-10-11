@@ -20,10 +20,10 @@
             <table class="table table-hover align-middle mb-0">
                 <thead>
                     <tr>
-                        <th><i class="bi bi-person" aria-hidden="true"></i> Aluno</th>
-                        <th><i class="bi bi-calendar3" aria-hidden="true"></i> Período</th>
-                        <th><i class="bi bi-file-earmark-check" aria-hidden="true"></i> Conteúdo</th>
-                        <th><i class="bi bi-clock" aria-hidden="true"></i> Data</th>
+                        <th>Aluno</th>
+                        <th>Período</th>
+                        <th>Conteúdo</th>
+                        <th>Data</th>
                         <th class="text-end">Ação</th>
                     </tr>
                 </thead>
@@ -33,17 +33,17 @@
                             <td>
                                 <strong>{{ $boletim->aluno->nome }}</strong>
                                 @if ($boletim->aluno->trashed())
-                                    <span class="badge bg-secondary-subtle text-secondary-emphasis ms-1">Desligado</span>
+                                    <small class="text-muted ms-1">Desligado</small>
                                 @endif
                             </td>
                             <td>{{ $boletim->periodo }}</td>
                             <td>
                                 @if ($boletim->observacao && ($boletim->documento || $boletim->arquivo_pdf))
-                                    <span class="badge bg-success-subtle text-success-emphasis">Avaliação + PDF</span>
+                                    Avaliação + PDF
                                 @elseif ($boletim->observacao)
-                                    <span class="badge bg-primary-subtle text-primary-emphasis">Avaliação</span>
+                                    Avaliação
                                 @elseif ($boletim->documento || $boletim->arquivo_pdf)
-                                    <span class="badge bg-secondary-subtle text-secondary-emphasis">PDF</span>
+                                    PDF
                                 @endif
                             </td>
                             <td>{{ $boletim->created_at->format('d/m/Y') }}</td>

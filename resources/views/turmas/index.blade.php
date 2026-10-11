@@ -64,10 +64,10 @@
                 <table class="table table-hover align-middle mb-0">
                     <thead>
                         <tr>
-                            <th><i class="bi bi-people" aria-hidden="true"></i> Nome</th>
-                            <th><i class="bi bi-calendar3" aria-hidden="true"></i> Ano</th>
-                            <th><i class="bi bi-clock" aria-hidden="true"></i> Período</th>
-                            <th><i class="bi bi-person" aria-hidden="true"></i> Alunos</th>
+                            <th>Nome</th>
+                            <th>Ano</th>
+                            <th>Período</th>
+                            <th>Alunos</th>
                             <th class="text-end">Ações</th>
                         </tr>
                     </thead>
@@ -75,38 +75,16 @@
                         @forelse($turmas as $turma)
                             <tr>
                                 <td>
-                                    <div class="d-flex align-items-center gap-3">
-                                        <span class="turma-avatar" aria-hidden="true">
-                                            <i class="bi bi-people-fill"></i>
-                                        </span>
-                                        <strong>{{ $turma->nome }}</strong>
-                                    </div>
+                                    <strong>{{ $turma->nome }}</strong>
                                 </td>
-                                <td>
-                                    <span class="turma-year">
-                                        <i class="bi bi-calendar3" aria-hidden="true"></i>
-                                        {{ $turma->ano }}
-                                    </span>
-                                </td>
-                                <td>
-                                    <span class="badge bg-primary-subtle text-primary-emphasis turma-badge">
-                                        <i class="bi bi-clock" aria-hidden="true"></i>
-                                        {{ $turma->periodo }}
-                                    </span>
-                                </td>
-                                <td>
-                                    <span class="turma-student-count">
-                                        <i class="bi bi-person-fill" aria-hidden="true"></i>
-                                        <strong>{{ $turma->alunos_count }}</strong>
-                                        {{ $turma->alunos_count === 1 ? 'aluno' : 'alunos' }}
-                                    </span>
-                                </td>
+                                <td>{{ $turma->ano }}</td>
+                                <td>{{ $turma->periodo }}</td>
+                                <td>{{ $turma->alunos_count }} {{ $turma->alunos_count === 1 ? 'aluno' : 'alunos' }}</td>
                                 <td class="text-end text-nowrap">
                                     <a href="{{ route('admin.turmas.edit', $turma) }}"
                                         class="usuario-action usuario-action-primary" title="Editar turma"
                                         aria-label="Editar turma">
                                         <i class="bi bi-pencil-square" aria-hidden="true"></i>
-                                        <span>Editar</span>
                                     </a>
                                     <form action="{{ route('admin.turmas.destroy', $turma) }}" method="POST" class="d-inline"
                                         onsubmit="return confirm('Remover esta turma?')">
@@ -115,7 +93,6 @@
                                         <button type="submit" class="usuario-action usuario-action-danger" title="Excluir turma"
                                             aria-label="Excluir turma">
                                             <i class="bi bi-trash3" aria-hidden="true"></i>
-                                            <span>Excluir</span>
                                         </button>
                                     </form>
                                 </td>

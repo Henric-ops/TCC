@@ -90,20 +90,9 @@
 
                 <thead>
                     <tr>
-                        <th>
-                            <i class="bi bi-person" aria-hidden="true"></i>
-                            Aluno
-                        </th>
-
-                        <th>
-                            <i class="bi bi-calendar3" aria-hidden="true"></i>
-                            Idade
-                        </th>
-
-                        <th>
-                            <i class="bi bi-people" aria-hidden="true"></i>
-                            Turma
-                        </th>
+                        <th>Aluno</th>
+                        <th>Idade</th>
+                        <th>Turma</th>
 
                         <th class="text-end">
                             Ações
@@ -118,44 +107,25 @@
                         <tr>
 
                             <td>
-                                <div class="d-flex align-items-center gap-3">
-
-                                    <span class="aluno-avatar" aria-hidden="true">
-                                        <i class="bi bi-person-fill"></i>
-                                    </span>
-
-                                    <div>
-                                        <strong>{{ $aluno->nome }}</strong>
-
-                                        <small class="d-block text-muted">
-                                            Responsável:
-                                            {{ $aluno->responsaveis->pluck('nome')->join(', ') ?: 'Sem responsável' }}
-                                        </small>
-                                    </div>
-
+                                <div>
+                                    <strong>{{ $aluno->nome }}</strong>
+                                    <small class="d-block text-muted">
+                                        Responsável:
+                                        {{ $aluno->responsaveis->pluck('nome')->join(', ') ?: 'Sem responsável' }}
+                                    </small>
                                 </div>
                             </td>
 
-                            <td>
-                                <span class="badge bg-warning-subtle text-warning-emphasis aluno-badge">
-                                    {{ $aluno->data_nascimento->age }} anos
-                                </span>
-                            </td>
+                            <td>{{ $aluno->data_nascimento->age }} anos</td>
 
-                            <td>
-                                <span class="badge bg-success-subtle text-success-emphasis aluno-badge">
-                                    <i class="bi bi-people" aria-hidden="true"></i>
-
-                                    {{ $aluno->turmas->pluck('nome')->join(', ') ?: 'Sem turma' }}
-                                </span>
-                            </td>
+                            <td>{{ $aluno->turmas->pluck('nome')->join(', ') ?: 'Sem turma' }}</td>
 
                             <td class="text-end text-nowrap">
 
                                 <a href="{{ route('admin.alunos.edit', $aluno) }}" class="usuario-action usuario-action-primary"
                                     title="Editar aluno" aria-label="Editar aluno">
                                     <i class="bi bi-pencil-square" aria-hidden="true"></i>
-                                    <span>Editar</span>
+
                                 </a>
 
                                 <form action="{{ route('admin.alunos.destroy', $aluno) }}" method="POST" class="d-inline"
@@ -166,7 +136,7 @@
                                     <button type="submit" class="usuario-action usuario-action-danger" title="Excluir aluno"
                                         aria-label="Excluir aluno">
                                         <i class="bi bi-trash3" aria-hidden="true"></i>
-                                        <span>Excluir</span>
+
                                     </button>
 
                                 </form>

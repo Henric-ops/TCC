@@ -163,24 +163,23 @@
 
 .dash-table th {
     text-align: left;
-    font-size: .75rem;
-    text-transform: uppercase;
-    letter-spacing: .04em;
-    color: #A0A8C0;
+    font-size: .78rem;
+    color: #555;
     font-weight: 600;
-    padding: 10px 22px;
-    background: #FAFBFE;
+    padding: 12px 16px;
+    background: #f2f2f2;
+    border-bottom: 1px solid var(--lk-border);
 }
 
 .dash-table td {
-    padding: 14px 22px;
-    font-size: .9rem;
-    color: #333A54;
-    border-top: 1px solid #F4F5FA;
+    padding: 12px 16px;
+    font-size: .88rem;
+    color: var(--lk-text-body);
+    border-top: 1px solid var(--lk-border-soft);
 }
 
 .dash-table tr:hover td {
-    background: #FAFBFF;
+    background: #f8f9fa;
 }
 
 .periodo-pill {

@@ -125,9 +125,9 @@
 
 .freq-panel {
     background: #fff;
-    border: 1px solid #EEF0F7;
-    border-radius: 16px;
-    box-shadow: 0 2px 10px rgba(30, 40, 90, .05);
+    border: 1px solid var(--lk-border);
+    border-radius: 6px;
+    box-shadow: none;
     overflow: hidden;
 }
 
@@ -138,21 +138,19 @@
 
 .freq-table th {
     text-align: left;
-    font-size: .74rem;
-    text-transform: uppercase;
-    letter-spacing: .04em;
-    color: #A0A8C0;
-    font-weight: 700;
-    padding: 14px 22px;
-    background: #FAFBFE;
-    border-bottom: 1px solid #F1F2F8;
+    font-size: .78rem;
+    color: #555;
+    font-weight: 600;
+    padding: 12px 16px;
+    background: #f2f2f2;
+    border-bottom: 1px solid var(--lk-border);
 }
 
 .freq-table td {
-    padding: 14px 22px;
+    padding: 12px 16px;
     font-size: .88rem;
-    color: #333A54;
-    border-top: 1px solid #F4F5FA;
+    color: var(--lk-text-body);
+    border-top: 1px solid var(--lk-border-soft);
     vertical-align: middle;
 }
 
@@ -161,7 +159,7 @@
 }
 
 .freq-table tr:hover td {
-    background: #FAFBFF;
+    background: #f8f9fa;
 }
 
 .freq-table .text-end {

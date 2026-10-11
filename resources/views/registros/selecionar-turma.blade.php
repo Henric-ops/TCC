@@ -30,28 +30,16 @@
             <table class="table table-hover align-middle mb-0">
                 <thead>
                     <tr>
-                        <th><i class="bi bi-people" aria-hidden="true"></i> Turma</th>
-                        <th><i class="bi bi-clock" aria-hidden="true"></i> Período</th>
+                        <th>Turma</th>
+                        <th>Período</th>
                         <th class="text-end">Ação</th>
                     </tr>
                 </thead>
                 <tbody>
                     @forelse($turmas as $turma)
                         <tr>
-                            <td data-label="Turma">
-                                <div class="d-flex align-items-center gap-3">
-                                    <span class="turma-avatar" aria-hidden="true">
-                                        <i class="bi bi-people-fill"></i>
-                                    </span>
-                                    <strong>{{ $turma->nome }}</strong>
-                                </div>
-                            </td>
-                            <td data-label="Período">
-                                <span class="badge bg-primary-subtle text-primary-emphasis turma-badge">
-                                    <i class="bi bi-clock" aria-hidden="true"></i>
-                                    {{ $turma->periodo }}
-                                </span>
-                            </td>
+                            <td data-label="Turma"><strong>{{ $turma->nome }}</strong></td>
+                            <td data-label="Período">{{ $turma->periodo }}</td>
                             <td class="text-end text-nowrap" data-label="Ação">
                                 <a href="{{ route('registros.selecionar-aluno', ['turma_id' => $turma->id]) }}"
                                     class="frequencia-action">

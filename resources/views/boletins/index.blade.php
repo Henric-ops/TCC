@@ -69,19 +69,9 @@
 
                 <thead>
                     <tr>
-                        <th>
-                            <i class="bi bi-person" aria-hidden="true"></i>
-                            Aluno
-                        </th>
-
-                        <th>
-                            <i class="bi bi-file-earmark-check" aria-hidden="true"></i>
-                            Conteúdo
-                        </th>
-                        <th>
-                            <i class="bi bi-clock" aria-hidden="true"></i>
-                            Data
-                        </th>
+                        <th>Aluno</th>
+                        <th>Conteúdo</th>
+                        <th>Data</th>
                         <th class="text-end">Ações</th>
                     </tr>
                 </thead>
@@ -94,22 +84,16 @@
                                     {{ $boletim->aluno?->nome ?? 'Aluno não disponível' }}
                                 </strong>
                                 @if ($boletim->aluno?->trashed())
-                                    <span class="badge bg-secondary-subtle text-secondary-emphasis ms-1">Desligado</span>
+                                    <small class="text-muted ms-1">Desligado</small>
                                 @endif
                             </td>
                             <td>
                                 @if ($boletim->observacao && ($boletim->documento || $boletim->arquivo_pdf))
-                                    <span class="badge bg-success-subtle text-success-emphasis">
-                                        Avaliação + PDF
-                                    </span>
+                                    Avaliação + PDF
                                 @elseif ($boletim->observacao)
-                                    <span class="badge bg-primary-subtle text-primary-emphasis">
-                                        Avaliação
-                                    </span>
+                                    Avaliação
                                 @elseif ($boletim->documento || $boletim->arquivo_pdf)
-                                    <span class="badge bg-secondary-subtle text-secondary-emphasis">
-                                        PDF
-                                    </span>
+                                    PDF
                                 @endif
                             </td>
                             <td>{{ $boletim->created_at->format('d/m/Y') }}</td>
@@ -117,7 +101,6 @@
                                 <a href="{{ route('boletins.show', $boletim) }}" class="usuario-action usuario-action-primary"
                                     title="Visualizar boletim" aria-label="Visualizar boletim">
                                     <i class="bi bi-eye" aria-hidden="true"></i>
-                                    <span>Ver</span>
                                 </a>
                                 <form method="POST" action="{{ route('boletins.destroy', $boletim) }}" class="d-inline"
                                     onsubmit="return confirm('Tem certeza que deseja excluir este boletim?')">
@@ -126,7 +109,6 @@
                                     <button type="submit" class="usuario-action usuario-action-danger" title="Excluir boletim"
                                         aria-label="Excluir boletim">
                                         <i class="bi bi-trash" aria-hidden="true"></i>
-                                        <span>Excluir</span>
                                     </button>
                                 </form>
                             </td>
