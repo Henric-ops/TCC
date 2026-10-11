@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Frequencia;
 use App\Models\Turma;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -45,6 +46,11 @@ class TurmaController extends Controller
                 ->orderByDesc('id'),
         ]);
 
-        return view('turmas.minha', compact('turma'));
+        $frequenciasHoje = Frequencia::where('turma_id', $turma->id)
+            ->whereDate('data', today()->toDateString())
+            ->get()
+            ->keyBy('aluno_id');
+
+        return view('turmas.minha', compact('turma', 'frequenciasHoje'));
     }
 }

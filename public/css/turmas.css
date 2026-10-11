@@ -80,6 +80,23 @@
     color: #6c757d;
 }
 
+.situacao-frequencia {
+    font-size: .88rem;
+    font-weight: 600;
+}
+
+.situacao-frequencia.status-presente {
+    color: #198754;
+}
+
+.situacao-frequencia.status-ausente {
+    color: #b02a37;
+}
+
+.situacao-frequencia.status-nao-informado {
+    color: #6c757d;
+}
+
 .turma-empty {
     color: var(--lk-text-label);
 }

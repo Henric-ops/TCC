@@ -29,7 +29,8 @@
                 <tr>
                     <th>Aluno</th>
                     <th>Idade</th>
-                    <th>Registro de hoje</th>
+                    <th>Frequência</th>
+                    <th>Registros</th>
                     <th class="text-end">Ação</th>
                 </tr>
             </thead>
@@ -37,8 +38,18 @@
                 @forelse($turma->alunos as $aluno)
                 <tr>
                     @php($registroHoje = $aluno->registrosDiarios->first())
+                    @php($frequenciaHoje = $frequenciasHoje->get($aluno->id))
                     <td><strong>{{ $aluno->nome }}</strong></td>
                     <td>{{ $aluno->data_nascimento->age }} anos</td>
+                    <td>
+                        @if(!$frequenciaHoje)
+                            <span class="situacao-frequencia status-nao-informado">Não informado</span>
+                        @elseif($frequenciaHoje->presente)
+                            <span class="situacao-frequencia status-presente">Presente</span>
+                        @else
+                            <span class="situacao-frequencia status-ausente">Ausente</span>
+                        @endif
+                    </td>
                     <td>
                         @if($registroHoje)
                             <span class="registro-hoje-status registrado">Registrado</span>
@@ -66,7 +77,7 @@
                 </tr>
                 @empty
                 <tr>
-                    <td colspan="4" class="text-center py-5">
+                    <td colspan="5" class="text-center py-5">
                         <div class="turma-empty">
                             <i class="bi bi-person-x" aria-hidden="true"></i>
                             <span>Nenhum aluno vinculado a essa turma.</span>
