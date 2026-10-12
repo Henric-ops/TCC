@@ -9,7 +9,9 @@
 
 @section('content')
     <main class="admin-reports">
-        <h1 class="admin-reports__title">Relatórios</h1>
+        <header class="admin-reports__header">
+            <h1 class="admin-reports__title">Relatórios</h1>
+        </header>
 
         <form method="GET" action="{{ route('admin.relatorios.turma.pdf') }}" class="admin-reports__filters"
             id="form-relatorio">
