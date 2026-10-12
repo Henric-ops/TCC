@@ -63,15 +63,26 @@
             @else
                 <div class="feed">
                     @foreach($comunicadosRecentes as $comunicado)
-                        <a href="{{ route('comunicados.comunicados-responsavel', $comunicado) }}" class="feed-item feed-item-link">
-                            <span class="feed-dot"></span>
-                            <div>
-                                <p class="feed-text">
-                                    <strong>{{ $comunicado->assunto }}</strong> — de {{ $comunicado->remetente->nome }}
-                                </p>
-                                <span class="feed-time">{{ $comunicado->enviado_em->diffForHumans() }}</span>
-                            </div>
-                        </a>
+                        <div class="feed-item feed-item-row">
+                            <a href="{{ route('comunicados.comunicados-responsavel', $comunicado) }}" class="feed-item-link">
+                                <span class="feed-dot"></span>
+                                <div>
+                                    <p class="feed-text">
+                                        <strong>{{ $comunicado->assunto }}</strong> — de {{ $comunicado->remetente->nome }}
+                                    </p>
+                                    <span class="feed-time">{{ $comunicado->enviado_em->diffForHumans() }}</span>
+                                </div>
+                            </a>
+                            <form method="POST" action="{{ route('comunicados.excluir', $comunicado) }}"
+                                onsubmit="return confirm('Tem certeza que deseja apagar este comunicado?')">
+                                @csrf
+                                @method('DELETE')
+                                <button type="submit" class="feed-delete" aria-label="Apagar comunicado: {{ $comunicado->assunto }}"
+                                    title="Apagar comunicado">
+                                    <i class="bi bi-trash" aria-hidden="true"></i>
+                                </button>
+                            </form>
+                        </div>
                     @endforeach
                 </div>
             @endif

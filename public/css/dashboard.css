@@ -496,3 +496,37 @@
 .feed-item-link:hover {
     background: #F4F5FA;
 }
+
+.feed-item-row {
+    align-items: flex-start;
+}
+
+.feed-item-row form {
+    margin: 0;
+}
+
+.feed-item-row .feed-item-link {
+    display: flex;
+    flex: 1;
+    gap: 12px;
+    min-width: 0;
+}
+
+.feed-delete {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 34px;
+    height: 34px;
+    border: 0;
+    border-radius: 6px;
+    background: transparent;
+    color: #8992A9;
+    cursor: pointer;
+}
+
+.feed-delete:hover,
+.feed-delete:focus-visible {
+    background: #FDEBEC;
+    color: #C23D4A;
+}

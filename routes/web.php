@@ -192,6 +192,7 @@ Route::middleware(['auth', 'perfil:responsavel'])//rota para visualização dos 
 
         //rota para visualizar detalhes de um comunicado 
         Route::get('meus-comunicados/{mensagem}', [ComunicadosController::class, 'meuDetalhe'])->name('comunicados.comunicados-responsavel');
+        Route::delete('meus-comunicados/{mensagem}', [ComunicadosController::class, 'excluirMeuComunicado'])->name('comunicados.excluir');
 
 
     });
