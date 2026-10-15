@@ -103,6 +103,66 @@
 }
 
 @media (max-width: 767.98px) {
+    .boletins-table-card .table-responsive {
+        overflow: visible;
+    }
+
+    .boletins-table-card .table,
+    .boletins-table-card .table tbody {
+        display: block;
+        width: 100%;
+    }
+
+    .boletins-table-card .table thead {
+        display: none;
+    }
+
+    .boletins-table-card .boletim-row {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: .85rem 1rem;
+        padding: 1rem;
+        border-top: 1px solid var(--lk-border-soft);
+    }
+
+    .boletins-table-card .boletim-row td {
+        min-width: 0;
+        padding: 0;
+        border: 0;
+        overflow-wrap: anywhere;
+    }
+
+    .boletins-table-card .boletim-row td[data-label]::before {
+        display: block;
+        margin-bottom: .25rem;
+        color: var(--lk-text-label);
+        content: attr(data-label);
+        font-size: .7rem;
+        font-weight: 700;
+        text-transform: uppercase;
+    }
+
+    .boletins-table-card .boletim-row td:first-child small {
+        display: block;
+        margin-left: 0 !important;
+    }
+
+    .boletins-table-card .boletim-row td:last-child {
+        grid-column: 1 / -1;
+        text-align: left !important;
+    }
+
+    .boletins-table-card .boletim-row .usuario-action {
+        display: flex;
+        width: 100%;
+        justify-content: center;
+    }
+
+    .boletins-table-card .boletim-empty-row td {
+        display: block;
+        width: 100%;
+    }
+
     .boletim-pdf-panel {
         align-items: stretch;
         flex-direction: column;

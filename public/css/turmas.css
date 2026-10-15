@@ -124,6 +124,10 @@
         flex: 1;
     }
 
+    .turmas-index-page .alunos-filtro-item {
+        flex: 0 1 auto;
+    }
+
     .turmas-table-card .table {
         min-width: 600px;
     }

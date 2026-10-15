@@ -29,15 +29,15 @@
                 </thead>
                 <tbody>
                     @forelse ($boletins as $boletim)
-                        <tr>
-                            <td>
+                        <tr class="boletim-row">
+                            <td data-label="Aluno">
                                 <strong>{{ $boletim->aluno->nome }}</strong>
                                 @if ($boletim->aluno->trashed())
                                     <small class="text-muted ms-1">Desligado</small>
                                 @endif
                             </td>
-                            <td>{{ $boletim->periodo }}</td>
-                            <td>
+                            <td data-label="Período">{{ $boletim->periodo }}</td>
+                            <td data-label="Conteúdo">
                                 @if ($boletim->observacao && ($boletim->documento || $boletim->arquivo_pdf))
                                     Avaliação + PDF
                                 @elseif ($boletim->observacao)
@@ -46,8 +46,8 @@
                                     PDF
                                 @endif
                             </td>
-                            <td>{{ $boletim->created_at->format('d/m/Y') }}</td>
-                            <td class="text-end text-nowrap">
+                            <td data-label="Data">{{ $boletim->created_at->format('d/m/Y') }}</td>
+                            <td data-label="Ação" class="text-end text-nowrap">
                                 <a href="{{ route('boletins.meu-detalhe', $boletim) }}"
                                     class="usuario-action usuario-action-primary" title="Visualizar boletim"
                                     aria-label="Visualizar boletim">
@@ -57,7 +57,7 @@
                             </td>
                         </tr>
                     @empty
-                        <tr>
+                        <tr class="boletim-empty-row">
                             <td colspan="5" class="text-center py-5">
                                 <div class="boletim-empty">
                                     <i class="bi bi-file-earmark-text" aria-hidden="true"></i>

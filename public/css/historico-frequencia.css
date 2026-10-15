@@ -236,6 +236,17 @@
     display: none;
 }
 
+.registros-row-actions {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: .5rem;
+}
+
+.registros-row-actions form {
+    margin: 0;
+}
+
 @media (max-width: 767.98px) {
     .registros-index-header {
         align-items: stretch !important;

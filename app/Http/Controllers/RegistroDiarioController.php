@@ -98,6 +98,8 @@ class RegistroDiarioController extends Controller
             );
         }
 
+        $query->when($alunoId, fn($q) => $q->where('aluno_id', $alunoId));
+
         $query->when($temFiltroData, function ($q) use ($request) {
             $q->when($request->filled('inicio'), fn($q2) => $q2->where('data', '>=', $request->inicio))
                 ->when($request->filled('fim'), fn($q2) => $q2->where('data', '<=', $request->fim));

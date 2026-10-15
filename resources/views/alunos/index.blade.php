@@ -104,9 +104,9 @@
 
                     @forelse($alunos as $aluno)
 
-                        <tr>
+                        <tr class="aluno-row">
 
-                            <td>
+                            <td data-label="Aluno">
                                 <div>
                                     <strong>{{ $aluno->nome }}</strong>
                                     <small class="d-block text-muted">
@@ -116,11 +116,11 @@
                                 </div>
                             </td>
 
-                            <td>{{ $aluno->data_nascimento->age }} anos</td>
+                            <td data-label="Idade">{{ $aluno->data_nascimento->age }} anos</td>
 
-                            <td>{{ $aluno->turmas->pluck('nome')->join(', ') ?: 'Sem turma' }}</td>
+                            <td data-label="Turma">{{ $aluno->turmas->pluck('nome')->join(', ') ?: 'Sem turma' }}</td>
 
-                            <td class="text-end text-nowrap">
+                            <td data-label="Ações" class="text-end text-nowrap">
 
                                 <a href="{{ route('admin.alunos.edit', $aluno) }}" class="usuario-action usuario-action-primary"
                                     title="Editar aluno" aria-label="Editar aluno">
@@ -147,7 +147,7 @@
 
                     @empty
 
-                        <tr>
+                        <tr class="aluno-empty-row">
                             <td colspan="4" class="text-center py-5">
 
                                 <div class="aluno-empty">
