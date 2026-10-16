@@ -8,6 +8,7 @@
 @endpush
 
 @section('content')
+    <main class="freq-history-page">
     @php
         $todosTurmas = $turmasTotais->map(fn($turma) => ['id' => $turma->id, 'nome' => $turma->nome, 'escola_id' => $turma->escola_id])->values()->all();
     @endphp
@@ -91,6 +92,7 @@
         </a>
     </form>
 
+    <section class="freq-history-results">
     @if($alunoId)
         <div class="freq-panel">
             @if($registros->isEmpty())
@@ -125,7 +127,7 @@
                 </table>
             @endif
         </div>
-        <div class="mt-3">{{ $registros->links() }}</div>
+        <div class="freq-history-pagination">{{ $registros->links() }}</div>
     @else
         <div class="freq-panel">
             @if($resumo->isEmpty())
@@ -168,4 +170,6 @@
             @endif
         </div>
     @endif
+    </section>
+    </main>
 @endsection

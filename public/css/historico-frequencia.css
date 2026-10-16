@@ -6,6 +6,38 @@
     margin-bottom: 20px;
 }
 
+.freq-history-page {
+    display: flex;
+    height: calc(100vh - 4rem);
+    min-height: 0;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+.freq-history-page .freq-title,
+.freq-history-page .freq-filtros {
+    flex-shrink: 0;
+}
+
+.freq-history-results {
+    display: flex;
+    min-height: 0;
+    flex: 1;
+    flex-direction: column;
+}
+
+.freq-history-results .freq-panel {
+    min-height: 0;
+    flex: 1;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+}
+
+.freq-history-pagination {
+    flex-shrink: 0;
+    padding-top: .75rem;
+}
+
 .freq-btn {
     display: inline-flex;
     align-items: center;
@@ -248,6 +280,10 @@
 }
 
 @media (max-width: 767.98px) {
+    .freq-history-page {
+        height: calc(100vh - 2rem);
+    }
+
     .registros-index-header {
         align-items: stretch !important;
         flex-direction: column;
