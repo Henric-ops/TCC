@@ -5,7 +5,7 @@
 @push('styles')
     <link rel="stylesheet" href="{{ asset('css/usuario-form.css') }}">
     <link rel="stylesheet" href="{{ asset('css/usuario-buttons.css') }}">
-    <link rel="stylesheet" href="{{ asset('css/turma-edit.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/turma-edit.css') }}?v={{ time() }}">
     <script src="{{ asset('js/turma.js') }}" defer></script>
 @endpush    
 
@@ -98,55 +98,89 @@
                             @enderror
                         </div>
 
+                    
                         <div class="col-12 mb-3 usuario-form-field">
                             @if($professores->isEmpty())
-                                <div class="usuario-form-checkbox-list mt-2">
-                                    <small class="usuario-form-help mb-0">
-                                        Nenhum professor aprovado ainda.
-                                    </small>
-                                </div>
+                                <small class="usuario-form-help">
+                                    Nenhum professor aprovado ainda.
+                                </small>
                             @else
-                                <div class="turma-edit-professores-header">
-                                    <label for="buscar-professor" class="form-label mb-0">
-                                        Professores responsáveis
-                                    </label>
-                                </div>
+                                <label id="professores-label" class="form-label">
+                                    Professores responsáveis
+                                </label>
 
-                                <div class="turma-professor-search mt-2">
-                                    <i class="bi bi-search" aria-hidden="true"></i>
-                                    <input
-                                        type="search"
-                                        id="buscar-professor"
-                                        placeholder="Buscar professor pelo nome"
-                                        autocomplete="off"
+                                <div class="turma-professor-dropdown" id="professores-dropdown">
+
+                                    <button
+                                        type="button"
+                                        class="form-select turma-professor-trigger"
+                                        id="professores-trigger"
+                                        aria-labelledby="professores-label professores-trigger"
+                                        aria-expanded="false"
+                                        aria-controls="professores-painel"
                                     >
-                                </div>
+                                        <span id="professores-resumo">
+                                            {{ count($professoresSelecionados) ? count($professoresSelecionados) . ' selecionados' : 'Selecione' }}
+                                        </span>
+                                        <i class="bi bi-chevron-down" aria-hidden="true"></i>
+                                    </button>
 
-                                <div class="usuario-form-checkbox-list turma-professores-list mt-2">
-                                    @foreach($professores as $professor)
-                                        @php
-                                            $professorSelecionado = in_array($professor->id, $professoresSelecionados);
-                                        @endphp
-
-                                        <label
-                                            class="form-check usuario-form-checkbox professor-item"
-                                            for="professor_{{ $professor->id }}"
-                                            data-nome="{{ strtolower($professor->nome) }}"
-                                            data-escolas="{{ $professor->escolas->pluck('id')->implode(',') }}"
-                                        >
+                                    <div
+                                        class="turma-professor-painel"
+                                        id="professores-painel"
+                                        hidden
+                                    >
+                                        <div class="turma-professor-search">
+                                            <i class="bi bi-search" aria-hidden="true"></i>
                                             <input
-                                                class="form-check-input"
-                                                type="checkbox"
-                                                name="professores[]"
-                                                value="{{ $professor->id }}"
-                                                id="professor_{{ $professor->id }}"
-                                                {{ $professorSelecionado ? 'checked' : '' }}
+                                                type="search"
+                                                id="buscar-professor"
+                                                placeholder="Buscar professor pelo nome"
+                                                aria-label="Buscar professor"
+                                                autocomplete="off"
                                             >
-                                            <span class="turma-professor-name">
-                                                {{ $professor->nome }}
-                                            </span>
-                                        </label>
-                                    @endforeach
+                                        </div>
+
+                                        <div class="usuario-form-checkbox-list turma-professores-list">
+                                            @foreach($professores as $professor)
+                                                @php
+                                                    $professorSelecionado = in_array(
+                                                        $professor->id,
+                                                        $professoresSelecionados
+                                                    );
+                                                @endphp
+
+                                                <label
+                                                    class="form-check usuario-form-checkbox professor-item"
+                                                    for="professor_{{ $professor->id }}"
+                                                    data-nome="{{ $professor->nome }}"
+                                                    data-escolas="{{ $professor->escolas->pluck('id')->implode(',') }}"
+                                                >
+                                                    <input
+                                                        class="form-check-input"
+                                                        type="checkbox"
+                                                        name="professores[]"
+                                                        value="{{ $professor->id }}"
+                                                        id="professor_{{ $professor->id }}"
+                                                        {{ $professorSelecionado ? 'checked' : '' }}
+                                                    >
+
+                                                    <span class="turma-professor-name">
+                                                        {{ $professor->nome }}
+                                                    </span>
+                                                </label>
+                                            @endforeach
+                                        </div>
+
+                                        <small
+                                            id="professores-sem-resultado"
+                                            class="usuario-form-help"
+                                            hidden
+                                        >
+                                            Nenhum professor encontrado.
+                                        </small>
+
+                                    </div>
                                 </div>
                             @endif
 
@@ -155,7 +189,13 @@
                                     {{ $message }}
                                 </div>
                             @enderror
+                            @error('professores.*')
+                                <div class="invalid-feedback d-block">
+                                    {{ $message }}
+                                </div>
+                            @enderror
                         </div>
+
                     </div>
 
                     <div class="usuario-form-actions">
