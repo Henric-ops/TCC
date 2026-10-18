@@ -180,14 +180,14 @@
 
             <div class="usuario-form-actions">
 
-                <a href="{{ route('admin.alunos.index') }}" class="usuario-button usuario-button-danger">
-                    <i class="bi bi-x-lg" aria-hidden="true"></i>
-                    Cancelar
-                </a>
+                <a href="{{ route('admin.alunos.index') }}" class="usuario-button usuario-button-muted">
+                            <i class="bi bi-x-lg" aria-hidden="true"></i>
+                            Cancelar
+                        </a>
 
                 <button type="submit" class="usuario-button usuario-button-primary">
                     <i class="bi bi-person-plus-fill" aria-hidden="true"></i>
-                    Cadastrar aluno
+                    Cadastrar 
                 </button>
 
             </div>

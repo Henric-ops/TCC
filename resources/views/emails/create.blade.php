@@ -16,13 +16,11 @@
                     Enviar comunicado
                 </h1>
                 <p>
-                    Selecione o aluno e escreva uma mensagem para o responsável.
+                    Selecione o aluno e escreva um comunicado para o responsável.
                 </p>
             </div>
 
-            <div class="email-header-icon">
-                <i class="bi bi-envelope-paper"></i>
-            </div>
+
 
         </div>
 

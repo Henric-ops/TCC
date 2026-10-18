@@ -2,36 +2,35 @@
 
 @section('title', 'Novo usuário')
 
-@section('content')
+@push('styles')
     <link rel="stylesheet" href="{{ asset('css/usuario-form.css') }}">
     <link rel="stylesheet" href="{{ asset('css/usuario-buttons.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/usuario-create.css') }}">
+@endpush
+
+@push('scripts')
     <script src="{{ asset('js/usuario-form.js') }}" defer></script>
+    <script src="{{ asset('js/alunos-selecao.js') }}" defer></script>
+@endpush
 
-    <div class="usuario-form-page">
-        <div class="usuario-form-header">
-            <div class="usuario-form-title">
-                <span class="usuario-form-title-icon" aria-hidden="true">
-                    <i class="bi bi-person-plus-fill"></i>
-                </span>
-                <div>
-                    <h1 class="h4 mb-1">Novo usuário</h1>
-                    <p class="usuario-form-subtitle">Cadastre um novo acesso para sua escola.</p>
-                </div>
+@section('content')
+    <main class="usuario-form-page usuario-cadastro-page">
+        <header class="usuario-cadastro-header">
+            <div>
+                <h1 class="usuario-cadastro-title">Novo usuário</h1>
+                <p class="usuario-cadastro-subtitle">Cadastre um novo acesso para sua escola.</p>
             </div>
-
             <a href="{{ route('admin.usuarios.index') }}" class="usuario-button usuario-button-muted">
-                <i class="bi bi-arrow-left" aria-hidden="true"></i>
                 Voltar
             </a>
-        </div>
+        </header>
 
-        <div class="card usuario-form-card">
-            <div class="card-header">
-                <i class="bi bi-person-vcard" aria-hidden="true"></i>
-                <strong>Dados do usuário</strong>
-            </div>
-
+        <section class="card usuario-form-card usuario-cadastro-card">
             <div class="card-body">
+                <div class="usuario-cadastro-section-heading">
+                    <h2>Dados do usuário</h2>
+                </div>
+                <div class="usuario-cadastro-divider" aria-hidden="true"></div>
                 @if ($errors->any())
                     <div class="alert alert-danger d-flex align-items-start gap-2" role="alert">
                         <i class="bi bi-exclamation-triangle-fill mt-1" aria-hidden="true"></i>
@@ -49,7 +48,7 @@
                 <form method="POST" action="{{ route('admin.usuarios.store') }}">
                     @csrf
 
-                    <div class="row">
+                    <div class="row g-3 usuario-cadastro-fields">
                         <div class="col-md-6 mb-3 usuario-form-field">
                             <label for="nome" class="form-label">Nome</label>
                             <input type="text" id="nome" name="nome"
@@ -92,63 +91,74 @@
                             @enderror
                         </div>
 
-                      <div id="bloco-escola-unica" class="mb-3">
-    <label class="form-label">Escola</label>
-    <select name="escola_id" class="form-select @error('escola_id') is-invalid @enderror">
-        <option value="">Selecione</option>
-        @foreach($escolas as $escola)
-            <option value="{{ $escola->id }}" {{ old('escola_id', $usuario->escola_id ?? '') == $escola->id ? 'selected' : '' }}>
-                {{ $escola->nome }}
-            </option>
-        @endforeach
-    </select>
-    @error('escola_id')<div class="invalid-feedback">{{ $message }}</div>@enderror
-</div>
+                            <div id="bloco-escola-unica" class="col-md-6 mb-3 usuario-form-field">
+                                <label for="escola_id" class="form-label">Escola</label>
+                                <select name="escola_id" id="escola_id" class="form-select @error('escola_id') is-invalid @enderror">
+                                    <option value="">Selecione</option>
+                                    @foreach($escolas as $escola)
+                                        <option value="{{ $escola->id }}" {{ old('escola_id', $usuario->escola_id ?? '') == $escola->id ? 'selected' : '' }}>
+                                            {{ $escola->nome }}
+                                        </option>
+                                    @endforeach
+                                </select>
+                                @error('escola_id')<div class="invalid-feedback">{{ $message }}</div>@enderror
+                            </div>
 
-<div id="bloco-professor" class="mb-3" style="display: none;">
-    <label class="form-label">Escolas em que atua</label>
-    <div class="usuario-form-checkbox-list mt-2">
-        @foreach($escolas as $escola)
-            <label class="form-check usuario-form-checkbox" for="escola_{{ $escola->id }}">
-                <input class="form-check-input" type="checkbox" name="escolas[]" value="{{ $escola->id }}"
-                    id="escola_{{ $escola->id }}"
-                    {{ in_array($escola->id, old('escolas', $escolasVinculadas ?? [])) ? 'checked' : '' }}>
-                <span>{{ $escola->nome }}</span>
-            </label>
-        @endforeach
-    </div>
-    @error('escolas')<div class="invalid-feedback d-block">{{ $message }}</div>@enderror
-</div>
+                            <div id="bloco-professor" class="col-12 mb-3 usuario-form-field" style="display: none;">
+                            <label class="form-label">Escolas em que atua</label>
+                            <div class="usuario-form-checkbox-list mt-2">
+                                @foreach($escolas as $escola)
+                                    <label class="form-check usuario-form-checkbox" for="escola_{{ $escola->id }}">
+                                        <input class="form-check-input" type="checkbox" name="escolas[]" value="{{ $escola->id }}"
+                                            id="escola_{{ $escola->id }}"
+                                            {{ in_array($escola->id, old('escolas', $escolasVinculadas ?? [])) ? 'checked' : '' }}>
+                                        <span>{{ $escola->nome }}</span>
+                                    </label>
+                                @endforeach
+                            </div>
+                            @error('escolas')<div class="invalid-feedback d-block">{{ $message }}</div>@enderror
+                        </div>
                     </div>
 
-                    <div id="bloco-responsavel" hidden>
-                        <hr>
-                        <h2 class="usuario-form-section mb-3">
-                            <i class="bi bi-people-fill" aria-hidden="true"></i>
-                            Vínculo do responsável
-                        </h2>
+                    <div id="bloco-responsavel" class="usuario-cadastro-related" hidden>
+                        <div class="usuario-cadastro-section-heading">
+                            <h2>Vínculo do responsável</h2>
+                        </div>
+                        <div class="usuario-cadastro-divider" aria-hidden="true"></div>
 
-                        <div class="mb-3 usuario-form-field">
-                            <label for="alunos" class="form-label">Aluno(s) vinculado(s)</label>
-                            <select name="alunos[]" id="alunos" multiple class="form-select @error('alunos') is-invalid @enderror">
-                                @foreach($alunos as $aluno)
-                                    <option value="{{ $aluno->id }}" data-escola-id="{{ $aluno->escola_id }}"
-                                        {{ in_array($aluno->id, old('alunos', [])) ? 'selected' : '' }}>
-                                        {{ $aluno->nome }}
-                                    </option>
-                                @endforeach
-                            </select>
-                            @if($alunos->isEmpty())
-                                <small class="usuario-form-help">Nenhum aluno cadastrado ainda. Cadastre os alunos primeiro para criar o vínculo.</small>
-                            @else
-                                <small class="usuario-form-help">Segure Ctrl ou Cmd para selecionar mais de um aluno.</small>
-                            @endif
+                        <div class="row g-3 usuario-cadastro-fields">
+                        <div class="col-md-6 mb-3 usuario-form-field">
+                            <label for="buscar-aluno" class="form-label">Aluno(s) vinculado(s)</label>
+                            <input type="search" id="buscar-aluno" class="form-control mb-2"
+                                placeholder="Buscar aluno pelo nome..." autocomplete="off">
+
+                            <div class="alunos-lista" id="alunos-lista" role="group" aria-label="Selecionar alunos">
+                                @forelse($alunos as $aluno)
+                                    <label class="aluno-item" data-nome="{{ $aluno->nome }}"
+                                        data-escola-id="{{ $aluno->escola_id }}">
+                                        <input type="checkbox" class="form-check-input @error('alunos') is-invalid @enderror"
+                                            name="alunos[]" value="{{ $aluno->id }}"
+                                            {{ in_array($aluno->id, old('alunos', [])) ? 'checked' : '' }}>
+                                        <span>{{ $aluno->nome }}</span>
+                                    </label>
+                                @empty
+                                    <p class="text-muted small mb-0">Nenhum aluno disponível.</p>
+                                @endforelse
+                            </div>
+
+                            <small id="alunos-sem-resultado" class="text-muted" hidden>
+                                Nenhum aluno encontrado.
+                            </small>
+
                             @error('alunos')
-                                <div class="invalid-feedback">{{ $message }}</div>
+                                <div class="invalid-feedback d-block">{{ $message }}</div>
+                            @enderror
+                            @error('alunos.*')
+                                <div class="invalid-feedback d-block">{{ $message }}</div>
                             @enderror
                         </div>
 
-                        <div class="mb-3 usuario-form-field">
+                        <div class="col-md-6 mb-3 usuario-form-field">
                             <label for="parentesco" class="form-label">Parentesco</label>
                             <select name="parentesco" id="parentesco" class="form-select @error('parentesco') is-invalid @enderror">
                                 <option value="">Selecione o parentesco</option>
@@ -167,6 +177,7 @@
                                 <div class="invalid-feedback">{{ $message }}</div>
                             @enderror
                         </div>
+                        </div>
                     </div>
 
                     <div class="usuario-form-actions">
@@ -176,12 +187,12 @@
                         </a>
                         <button type="submit" class="usuario-button usuario-button-primary">
                             <i class="bi bi-person-plus-fill" aria-hidden="true"></i>
-                            Cadastrar usuário
+                            Cadastrar 
                         </button>
                     </div>
                 </form>
             </div>
-        </div>
+        </section>
 
 
         <script>
@@ -201,5 +212,5 @@
     perfilSelect.addEventListener('change', toggleBlocos);
     toggleBlocos();
 </script>
-    </div>
+    </main>
 @endsection

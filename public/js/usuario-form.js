@@ -1,20 +1,24 @@
-document.addEventListener('DOMContentLoaded', () => {
-    const perfilSelect = document.getElementById('perfil');
-    const escolaSelect = document.getElementById('escola_id');
-    const alunosSelect = document.getElementById('alunos');
-    const parentescoSelect = document.getElementById('parentesco');
-    const blocoResponsavel = document.getElementById('bloco-responsavel');
+document.addEventListener("DOMContentLoaded", () => {
+    const perfilSelect = document.getElementById("perfil");
+    const escolaSelect = document.getElementById("escola_id");
+    const alunosLista = document.getElementById("alunos-lista");
+    const parentescoSelect = document.getElementById("parentesco");
+    const blocoResponsavel = document.getElementById("bloco-responsavel");
 
     if (!perfilSelect || !blocoResponsavel) {
         return;
     }
 
     const atualizarBlocoResponsavel = () => {
-        const responsavelSelecionado = perfilSelect.value === 'responsavel';
+        const responsavelSelecionado = perfilSelect.value === "responsavel";
         blocoResponsavel.hidden = !responsavelSelecionado;
 
-        if (alunosSelect) {
-            alunosSelect.disabled = !responsavelSelecionado;
+        if (alunosLista) {
+            alunosLista
+                .querySelectorAll('input[name="alunos[]"]')
+                .forEach((checkbox) => {
+                    checkbox.disabled = !responsavelSelecionado;
+                });
         }
 
         if (parentescoSelect) {
@@ -22,24 +26,6 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     };
 
-    perfilSelect.addEventListener('change', atualizarBlocoResponsavel);
+    perfilSelect.addEventListener("change", atualizarBlocoResponsavel);
     atualizarBlocoResponsavel();
-
-    if (escolaSelect && alunosSelect) {
-        const atualizarAlunos = () => {
-            const escolaSelecionada = escolaSelect.value;
-
-            Array.from(alunosSelect.options).forEach((option) => {
-                const pertenceAEscola = option.dataset.escolaId === escolaSelecionada;
-                option.hidden = !escolaSelecionada || !pertenceAEscola;
-
-                if (!pertenceAEscola) {
-                    option.selected = false;
-                }
-            });
-        };
-
-        escolaSelect.addEventListener('change', atualizarAlunos);
-        atualizarAlunos();
-    }
 });

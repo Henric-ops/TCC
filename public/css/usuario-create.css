@@ -1,0 +1,202 @@
+.usuario-cadastro-page {
+    max-width: 940px;
+    margin: 0 auto;
+}
+
+.usuario-cadastro-header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 1rem;
+    margin-bottom: 1.25rem;
+}
+
+.usuario-cadastro-title {
+    margin: 0;
+    color: #263445;
+    font-size: 1.5rem;
+    font-weight: 600;
+    line-height: 1.3;
+}
+
+.usuario-cadastro-subtitle {
+    margin: .35rem 0 0;
+    color: #687586;
+    font-size: .9rem;
+}
+
+.usuario-cadastro-header .usuario-button {
+    flex: 0 0 auto;
+}
+
+.usuario-cadastro-card {
+    overflow: visible;
+    border: 1px solid #dce2e8;
+    border-radius: 7px;
+    background: #fff;
+    box-shadow: none;
+}
+
+.usuario-cadastro-card .card-body {
+    padding: 1.5rem;
+}
+
+.usuario-cadastro-section-heading h2 {
+    margin: 0;
+    color: #303c4b;
+    font-size: 1rem;
+    font-weight: 600;
+}
+
+.usuario-cadastro-divider {
+    height: 1px;
+    margin: 1rem 0 1.35rem;
+    background: #e5e9ee;
+}
+
+.usuario-cadastro-fields {
+    --bs-gutter-x: 1.25rem;
+    --bs-gutter-y: 1rem;
+}
+
+.usuario-cadastro-page .usuario-form-field {
+    margin-bottom: 0 !important;
+}
+
+.usuario-cadastro-page .usuario-form-field .form-label {
+    margin-bottom: .4rem;
+    color: #4b5868;
+    font-size: .86rem;
+    font-weight: 500;
+    letter-spacing: 0;
+    text-transform: none;
+}
+
+.usuario-cadastro-page .usuario-form-field .form-control,
+.usuario-cadastro-page .usuario-form-field .form-select {
+    min-height: 2.7rem;
+    border: 1px solid #d5dce5;
+    border-radius: 5px;
+    background-color: #fff;
+    color: #2d3948;
+    font-size: .9rem;
+    box-shadow: none;
+    transition: border-color .15s ease, box-shadow .15s ease;
+}
+
+.usuario-cadastro-page .usuario-form-field .form-control:focus,
+.usuario-cadastro-page .usuario-form-field .form-select:focus {
+    border-color: #78a5dc;
+    box-shadow: 0 0 0 3px rgba(55, 119, 190, .1);
+    outline: 0;
+}
+
+.usuario-cadastro-related {
+    margin-top: 1.25rem;
+}
+
+.usuario-cadastro-related .usuario-cadastro-divider {
+    margin-bottom: 1.1rem;
+}
+
+.usuario-cadastro-page .alunos-lista {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    max-height: 12rem;
+    overflow-y: auto;
+    padding: .35rem;
+    border: 1px solid #d5dce5;
+    border-radius: 5px;
+    background: #fff;
+}
+
+.usuario-cadastro-page .aluno-item {
+    display: flex;
+    align-items: center;
+    gap: .65rem;
+    min-height: 2.65rem;
+    margin: 0;
+    padding: .55rem .65rem;
+    border-radius: 4px;
+    color: #2d3948;
+    cursor: pointer;
+    transition: background-color .15s ease;
+}
+
+.usuario-cadastro-page .aluno-item:hover,
+.usuario-cadastro-page .aluno-item:has(.form-check-input:checked) {
+    background: #f2f7fc;
+}
+
+.usuario-cadastro-page .aluno-item[hidden],
+.usuario-cadastro-page #alunos-sem-resultado[hidden] {
+    display: none !important;
+}
+
+.usuario-cadastro-page .aluno-item .form-check-input {
+    width: 1rem;
+    height: 1rem;
+    flex-shrink: 0;
+    margin: 0;
+    border-color: #b8c4d2;
+    cursor: pointer;
+}
+
+.usuario-cadastro-page .aluno-item .form-check-input:focus-visible {
+    border-color: #78a5dc;
+    box-shadow: 0 0 0 3px rgba(55, 119, 190, .1);
+}
+
+.usuario-cadastro-page #alunos-sem-resultado {
+    display: block;
+    margin-top: .4rem;
+    color: #687586;
+    font-size: .84rem;
+}
+
+.usuario-cadastro-page .usuario-form-actions {
+    justify-content: flex-end;
+    gap: .65rem;
+    margin-top: 1.4rem;
+    padding-top: 1.1rem;
+    border-top: 1px solid #e5e9ee;
+}
+
+@media (max-width: 767.98px) {
+    .usuario-cadastro-card .card-body {
+        padding: 1.15rem;
+    }
+
+    .usuario-cadastro-fields {
+        --bs-gutter-x: 1rem;
+        --bs-gutter-y: .9rem;
+    }
+
+    .usuario-cadastro-page .alunos-lista {
+        max-height: 10rem;
+    }
+
+    .usuario-cadastro-page .usuario-form-actions {
+        justify-content: flex-end;
+    }
+
+    .usuario-cadastro-page .usuario-form-actions .usuario-button {
+        flex: 0 1 auto;
+    }
+}
+
+@media (max-width: 420px) {
+    .usuario-cadastro-title {
+        font-size: 1.35rem;
+    }
+
+    .usuario-cadastro-subtitle {
+        max-width: 15rem;
+        font-size: .84rem;
+    }
+
+    .usuario-cadastro-header .usuario-button {
+        padding-inline: .65rem;
+    }
+}
