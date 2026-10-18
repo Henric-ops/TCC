@@ -10,171 +10,175 @@
 
 @section('content')
 
-    <div class="alunos-header d-flex justify-content-between align-items-center mb-4">
+    <div class="alunos-index-page">
+        <div class="alunos-header d-flex justify-content-between align-items-center mb-4">
 
-        <div>
-            <h1 class="h4 mb-1">Alunos</h1>
-        </div>
-
-        <a href="{{ route('admin.alunos.create') }}" class="usuario-button usuario-button-primary">
-            <i class="bi bi-person-plus-fill" aria-hidden="true"></i>
-            Novo aluno
-        </a>
-
-    </div>
-
-    <form method="GET" class="freq-filtros alunos-filtros">
-
-        <div class="freq-filtro-item alunos-filtro-item">
-            <label for="busca">Aluno</label>
-
-            <div class="alunos-busca">
-                <i class="bi bi-search" aria-hidden="true"></i>
-
-                <input type="text" id="busca" name="busca" value="{{ $busca }}" placeholder="Buscar aluno">
+            <div>
+                <h1 class="h4 mb-1">Alunos</h1>
             </div>
+
+            <a href="{{ route('admin.alunos.create') }}" class="usuario-button usuario-button-primary">
+                <i class="bi bi-person-plus-fill" aria-hidden="true"></i>
+                Novo aluno
+            </a>
+
         </div>
 
-        <div class="freq-filtro-item alunos-filtro-item">
-            <label for="escola_id">Escola</label>
+        <form method="GET" class="freq-filtros alunos-filtros">
 
-            <select name="escola_id" id="escola_id" class="alunos-filtro-escola">
-                <option value="">Todas as escolas</option>
+            <div class="freq-filtro-item alunos-filtro-item">
+                <label for="busca">Aluno</label>
 
-                @foreach($escolasPermitidas as $escola)
-                    <option value="{{ $escola->id }}" {{ (string) $escolaId === (string) $escola->id ? 'selected' : '' }}>
-                        {{ $escola->nome }}
-                    </option>
-                @endforeach
-            </select>
-        </div>
+                <div class="alunos-busca">
+                    <i class="bi bi-search" aria-hidden="true"></i>
 
-        <div class="freq-filtro-item alunos-filtro-item">
-            <label for="turma_id">Turma</label>
+                    <input type="text" id="busca" name="busca" value="{{ $busca }}" placeholder="Buscar aluno">
+                </div>
+            </div>
 
-            <select name="turma_id" id="turma_id">
-                <option value="">Todas as turmas</option>
+            <div class="freq-filtro-item alunos-filtro-item">
+                <label for="escola_id">Escola</label>
 
-                @foreach($turmasPermitidas as $turma)
-                    <option value="{{ $turma->id }}" {{ (string) $turmaId === (string) $turma->id ? 'selected' : '' }}>
-                        {{ $turma->nome }}
-                    </option>
-                @endforeach
-            </select>
-        </div>
+                <select name="escola_id" id="escola_id" class="alunos-filtro-escola">
+                    <option value="">Todas as escolas</option>
 
-        <button type="submit" class="usuario-button usuario-button-primary alunos-filtro-btn">
-            <i class="bi bi-search" aria-hidden="true"></i>
-            Buscar
-        </button>
+                    @foreach($escolasPermitidas as $escola)
+                        <option value="{{ $escola->id }}" {{ (string) $escolaId === (string) $escola->id ? 'selected' : '' }}>
+                            {{ $escola->nome }}
+                        </option>
+                    @endforeach
+                </select>
+            </div>
 
-        <a href="{{ route('admin.alunos.index') }}" class="usuario-button usuario-button-muted alunos-filtro-btn">
-            <i class="bi bi-x-lg" aria-hidden="true"></i>
-            Limpar
-        </a>
+            <div class="freq-filtro-item alunos-filtro-item">
+                <label for="turma_id">Turma</label>
 
-    </form>
+                <select name="turma_id" id="turma_id">
+                    <option value="">Todas as turmas</option>
 
-    @if(session('sucesso'))
-        <div class="alert alert-success d-flex align-items-center gap-2" role="alert">
-            <i class="bi bi-check-circle-fill" aria-hidden="true"></i>
-            {{ session('sucesso') }}
-        </div>
-    @endif
+                    @foreach($turmasPermitidas as $turma)
+                        <option value="{{ $turma->id }}" {{ (string) $turmaId === (string) $turma->id ? 'selected' : '' }}>
+                            {{ $turma->nome }}
+                        </option>
+                    @endforeach
+                </select>
+            </div>
 
-    <div class="card alunos-table-card">
+            <button type="submit" class="usuario-button usuario-button-primary alunos-filtro-btn">
+                <i class="bi bi-search" aria-hidden="true"></i>
+                Buscar
+            </button>
 
-        <div class="table-responsive">
+            <a href="{{ route('admin.alunos.index') }}" class="usuario-button usuario-button-muted alunos-filtro-btn">
+                <i class="bi bi-x-lg" aria-hidden="true"></i>
+                Limpar
+            </a>
 
-            <table class="table table-hover align-middle mb-0">
+        </form>
 
-                <thead>
-                    <tr>
-                        <th>Aluno</th>
-                        <th>Idade</th>
-                        <th>Turma</th>
+        @if(session('sucesso'))
+            <div class="alert alert-success d-flex align-items-center gap-2" role="alert">
+                <i class="bi bi-check-circle-fill" aria-hidden="true"></i>
+                {{ session('sucesso') }}
+            </div>
+        @endif
 
-                        <th class="text-end">
-                            Ações
-                        </th>
-                    </tr>
-                </thead>
+        <div class="card alunos-table-card">
 
-                <tbody>
+            <div class="table-responsive alunos-table-scroll">
 
-                    @forelse($alunos as $aluno)
+                <table class="table table-hover align-middle mb-0">
 
-                        <tr class="aluno-row">
+                    <thead>
+                        <tr>
+                            <th>Aluno</th>
+                            <th>Idade</th>
+                            <th>Turma</th>
 
-                            <td data-label="Aluno">
-                                <div>
-                                    <strong>{{ $aluno->nome }}</strong>
-                                    <small class="d-block text-muted">
-                                        Responsável:
-                                        {{ $aluno->responsaveis->pluck('nome')->join(', ') ?: 'Sem responsável' }}
-                                    </small>
-                                </div>
-                            </td>
-
-                            <td data-label="Idade">{{ $aluno->data_nascimento->age }} anos</td>
-
-                            <td data-label="Turma">{{ $aluno->turmas->pluck('nome')->join(', ') ?: 'Sem turma' }}</td>
-
-                            <td data-label="Ações" class="text-end text-nowrap">
-
-                                <a href="{{ route('admin.alunos.edit', $aluno) }}" class="usuario-action usuario-action-primary"
-                                    title="Editar aluno" aria-label="Editar aluno">
-                                    <i class="bi bi-pencil-square" aria-hidden="true"></i>
-
-                                </a>
-
-                                <form action="{{ route('admin.alunos.destroy', $aluno) }}" method="POST" class="d-inline"
-                                    onsubmit="return confirm('Remover este aluno?')">
-                                    @csrf
-                                    @method('DELETE')
-
-                                    <button type="submit" class="usuario-action usuario-action-danger" title="Excluir aluno"
-                                        aria-label="Excluir aluno">
-                                        <i class="bi bi-trash3" aria-hidden="true"></i>
-
-                                    </button>
-
-                                </form>
-
-                            </td>
-
+                            <th class="text-end">
+                                Ações
+                            </th>
                         </tr>
+                    </thead>
 
-                    @empty
+                    <tbody>
 
-                        <tr class="aluno-empty-row">
-                            <td colspan="4" class="text-center py-5">
+                        @forelse($alunos as $aluno)
 
-                                <div class="aluno-empty">
+                            <tr class="aluno-row">
 
-                                    <i class="bi bi-people" aria-hidden="true"></i>
+                                <td data-label="Aluno">
+                                    <div>
+                                        <strong>{{ $aluno->nome }}</strong>
+                                        <small class="d-block text-muted">
+                                            Responsável:
+                                            {{ $aluno->responsaveis->pluck('nome')->join(', ') ?: 'Sem responsável' }}
+                                        </small>
+                                    </div>
+                                </td>
 
-                                    <span>
-                                        Nenhum aluno encontrado.
-                                    </span>
+                                <td data-label="Idade">{{ $aluno->data_nascimento->age }} anos</td>
 
-                                </div>
+                                <td data-label="Turma">{{ $aluno->turmas->pluck('nome')->join(', ') ?: 'Sem turma' }}</td>
 
-                            </td>
-                        </tr>
+                                <td data-label="Ações" class="text-end text-nowrap">
 
-                    @endforelse
+                                    <a href="{{ route('admin.alunos.edit', $aluno) }}"
+                                        class="usuario-action usuario-action-primary" title="Editar aluno"
+                                        aria-label="Editar aluno">
+                                        <i class="bi bi-pencil-square" aria-hidden="true"></i>
 
-                </tbody>
+                                    </a>
 
-            </table>
+                                    <form action="{{ route('admin.alunos.destroy', $aluno) }}" method="POST" class="d-inline"
+                                        onsubmit="return confirm('Remover este aluno?')">
+                                        @csrf
+                                        @method('DELETE')
+
+                                        <button type="submit" class="usuario-action usuario-action-danger" title="Excluir aluno"
+                                            aria-label="Excluir aluno">
+                                            <i class="bi bi-trash3" aria-hidden="true"></i>
+
+                                        </button>
+
+                                    </form>
+
+                                </td>
+
+                            </tr>
+
+                        @empty
+
+                            <tr class="aluno-empty-row">
+                                <td colspan="4" class="text-center py-5">
+
+                                    <div class="aluno-empty">
+
+                                        <i class="bi bi-people" aria-hidden="true"></i>
+
+                                        <span>
+                                            Nenhum aluno encontrado.
+                                        </span>
+
+                                    </div>
+
+                                </td>
+                            </tr>
+
+                        @endforelse
+
+                    </tbody>
+
+                </table>
+
+            </div>
 
         </div>
 
-    </div>
+        <div class="mt-3 alunos-pagination">
+            {{ $alunos->links() }}
+        </div>
 
-    <div class="mt-3">
-        {{ $alunos->links() }}
     </div>
 
 @endsection

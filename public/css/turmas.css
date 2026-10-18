@@ -1,5 +1,13 @@
 .turmas-index-page {
+    display: flex;
+    height: calc(100vh - 4rem);
+    min-height: 0;
+    flex-direction: column;
     max-width: none;
+}
+
+.turmas-index-page>* {
+    flex: 0 0 auto;
 }
 
 .turmas-header {
@@ -36,6 +44,37 @@
     border: 1px solid var(--lk-border);
     border-radius: 6px;
     box-shadow: none;
+}
+
+.turmas-index-page .turmas-table-card {
+    display: flex;
+    min-height: 0;
+    flex: 0 1 auto;
+    flex-direction: column;
+}
+
+.turmas-table-scroll {
+    min-height: 0;
+    max-height: min(450px, calc(100vh - 21rem));
+    flex: 0 1 auto;
+    overflow: auto;
+    scrollbar-color: #cbd5e1 transparent;
+    scrollbar-width: thin;
+}
+
+.turmas-table-scroll thead th {
+    position: sticky;
+    z-index: 2;
+    top: 0;
+    background: #f6f8fd;
+}
+
+.turmas-table-scroll table {
+    margin-bottom: 0;
+}
+
+.turmas-pagination {
+    margin-bottom: 0;
 }
 
 .turmas-table-card .table {
@@ -130,5 +169,15 @@
 
     .turmas-table-card .table {
         min-width: 600px;
+    }
+}
+
+@media (max-width: 991.98px) {
+    .turmas-index-page {
+        height: calc(100dvh - 102px);
+    }
+
+    .turmas-table-scroll {
+        max-height: max(8rem, min(450px, calc(100dvh - 24rem)));
     }
 }

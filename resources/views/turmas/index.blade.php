@@ -60,7 +60,7 @@
         </form>
 
         <div class="card turmas-table-card">
-            <div class="table-responsive">
+            <div class="table-responsive turmas-table-scroll">
                 <table class="table table-hover align-middle mb-0">
                     <thead>
                         <tr>
@@ -112,7 +112,7 @@
             </div>
         </div>
 
-        <div class="mt-3">
+        <div class="mt-3 turmas-pagination">
             {{ $turmas->links() }}
         </div>
     </div>
