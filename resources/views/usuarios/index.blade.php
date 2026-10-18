@@ -9,314 +9,317 @@
     <link rel="stylesheet" href="{{ asset('css/alunos.css') }}">
     <link rel="stylesheet" href="{{ asset('css/usuario-buttons.css') }}">
 
-    <div class="usuarios-header d-flex justify-content-between align-items-center mb-4">
+    <div class="usuarios-index-page">
+        <div class="usuarios-header d-flex justify-content-between align-items-center mb-4">
 
-        <div>
-            <h1 class="h4 mb-1">Usuários</h1>
-        </div>
+            <div>
+                <h1 class="h4 mb-1">Usuários</h1>
+            </div>
 
-        <div class="usuarios-header-actions d-flex align-items-center gap-3">
-            <a href="{{ route('admin.usuarios.create') }}" class="usuario-button usuario-button-primary">
+            <div class="usuarios-header-actions d-flex align-items-center gap-3">
+                <a href="{{ route('admin.usuarios.create') }}" class="usuario-button usuario-button-primary">
 
-                <i class="bi bi-person-plus-fill" aria-hidden="true"></i>
-                Novo usuário
+                    <i class="bi bi-person-plus-fill" aria-hidden="true"></i>
+                    Novo usuário
 
-            </a>
-        </div>
-
-    </div>
-
-
-    @if(session('sucesso'))
-
-        <div class="alert alert-success d-flex align-items-center gap-2" role="alert">
-
-            <i class="bi bi-check-circle-fill" aria-hidden="true"></i>
-
-            {{ session('sucesso') }}
+                </a>
+            </div>
 
         </div>
 
-    @endif
+
+        @if(session('sucesso'))
+
+            <div class="alert alert-success d-flex align-items-center gap-2" role="alert">
+
+                <i class="bi bi-check-circle-fill" aria-hidden="true"></i>
+
+                {{ session('sucesso') }}
+
+            </div>
+
+        @endif
 
 
-    @if(session('erro'))
+        @if(session('erro'))
 
-        <div class="alert alert-danger d-flex align-items-center gap-2" role="alert">
+            <div class="alert alert-danger d-flex align-items-center gap-2" role="alert">
 
-            <i class="bi bi-exclamation-triangle-fill" aria-hidden="true"></i>
+                <i class="bi bi-exclamation-triangle-fill" aria-hidden="true"></i>
 
-            {{ session('erro') }}
+                {{ session('erro') }}
 
-        </div>
+            </div>
 
-    @endif
-
-
-
-    <div class="usuarios-filtros">
+        @endif
 
 
-        <form action="{{ route('admin.usuarios.index') }}" method="GET" class="usuarios-filtro-form freq-filtros">
 
-            @if(request('perfil'))
-                <input type="hidden" name="perfil" value="{{ request('perfil') }}">
-            @endif
+        <div class="usuarios-filtros">
 
-            <div class="freq-filtro-item alunos-filtro-item">
-                <label for="busca">Usuário</label>
 
-                <div class="alunos-busca">
+            <form action="{{ route('admin.usuarios.index') }}" method="GET" class="usuarios-filtro-form freq-filtros">
 
-                    <i class="bi bi-search" aria-hidden="true"></i>
+                @if(request('perfil'))
+                    <input type="hidden" name="perfil" value="{{ request('perfil') }}">
+                @endif
 
-                    <input type="text" id="busca" name="busca" value="{{ request('busca') }}"
-                        placeholder="Buscar por nome ou e-mail...">
+                <div class="freq-filtro-item alunos-filtro-item">
+                    <label for="busca">Usuário</label>
 
+                    <div class="alunos-busca">
+
+                        <i class="bi bi-search" aria-hidden="true"></i>
+
+                        <input type="text" id="busca" name="busca" value="{{ request('busca') }}"
+                            placeholder="Buscar por nome ou e-mail...">
+
+                    </div>
                 </div>
-            </div>
 
 
 
-            <div class="freq-filtro-item alunos-filtro-item">
-                <label for="status">Status</label>
+                <div class="freq-filtro-item alunos-filtro-item">
+                    <label for="status">Status</label>
 
-                <select name="status" id="status" class="usuarios-filtro-select">
+                    <select name="status" id="status" class="usuarios-filtro-select">
 
-                    <option value="">Todos os status</option>
+                        <option value="">Todos os status</option>
 
-                    <option value="aprovado" {{ request('status') === 'aprovado' ? 'selected' : '' }}>
-                        Aprovados
-                    </option>
+                        <option value="aprovado" {{ request('status') === 'aprovado' ? 'selected' : '' }}>
+                            Aprovados
+                        </option>
 
-                    <option value="pendente" {{ request('status') === 'pendente' ? 'selected' : '' }}>
-                        Pendentes
-                    </option>
+                        <option value="pendente" {{ request('status') === 'pendente' ? 'selected' : '' }}>
+                            Pendentes
+                        </option>
 
-                    <option value="recusado" {{ request('status') === 'recusado' ? 'selected' : '' }}>
-                        Recusados
-                    </option>
+                        <option value="recusado" {{ request('status') === 'recusado' ? 'selected' : '' }}>
+                            Recusados
+                        </option>
 
-                </select>
-            </div>
-
-
-            <button type="submit" class="usuario-button usuario-button-primary alunos-filtro-btn">
-                <i class="bi bi-search"></i>
-                Buscar
-            </button>
+                    </select>
+                </div>
 
 
-            <a href="{{ route('admin.usuarios.index') }}" class="usuario-button usuario-button-muted alunos-filtro-btn"
-                aria-label="Limpar filtros">
+                <button type="submit" class="usuario-button usuario-button-primary alunos-filtro-btn">
+                    <i class="bi bi-search"></i>
+                    Buscar
+                </button>
 
-                <i class="bi bi-x-lg"></i>
-                Limpar
+
+                <a href="{{ route('admin.usuarios.index') }}" class="usuario-button usuario-button-muted alunos-filtro-btn"
+                    aria-label="Limpar filtros">
+
+                    <i class="bi bi-x-lg"></i>
+                    Limpar
+
+                </a>
+
+            </form>
+
+        </div>
+
+
+
+        <div class="usuarios-tabs">
+
+            <a href="{{ route('admin.usuarios.index', request()->except('perfil', 'page')) }}"
+                class="usuarios-tab {{ !request('perfil') ? 'active' : '' }}">
+
+                <i class="bi bi-people"></i>
+
+                Todos
+
+                <span>{{ $totalUsuarios }}</span>
 
             </a>
 
-        </form>
 
-    </div>
+            <a href="{{ route('admin.usuarios.index', array_merge(request()->except('perfil', 'page'), ['perfil' => 'professor'])) }}"
+                class="usuarios-tab {{ request('perfil') === 'professor' ? 'active' : '' }}">
 
+                <i class="bi bi-mortarboard-fill"></i>
 
+                Professores
 
-    <div class="usuarios-tabs">
+                <span>{{ $totalProfessores }}</span>
 
-        <a href="{{ route('admin.usuarios.index', request()->except('perfil', 'page')) }}"
-            class="usuarios-tab {{ !request('perfil') ? 'active' : '' }}">
-
-            <i class="bi bi-people"></i>
-
-            Todos
-
-            <span>{{ $totalUsuarios }}</span>
-
-        </a>
+            </a>
 
 
-        <a href="{{ route('admin.usuarios.index', array_merge(request()->except('perfil', 'page'), ['perfil' => 'professor'])) }}"
-            class="usuarios-tab {{ request('perfil') === 'professor' ? 'active' : '' }}">
+            <a href="{{ route('admin.usuarios.index', array_merge(request()->except('perfil', 'page'), ['perfil' => 'responsavel'])) }}"
+                class="usuarios-tab {{ request('perfil') === 'responsavel' ? 'active' : '' }}">
 
-            <i class="bi bi-mortarboard-fill"></i>
+                <i class="bi bi-person-heart"></i>
 
-            Professores
+                Responsáveis
 
-            <span>{{ $totalProfessores }}</span>
+                <span>{{ $totalResponsaveis }}</span>
 
-        </a>
+            </a>
 
-
-        <a href="{{ route('admin.usuarios.index', array_merge(request()->except('perfil', 'page'), ['perfil' => 'responsavel'])) }}"
-            class="usuarios-tab {{ request('perfil') === 'responsavel' ? 'active' : '' }}">
-
-            <i class="bi bi-person-heart"></i>
-
-            Responsáveis
-
-            <span>{{ $totalResponsaveis }}</span>
-
-        </a>
-
-    </div>
+        </div>
 
 
-    <div class="card usuarios-table-card">
+        <div class="card usuarios-table-card">
 
-        <div class="table-responsive">
+            <div class="table-responsive usuarios-table-scroll">
 
-            <table class="table table-hover align-middle mb-0">
+                <table class="table table-hover align-middle mb-0">
 
-                <thead>
-
-                    <tr>
-
-                        <th>Nome</th>
-
-                        <th>E-mail</th>
-
-                        @if(!request('perfil'))
-                            <th>Perfil</th>
-                        @endif
-
-                        <th>Status</th>
-
-                        <th class="text-end">
-                            Ações
-                        </th>
-
-                    </tr>
-
-                </thead>
-
-
-                <tbody>
-
-                    @forelse($usuarios as $usuario)
+                    <thead>
 
                         <tr>
 
-                            <td>
+                            <th>Nome</th>
 
-                                <strong>{{ $usuario->nome }}</strong>
-
-                            </td>
-
-
-                            <td class="usuario-email">
-
-                                {{ $usuario->email }}
-
-                            </td>
-
-
+                            <th>E-mail</th>
 
                             @if(!request('perfil'))
-                                <td>
-                                    @if($usuario->perfil === 'professor')
-                                        Professor
-                                    @elseif($usuario->perfil === 'responsavel')
-                                        Responsável
-                                    @endif
-                                </td>
+                                <th>Perfil</th>
                             @endif
 
+                            <th>Status</th>
+
+                            <th class="text-end">
+                                Ações
+                            </th>
+
+                        </tr>
+
+                    </thead>
 
 
-                            <td>
+                    <tbody>
 
-                                @if($usuario->status === 'pendente')
-                                    Pendente
-                                @elseif($usuario->status === 'aprovado')
-                                    Aprovado
-                                @elseif($usuario->status === 'recusado')
-                                    Recusado
+                        @forelse($usuarios as $usuario)
+
+                            <tr>
+
+                                <td>
+
+                                    <strong>{{ $usuario->nome }}</strong>
+
+                                </td>
+
+
+                                <td class="usuario-email">
+
+                                    {{ $usuario->email }}
+
+                                </td>
+
+
+
+                                @if(!request('perfil'))
+                                    <td>
+                                        @if($usuario->perfil === 'professor')
+                                            Professor
+                                        @elseif($usuario->perfil === 'responsavel')
+                                            Responsável
+                                        @endif
+                                    </td>
                                 @endif
 
-                            </td>
+
+
+                                <td>
+
+                                    @if($usuario->status === 'pendente')
+                                        Pendente
+                                    @elseif($usuario->status === 'aprovado')
+                                        Aprovado
+                                    @elseif($usuario->status === 'recusado')
+                                        Recusado
+                                    @endif
+
+                                </td>
 
 
 
-                            <td class="text-end text-nowrap">
+                                <td class="text-end text-nowrap">
 
-                                <a href="{{ route('admin.usuarios.edit', $usuario) }}"
-                                    class="usuario-action usuario-action-primary" title="Editar usuário"
-                                    aria-label="Editar usuário">
+                                    <a href="{{ route('admin.usuarios.edit', $usuario) }}"
+                                        class="usuario-action usuario-action-primary" title="Editar usuário"
+                                        aria-label="Editar usuário">
 
-                                    <i class="bi bi-pencil-square" aria-hidden="true"></i>
-
-
-                                </a>
+                                        <i class="bi bi-pencil-square" aria-hidden="true"></i>
 
 
-                                @if($usuario->status === 'pendente')
-
-                                    <a href="{{ route('admin.usuarios.verificar', $usuario) }}"
-                                        class="usuario-action usuario-action-success" title="Validar cadastro"
-                                        aria-label="Validar cadastro">
-
-                                        <i class="bi bi-person-check-fill" aria-hidden="true"></i>
                                     </a>
 
-                                @endif
+
+                                    @if($usuario->status === 'pendente')
+
+                                        <a href="{{ route('admin.usuarios.verificar', $usuario) }}"
+                                            class="usuario-action usuario-action-success" title="Validar cadastro"
+                                            aria-label="Validar cadastro">
+
+                                            <i class="bi bi-person-check-fill" aria-hidden="true"></i>
+                                        </a>
+
+                                    @endif
 
 
-                                <form action="{{ route('admin.usuarios.destroy', $usuario) }}" method="POST" class="d-inline"
-                                    onsubmit="return confirm('Remover este usuário?')">
+                                    <form action="{{ route('admin.usuarios.destroy', $usuario) }}" method="POST"
+                                        class="d-inline" onsubmit="return confirm('Remover este usuário?')">
 
-                                    @csrf
+                                        @csrf
 
-                                    @method('DELETE')
+                                        @method('DELETE')
 
-                                    <button type="submit" class="usuario-action usuario-action-danger" title="Excluir usuário"
-                                        aria-label="Excluir usuário">
+                                        <button type="submit" class="usuario-action usuario-action-danger"
+                                            title="Excluir usuário" aria-label="Excluir usuário">
 
-                                        <i class="bi bi-trash3" aria-hidden="true"></i>
+                                            <i class="bi bi-trash3" aria-hidden="true"></i>
 
-                                    </button>
+                                        </button>
 
-                                </form>
+                                    </form>
 
-                            </td>
+                                </td>
 
-                        </tr>
+                            </tr>
 
 
-                    @empty
+                        @empty
 
-                        <tr>
+                            <tr>
 
-                            <td colspan="{{ request('perfil') ? 4 : 5 }}" class="text-center py-5">
+                                <td colspan="{{ request('perfil') ? 4 : 5 }}" class="text-center py-5">
 
-                                <div class="usuario-empty">
+                                    <div class="usuario-empty">
 
-                                    <i class="bi bi-people" aria-hidden="true"></i>
+                                        <i class="bi bi-people" aria-hidden="true"></i>
 
-                                    <span>
-                                        Nenhum usuário encontrado.
-                                    </span>
+                                        <span>
+                                            Nenhum usuário encontrado.
+                                        </span>
 
-                                </div>
+                                    </div>
 
-                            </td>
+                                </td>
 
-                        </tr>
+                            </tr>
 
-                    @endforelse
+                        @endforelse
 
-                </tbody>
+                    </tbody>
 
-            </table>
+                </table>
+
+            </div>
 
         </div>
 
-    </div>
 
 
+        <div class="mt-3 usuarios-pagination">
 
-    <div class="mt-3">
+            {{ $usuarios->links() }}
 
-        {{ $usuarios->links() }}
+        </div>
 
     </div>
 
