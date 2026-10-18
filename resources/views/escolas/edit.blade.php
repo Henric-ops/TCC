@@ -98,13 +98,13 @@
                     </div>
 
                     <div class="usuario-form-actions">
-                        <a href="{{ route('admin.escolas.index') }}" class="usuario-button usuario-button-danger">
+                        <a href="{{ route('admin.escolas.index') }}" class="usuario-button usuario-button-muted">
                             <i class="bi bi-x-lg" aria-hidden="true"></i>
                             Cancelar
                         </a>
                         <button type="submit" class="usuario-button usuario-button-primary">
                             <i class="bi bi-check2-circle" aria-hidden="true"></i>
-                            Salvar alterações
+                            Salvar
                         </button>
                     </div>
                 </form>

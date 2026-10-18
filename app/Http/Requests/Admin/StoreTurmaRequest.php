@@ -4,6 +4,7 @@ namespace App\Http\Requests\Admin;
 
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Validation\Rule;
 
 class StoreTurmaRequest extends FormRequest
 {
@@ -20,7 +21,12 @@ class StoreTurmaRequest extends FormRequest
             'ano' => 'required|integer|min:2000|max:2100',
             'periodo' => 'required|in:Manhã,Tarde,Integral',
             'professores' => 'nullable|array',
-            'professores.*' => 'exists:usuarios,id',
+            'professores.*' => [
+                'integer',
+                Rule::exists('usuarios', 'id')->where(fn($query) => $query
+                    ->where('perfil', 'professor')
+                    ->where('status', 'aprovado')),
+            ],
         ];
     }
 

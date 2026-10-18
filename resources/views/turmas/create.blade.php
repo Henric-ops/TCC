@@ -50,7 +50,7 @@
                     </div>
                 @endif
 
-                <form action="{{ route('admin.turmas.store') }}" method="POST">
+                <form action="{{ route('admin.turmas.store') }}" method="POST" data-professores-sem-restricao-escola>
                     @csrf
 
                     <div class="row">
@@ -205,8 +205,9 @@
                         </a>
                         <button type="submit" class="usuario-button turma-edit-save">
                             <i class="bi bi-check2-circle" aria-hidden="true"></i>
-                            Salvar turma
+                            Cadastrar 
                         </button>
+
                     </div>
                 </form>
             </div>

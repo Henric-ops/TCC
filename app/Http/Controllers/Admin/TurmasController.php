@@ -37,8 +37,6 @@ class TurmasController extends Controller
 
     public function store(StoreTurmaRequest $request)
     {
-        $this->validarProfessoresDaEscola($request->escola_id, $request->input('professores', []));
-
         $turma = Turma::create([
             'escola_id' => $request->escola_id,
             'nome' => $request->nome,
@@ -68,20 +66,6 @@ class TurmasController extends Controller
         $turma->professores()->sync($request->professores ?? []);
 
         return redirect()->route('admin.turmas.index')->with('sucesso', 'Turma atualizada com sucesso.');
-    }
-
-    //  garante que nenhum professor selecionado é de outra escola
-    private function validarProfessoresDaEscola($escolaId, array $professorIds): void
-    {
-        if (empty($professorIds)) {
-            return;
-        }
-
-        $qtdVinculados = User::whereIn('id', $professorIds)
-            ->whereHas('escolas', fn($q) => $q->where('escolas.id', $escolaId))
-            ->count();
-
-        abort_if($qtdVinculados !== count($professorIds), 422, 'Um ou mais professores selecionados não atuam na escola escolhida.');
     }
 
     public function destroy(Turma $turma)
