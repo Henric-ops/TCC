@@ -26,6 +26,7 @@ class RegistroDiarioController extends Controller
             ->with('alunos')
             ->orderBy('nome')
             ->get();
+
         $turmasPermitidas = $turmasTotais
             ->when($escolaId, fn($query) => $query->where('escola_id', $escolaId))
             ->values();
