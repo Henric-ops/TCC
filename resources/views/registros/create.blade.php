@@ -86,19 +86,17 @@
 
                 <div class="period-block">
                     Período 1 das
-                    <label class="time-input"><i class="bi bi-clock-fill"></i><input type="time"
-                            name="sono_inicio_1"></label>
+                    <label class="time-input"></i><input type="time" name="sono_inicio_1"></label>
                     às
-                    <label class="time-input"><i class="bi bi-clock-fill"></i><input type="time" name="sono_fim_1"></label>
+                    <label class="time-input"></i><input type="time" name="sono_fim_1"></label>
                     <span class="duration-pill" id="duracao-1">--</span>
                 </div>
 
                 <div class="period-block">
                     Período 2 das
-                    <label class="time-input"><i class="bi bi-clock-fill"></i><input type="time"
-                            name="sono_inicio_2"></label>
+                    <label class="time-input"></i><input type="time" name="sono_inicio_2"></label>
                     às
-                    <label class="time-input"><i class="bi bi-clock-fill"></i><input type="time" name="sono_fim_2"></label>
+                    <label class="time-input"></i><input type="time" name="sono_fim_2"></label>
                     <span class="duration-pill" id="duracao-2">--</span>
                 </div>
             </div>

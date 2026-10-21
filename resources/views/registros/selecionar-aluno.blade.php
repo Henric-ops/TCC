@@ -15,10 +15,6 @@
         </div>
 
         <div class="frequencia-header-actions">
-            <span class="frequencia-total">
-                <strong>{{ $alunos->count() }}</strong>
-                {{ $alunos->count() === 1 ? 'aluno' : 'alunos' }}
-            </span>
             <a href="{{ route('registros.selecionar-turma') }}" class="freq-link freq-link-muted">
                 <i class="bi bi-arrow-left" aria-hidden="true"></i> Trocar turma
             </a>
@@ -41,7 +37,7 @@
                             <td class="text-end text-nowrap" data-label="Ação">
                                 <a href="{{ route('registros.create', ['aluno_id' => $aluno->id]) }}" class="frequencia-action">
                                     <i class="bi bi-journal-plus" aria-hidden="true"></i>
-                                    <span>Fazer registro</span>
+                                    <span>Registrar</span>
                                 </a>
                             </td>
                         </tr>

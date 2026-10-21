@@ -38,7 +38,7 @@ class User extends Authenticatable
             'escola_id'
         );
     }
-    public function turmas()//método para obter as turmas vinculadas ao usuário
+    public function turmas()
     {
         return $this->belongsToMany(
             Turma::class,
@@ -48,7 +48,7 @@ class User extends Authenticatable
         );
     }
 
-    public function alunosResponsavel()//método para obter os alunos vinculados ao responsável
+    public function alunosResponsavel()
     {
         return $this->belongsToMany(
             Aluno::class,

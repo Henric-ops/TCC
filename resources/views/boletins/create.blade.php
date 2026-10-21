@@ -1,4 +1,4 @@
-```blade
+
 @extends('layout.app')
 
 @section('title', 'Novo boletim')
@@ -11,38 +11,20 @@
 @section('content')
 
     <div class="usuario-form-page">
-
-      
-        <div class="usuario-form-header">
-
-            <div class="usuario-form-title">
-
-                <span class="usuario-form-title-icon" aria-hidden="true">
-                    <i class="bi bi-file-earmark-plus" aria-hidden="true"></i>
-                </span>
-
-                <div>
-                    <h1 class="h4 mb-1">Novo boletim</h1>
-
-                    <p class="usuario-form-subtitle">
-                        Registre a avaliação do aluno ou envie o boletim em PDF.
-                    </p>
-                </div>
-
+        <div class="d-flex flex-wrap justify-content-between align-items-center gap-3 mb-4">
+            <div>
+                <h1 class="h4 mb-1">Novo boletim</h1>
+                <p class="usuario-form-subtitle">
+                    Registre a avaliação do aluno ou envie o boletim em PDF.
+                </p>
             </div>
 
-            <a href="{{ route('boletins.index') }}"
-               class="usuario-button usuario-button-muted">
-
+            <a href="{{ route('boletins.index') }}" class="usuario-button usuario-button-muted ms-auto">
                 <i class="bi bi-arrow-left" aria-hidden="true"></i>
                 Voltar
-
             </a>
-
         </div>
 
-
-       
         <div class="card usuario-form-card">
 
             <div class="card-header">
