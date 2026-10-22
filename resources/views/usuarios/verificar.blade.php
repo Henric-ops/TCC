@@ -12,9 +12,6 @@
 
         <div class="verificar-header">
             <div class="verificar-title">
-                <span class="verificar-title-icon" aria-hidden="true">
-                    <i class="bi bi-person-check-fill"></i>
-                </span>
                 <div>
                     <h1 class="h4 mb-1">Validar cadastro</h1>
                     <p class="verificar-subtitle">Analise os dados antes de aprovar o usuário.</p>
@@ -23,7 +20,7 @@
 
             <a href="{{ route('admin.usuarios.index') }}" class="usuario-button usuario-button-muted">
                 <i class="bi bi-arrow-left" aria-hidden="true"></i>
-                Voltar para usuários
+                Voltar
             </a>
         </div>
 

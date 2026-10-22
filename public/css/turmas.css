@@ -26,19 +26,6 @@
     font-weight: 700;
 }
 
-.turmas-header-actions .usuario-button-primary {
-    border-color: #1765c2;
-    background: #1765c2;
-    color: #fff;
-}
-
-.turmas-header-actions .usuario-button-primary:hover {
-    border-color: #0d4b95;
-    background: #0d4b95;
-    color: #fff;
-    box-shadow: 0 .3rem .7rem rgba(23, 101, 194, .2);
-}
-
 .turmas-table-card {
     overflow: hidden;
     border: 1px solid var(--lk-border);

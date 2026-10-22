@@ -278,51 +278,12 @@
     background: #fafbfc;
 }
 
-.btn-cancel,
-.btn-send {
-    min-height: 42px;
-    padding: 0 18px;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    gap: 8px;
-    border-radius: 9px;
-    font-family: 'Poppins', sans-serif;
-    font-size: .78rem;
-    font-weight: 600;
-    text-decoration: none;
-    transition: .2s ease;
-    cursor: pointer;
-}
-
-.btn-cancel {
-    border: 1px solid #dfe2e8;
-    background: #fff;
-    color: #666c78;
-}
-
-.btn-cancel:hover {
-    background: #f5f6f8;
-    color: #444955;
-}
-
-.btn-send {
-    border: 0;
-    background: #4C63E8;
-    color: #fff;
-    box-shadow: 0 4px 10px rgba(76, 99, 232, .18);
-}
-
-.btn-send:hover {
-    background: #4C63E8;
-    transform: translateY(-1px);
-    box-shadow: 0 6px 14px rgba(76, 99, 232, .23);
-}
-
-.btn-send:disabled {
+.email-actions .usuario-button:disabled,
+.email-actions .usuario-button:disabled:hover {
     opacity: .65;
     cursor: wait;
     transform: none;
+    box-shadow: none;
 }
 
 @media (max-width: 768px) {
@@ -425,21 +386,6 @@
     border-color: #DCE5FF;
     border-radius: 8px;
     background: #F5F7FF;
-}
-
-.btn-cancel,
-.btn-send {
-    border-radius: 8px;
-}
-
-.btn-send {
-    background: #4C7DF5;
-    box-shadow: 0 4px 10px rgba(76, 125, 245, .2);
-}
-
-.btn-send:hover {
-    background: #3D68DD;
-    box-shadow: 0 6px 14px rgba(76, 125, 245, .23);
 }
 
 @media (max-width: 768px) {

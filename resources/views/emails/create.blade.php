@@ -2,11 +2,13 @@
 
 @section('title', 'Enviar comunicado')
 
-@section('content')
-
+@push('styles')
     <link rel="stylesheet" href="{{ asset('css/email.css') }}">
-    <div class="email-page">
+    <link rel="stylesheet" href="{{ asset('css/usuario-buttons.css') }}">
+@endpush
 
+@section('content')
+    <div class="email-page">
 
         <div class="email-header">
 
@@ -19,23 +21,16 @@
                     Selecione o aluno e escreva um comunicado para o responsável.
                 </p>
             </div>
-
-
-
         </div>
 
-
-
-        @if(session('success'))<!-- Mensagem de sucesso -->
+        @if(session('success'))
             <div class="alert alert-success email-alert">
                 <i class="bi bi-check-circle-fill"></i>
                 <span>{{ session('success') }}</span>
             </div>
         @endif
 
-
-
-        @if($errors->any())<!-- Mensagem de erro -->
+        @if($errors->any())
             <div class="alert alert-danger email-alert">
                 <i class="bi bi-exclamation-circle-fill"></i>
 
@@ -51,29 +46,11 @@
             </div>
         @endif
 
-
-
         <div class="email-card">
-
-            <div class="email-card-header">
-
-                <div class="email-card-icon">
-                    <i class="bi bi-send"></i>
-                </div>
-
-                <div>
-                    <h2>Nova mensagem</h2>
-                </div>
-
-            </div>
-
 
             <form action="{{ route('emails.enviar') }}" method="POST" id="emailForm">
 
                 @csrf
-
-
-                <!-- Destinatário -->
                 <div class="email-section">
 
                     <div class="section-title">
@@ -82,7 +59,6 @@
                     </div>
 
 
-                    <!-- Aluno -->
                     <div class="form-group">
 
                         <label for="buscar_aluno">
@@ -113,7 +89,6 @@
                     </div>
 
 
-                    <!-- Responsável -->
                     <div class="form-group">
 
                         <label for="destinatario_id">
@@ -152,7 +127,6 @@
                 </div>
 
 
-                <!-- Conteúdo -->
                 <div class="email-section">
 
                     <div class="section-title">
@@ -160,8 +134,6 @@
                         <span>Mensagem</span>
                     </div>
 
-
-                    <!-- Assunto -->
                     <div class="form-group">
 
                         <label for="assunto">
@@ -181,8 +153,6 @@
 
                     </div>
 
-
-                    <!-- Mensagem -->
                     <div class="form-group">
 
                         <label for="conteudo">
@@ -212,14 +182,13 @@
 
                 </div>
 
-                <!-- Ações -->
                 <div class="email-actions">
 
-                    <a href="{{ url()->previous() }}" class="btn-cancel">
+                    <a href="{{ url()->previous() }}" class="usuario-button usuario-button-muted">
                         Cancelar
                     </a>
 
-                    <button type="submit" class="btn-send" id="btnEnviar">
+                    <button type="submit" class="usuario-button usuario-button-primary" id="btnEnviar">
                         <i class="bi bi-send-fill"></i>
                         <span>Enviar e-mail</span>
                     </button>

@@ -288,14 +288,14 @@
     border-top: 0;
 }
 
-.turma-edit-page .turma-edit-save {
+.turma-create-page .turma-edit-save {
     border-color: #1765c2;
     background: #1765c2;
     color: #fff;
     padding-inline: 1.1rem;
 }
 
-.turma-edit-page .turma-edit-save:hover {
+.turma-create-page .turma-edit-save:hover {
     border-color: #0d4b95;
     background: #0d4b95;
     color: #fff;

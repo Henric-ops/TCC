@@ -188,9 +188,9 @@
                             <i class="bi bi-x-lg" aria-hidden="true"></i>
                             Cancelar
                         </a>
-                        <button type="submit" class="usuario-button turma-edit-save">
+                        <button type="submit" class="usuario-button usuario-button-primary">
                             <i class="bi bi-check2-circle" aria-hidden="true"></i>
-                            Salvar alterações
+                            Salvar 
                         </button>
                     </div>
                 </form>
