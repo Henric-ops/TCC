@@ -20,10 +20,12 @@
                 </p>
             </div>
 
-            <a href="{{ route('boletins.index') }}" class="usuario-button usuario-button-muted ms-auto">
-                <i class="bi bi-arrow-left" aria-hidden="true"></i>
-                Voltar
-            </a>
+            <div class="d-flex flex-wrap gap-2 ms-auto">
+                <a href="{{ route('boletins.index') }}" class="usuario-button usuario-button-muted">
+                    <i class="bi bi-arrow-left" aria-hidden="true"></i>
+                    Voltar
+                </a>
+            </div>
         </div>
 
         <div class="card usuario-form-card">

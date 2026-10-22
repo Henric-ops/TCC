@@ -98,6 +98,10 @@
                             </td>
                             <td>{{ $boletim->created_at->format('d/m/Y') }}</td>
                             <td class="text-end text-nowrap">
+                                <a href="{{ route('boletins.edit', $boletim) }}" class="usuario-action usuario-action-primary"
+                                    title="Editar boletim" aria-label="Editar boletim">
+                                    <i class="bi bi-pencil-square" aria-hidden="true"></i>
+                                </a>
                                 <a href="{{ route('boletins.show', $boletim) }}" class="usuario-action usuario-action-primary"
                                     title="Visualizar boletim" aria-label="Visualizar boletim">
                                     <i class="bi bi-eye" aria-hidden="true"></i>

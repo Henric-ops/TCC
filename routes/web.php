@@ -233,6 +233,16 @@ Route::middleware(['auth', 'perfil:admin,professor'])->group(function () {
         'store'
     ])->name('boletins.store');
 
+    Route::get('/boletins/{boletim}/edit', [
+        BoletimController::class,
+        'edit'
+    ])->name('boletins.edit');
+
+    Route::put('/boletins/{boletim}', [
+        BoletimController::class,
+        'update'
+    ])->name('boletins.update');
+
     Route::delete('/boletins/{boletim}', [
         BoletimController::class,
         'destroy'

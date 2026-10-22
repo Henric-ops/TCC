@@ -112,6 +112,24 @@ class BoletimController extends Controller
         ));
     }
 
+    public function edit(Boletim $boletim)
+    {
+        $user = Auth::user();
+
+        abort_unless($this->podeAcessarComoEquipe($user, $boletim), 403);
+
+        $alunos = $this->alunosPermitidos($user);
+        $alunoAtual = $boletim->aluno()->withTrashed()->firstOrFail();
+
+        if (!$alunos->contains('id', $alunoAtual->id)) {
+            $alunos->push($alunoAtual);
+        }
+
+        $boletim->load('documento:id,boletim_id,nome_original,tamanho');
+
+        return view('boletins.edit', compact('boletim', 'alunos'));
+    }
+
     public function store(Request $request)
     {
         $user = Auth::user();
@@ -171,36 +189,7 @@ class BoletimController extends Controller
             ]);
 
             if ($request->hasFile('arquivo_pdf')) {
-                $arquivo = $request->file('arquivo_pdf');
-
-                // Lê o PDF temporário sem salvá-lo no diretório
-                $conteudo = file_get_contents($arquivo->getRealPath());
-
-                if ($conteudo === false) {
-                    throw new \RuntimeException('Não foi possível ler o PDF.');
-                }
-
-                // Usa parâmetros binários para inserir o LONGBLOB
-                $pdo = DB::connection()->getPdo();
-
-                $sql = 'INSERT INTO boletim_documentos
-                    (boletim_id, nome_original, mime, tamanho,
-                     conteudo, created_at, updated_at)
-                    VALUES (?, ?, ?, ?, ?, ?, ?)';
-
-                $stmt = $pdo->prepare($sql);
-
-                $data = now()->toDateTimeString();
-
-                $stmt->bindValue(1, $boletim->id, PDO::PARAM_INT);
-                $stmt->bindValue(2, $arquivo->getClientOriginalName());
-                $stmt->bindValue(3, 'application/pdf');
-                $stmt->bindValue(4, $arquivo->getSize(), PDO::PARAM_INT);
-                $stmt->bindValue(5, $conteudo, PDO::PARAM_LOB);
-                $stmt->bindValue(6, $data);
-                $stmt->bindValue(7, $data);
-
-                $stmt->execute();
+                $this->salvarDocumento($boletim, $request->file('arquivo_pdf'));
             }
         });
 
@@ -208,6 +197,78 @@ class BoletimController extends Controller
             ->route('boletins.index')
             ->with('sucesso', 'Boletim cadastrado com sucesso.');
     }
+
+    public function update(Request $request, Boletim $boletim)
+    {
+        $user = Auth::user();
+
+        abort_unless($this->podeAcessarComoEquipe($user, $boletim), 403);
+
+        $request->validate([
+            'aluno_id' => 'required|exists:alunos,id',
+            'tipo_periodo' => 'required|in:bimestre,trimestre,semestre',
+            'numero_periodo' => 'required|integer|min:1|max:4',
+            'observacao' => 'nullable|string',
+            'arquivo_pdf' => 'nullable|file|mimes:pdf|max:10240',
+            'remover_arquivo_pdf' => 'nullable|boolean',
+        ], [
+            'aluno_id.required' => 'Selecione um aluno.',
+            'aluno_id.exists' => 'O aluno selecionado não existe.',
+            'tipo_periodo.required' => 'Informe o regime letivo.',
+            'tipo_periodo.in' => 'Selecione um regime letivo válido.',
+            'numero_periodo.required' => 'Informe o período.',
+            'numero_periodo.integer' => 'Selecione um período válido.',
+            'numero_periodo.min' => 'Selecione um período válido.',
+            'numero_periodo.max' => 'Selecione um período válido.',
+            'arquivo_pdf.mimes' => 'O arquivo deve ser um PDF.',
+            'arquivo_pdf.max' => 'O PDF deve ter no máximo 10 MB.',
+        ]);
+
+        $alunosPermitidos = $this->alunosPermitidos($user);
+
+        abort_unless(
+            $alunosPermitidos->contains('id', $request->aluno_id)
+                || (int) $request->aluno_id === (int) $boletim->aluno_id,
+            403
+        );
+
+        $mantemDocumento = $request->hasFile('arquivo_pdf')
+            || (
+                !$request->boolean('remover_arquivo_pdf')
+                && ($boletim->documento()->exists() || $boletim->arquivo_pdf)
+            );
+
+        if (!$request->filled('observacao') && !$mantemDocumento) {
+            return back()
+                ->withInput()
+                ->withErrors([
+                    'observacao' => 'Informe uma avaliação ou mantenha/envie um arquivo PDF.',
+                ]);
+        }
+
+        DB::transaction(function () use ($request, $boletim) {
+            $boletim->update([
+                'aluno_id' => $request->aluno_id,
+                'tipo_periodo' => $request->tipo_periodo,
+                'numero_periodo' => $request->numero_periodo,
+                'observacao' => $request->observacao,
+            ]);
+
+            if ($request->hasFile('arquivo_pdf')) {
+                $boletim->documento()->delete();
+                $boletim->update(['arquivo_pdf' => null]);
+                $this->salvarDocumento($boletim, $request->file('arquivo_pdf'));
+            } elseif ($request->boolean('remover_arquivo_pdf')) {
+                $boletim->documento()->delete();
+                $boletim->update(['arquivo_pdf' => null]);
+            }
+        });
+
+        return redirect()
+            ->route('boletins.index')
+            ->with('sucesso', 'Boletim atualizado com sucesso.');
+    }
+
     public function meusBoletins()
     {
         $user = Auth::user();
@@ -405,6 +466,32 @@ class BoletimController extends Controller
             ->unique('id')
             ->sortBy('nome')
             ->values();
+    }
+
+    private function salvarDocumento(Boletim $boletim, \Illuminate\Http\UploadedFile $arquivo): void
+    {
+        $conteudo = file_get_contents($arquivo->getRealPath());
+
+        if ($conteudo === false) {
+            throw new \RuntimeException('Não foi possível ler o PDF enviado.');
+        }
+
+        $pdo = DB::connection()->getPdo();
+        $stmt = $pdo->prepare(
+            'INSERT INTO boletim_documentos
+                (boletim_id, nome_original, mime, tamanho, conteudo, created_at, updated_at)
+             VALUES (?, ?, ?, ?, ?, ?, ?)'
+        );
+        $data = now()->toDateTimeString();
+
+        $stmt->bindValue(1, $boletim->id, PDO::PARAM_INT);
+        $stmt->bindValue(2, $arquivo->getClientOriginalName());
+        $stmt->bindValue(3, 'application/pdf');
+        $stmt->bindValue(4, $arquivo->getSize(), PDO::PARAM_INT);
+        $stmt->bindValue(5, $conteudo, PDO::PARAM_LOB);
+        $stmt->bindValue(6, $data);
+        $stmt->bindValue(7, $data);
+        $stmt->execute();
     }
 
     private function podeAcessarComoEquipe($user, Boletim $boletim): bool
