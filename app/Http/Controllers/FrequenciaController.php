@@ -92,8 +92,19 @@ class FrequenciaController extends Controller
             abort(403);
         }
 
+        $alunosDaTurma = $turma->alunos()
+            ->pluck('alunos.id')
+            ->map(fn($id) => (string) $id)
+            ->all();
+
+        $alunosEnviados = array_keys($request->input('presenca'));
+
+        if (count(array_diff($alunosEnviados, $alunosDaTurma)) > 0) {
+            abort(403, 'Um ou mais alunos não pertencem à turma selecionada.');
+        }
+
         $jaExiste = Frequencia::where('turma_id', $turma->id)
-            ->where('data', $request->data)
+            ->whereData('data', $request->data)
             ->exists();
 
         // Impede que a mesma frequência seja lançada novamente.
@@ -143,6 +154,17 @@ class FrequenciaController extends Controller
 
         if (!$this->turmasPermitidas(Auth::user())->contains('id', $turma->id)) {
             abort(403);
+        }
+
+        $alunosDaTurma = $turma->alunos()
+            ->pluck('alunos.id')
+            ->map(fn($id) => (string) $id)
+            ->all();
+
+        $alunosEnviados = array_keys($request->input('presenca'));
+
+        if (count(array_diff($alunosEnviados, $alunosDaTurma)) > 0) {
+            abort(403, 'Um ou mais alunos não pertencem à turma selecionada.');
         }
 
         $frequenciaExiste = Frequencia::where('turma_id', $turma->id)

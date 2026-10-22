@@ -317,7 +317,7 @@
 
         <div class="mt-3 usuarios-pagination">
 
-            {{ $usuarios->links() }}
+            {{ $usuarios->links('pagination::bootstrap-5') }}
 
         </div>
 
