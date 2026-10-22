@@ -31,7 +31,6 @@
                     <th>Idade</th>
                     <th>Frequência</th>
                     <th>Registros</th>
-                    <th class="text-end">Ação</th>
                 </tr>
             </thead>
             <tbody>
@@ -55,23 +54,6 @@
                             <span class="registro-hoje-status registrado">Registrado</span>
                         @else
                             <span class="registro-hoje-status pendente">Pendente</span>
-                        @endif
-                    </td>
-                    <td class="text-end text-nowrap">
-                        @if(!$registroHoje)
-                            <a href="{{ route('registros.create', ['aluno_id' => $aluno->id]) }}"
-                                class="usuario-button usuario-button-primary" title="Fazer registro"
-                                aria-label="Fazer registro para {{ $aluno->nome }}">
-                                <i class="bi bi-plus-lg" aria-hidden="true"></i>
-                            </a>
-                        @elseif($registroHoje->professor_id === auth()->id())
-                            <a href="{{ route('registros.edit', $registroHoje) }}"
-                                class="usuario-button usuario-button-muted" title="Visualizar ou editar registro"
-                                aria-label="Visualizar ou editar registro de {{ $aluno->nome }}">
-                                <i class="bi bi-eye" aria-hidden="true"></i>
-                            </a>
-                        @else
-                            <span class="text-muted small">Sem permissão para editar</span>
                         @endif
                     </td>
                 </tr>

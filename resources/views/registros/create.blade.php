@@ -11,6 +11,17 @@
         @csrf
         <input type="hidden" name="aluno_id" value="{{ $aluno->id }}">
 
+        @if ($errors->any())
+            <div class="alert alert-danger" role="alert">
+                <strong>Preencha todos os campos obrigatórios:</strong>
+                <ul class="mb-0 mt-1">
+                    @foreach ($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                    @endforeach
+                </ul>
+            </div>
+        @endif
+
         <div class="header-card">
             <div>
                 <h1>{{ $aluno->nome }}</h1>
@@ -33,9 +44,11 @@
                         @foreach(['colacao' => 'Colação', 'almoco' => 'Almoço'] as $chave => $nome)
                             <div class="meal-row"><span>{{ $nome }}</span>
                                 @foreach(['tudo' => 'TUDO', 'parte' => 'PARTE', 'rejeitou' => 'REJEITOU'] as $status => $rotulo)
-                                    <label class="radio radio-{{ $status }}" title="{{ $rotulo }}">
+                                    <label class="radio radio-{{ $status }} {{ old('alimentacao.' . $chave) === $status ? 'selected' : '' }}"
+                                        title="{{ $rotulo }}">
                                         <input class="choice-input" type="radio" name="alimentacao[{{ $chave }}]"
-                                            value="{{ $status }}">
+                                            value="{{ $status }}" required
+                                            @checked(old('alimentacao.' . $chave) === $status)>
                                     </label>
                                 @endforeach
                             </div>
@@ -64,8 +77,10 @@
                 @foreach(['leite' => 'Leite', 'suco' => 'Suco', 'agua' => 'Água'] as $chave => $nome)
                     <div class="liquid-item"><span>{{ $nome }}</span>
                         @foreach(['tudo' => 'TUDO', 'parte' => 'PARTE', 'rejeitou' => 'REJEITOU'] as $status => $rotulo)
-                            <label class="radio radio-{{ $status }}" title="{{ $rotulo }}">
-                                <input class="choice-input" type="radio" name="liquidos[{{ $chave }}]" value="{{ $status }}">
+                            <label class="radio radio-{{ $status }} {{ old('liquidos.' . $chave) === $status ? 'selected' : '' }}"
+                                title="{{ $rotulo }}">
+                                <input class="choice-input" type="radio" name="liquidos[{{ $chave }}]" value="{{ $status }}"
+                                    required @checked(old('liquidos.' . $chave) === $status)>
                             </label>
                         @endforeach
                     </div>
@@ -78,25 +93,31 @@
 
                 <div class="sono-question">DORMIU?</div>
                 <div class="sono-btns">
-                    <label class="sono-btn yes"><input type="radio" name="dormiu" value="sim"><i
+                    <label class="sono-btn yes {{ old('dormiu') === 'sim' ? 'selected' : '' }}"><input type="radio"
+                            name="dormiu" value="sim" required @checked(old('dormiu') === 'sim')><i
                             class="bi bi-check-circle-fill"></i> Sim</label>
-                    <label class="sono-btn no"><input type="radio" name="dormiu" value="nao"><i
+                    <label class="sono-btn no {{ old('dormiu') === 'nao' ? 'selected' : '' }}"><input type="radio"
+                            name="dormiu" value="nao" required @checked(old('dormiu') === 'nao')><i
                             class="bi bi-x-circle-fill"></i> Não</label>
                 </div>
 
                 <div class="period-block">
                     Período 1 das
-                    <label class="time-input"></i><input type="time" name="sono_inicio_1"></label>
+                    <label class="time-input"></i><input type="time" name="sono_inicio_1"
+                            value="{{ old('sono_inicio_1') }}" required></label>
                     às
-                    <label class="time-input"></i><input type="time" name="sono_fim_1"></label>
+                    <label class="time-input"></i><input type="time" name="sono_fim_1" value="{{ old('sono_fim_1') }}"
+                            required></label>
                     <span class="duration-pill" id="duracao-1">--</span>
                 </div>
 
                 <div class="period-block">
                     Período 2 das
-                    <label class="time-input"></i><input type="time" name="sono_inicio_2"></label>
+                    <label class="time-input"></i><input type="time" name="sono_inicio_2"
+                            value="{{ old('sono_inicio_2') }}" required></label>
                     às
-                    <label class="time-input"></i><input type="time" name="sono_fim_2"></label>
+                    <label class="time-input"></i><input type="time" name="sono_fim_2" value="{{ old('sono_fim_2') }}"
+                            required></label>
                     <span class="duration-pill" id="duracao-2">--</span>
                 </div>
             </div>
@@ -111,7 +132,7 @@
                     <div class="counter-label"><i class="bi bi-droplet-fill text-primary"></i> XIXI</div>
                     <div class="counter">
                         <button type="button" onclick="changeCount('xixi',-1)"><i class="bi bi-dash-lg"></i></button>
-                        <div class="count" id="xixi">0</div>
+                        <div class="count" id="xixi">{{ old('xixi', 0) }}</div>
                         <button type="button" onclick="changeCount('xixi',1)"><i class="bi bi-plus-lg"></i></button>
                     </div>
                 </div>
@@ -119,18 +140,18 @@
                     <div class="counter-label"><i class="bi bi-exclamation-triangle-fill text-warning"></i> COCÔ</div>
                     <div class="counter">
                         <button type="button" onclick="changeCount('coco',-1)"><i class="bi bi-dash-lg"></i></button>
-                        <div class="count" id="coco">0</div>
+                        <div class="count" id="coco">{{ old('coco', 0) }}</div>
                         <button type="button" onclick="changeCount('coco',1)"><i class="bi bi-plus-lg"></i></button>
                     </div>
                 </div>
             </div>
 
             <div class="obs-label">OBSERVAÇÕES</div>
-            <textarea name="observacoes" placeholder="Ex: fezes com aspecto normal"></textarea>
+            <textarea name="observacoes" placeholder="Ex: fezes com aspecto normal">{{ old('observacoes') }}</textarea>
         </div>
 
-        <input type="hidden" name="xixi" id="xixi-input" value="0">
-        <input type="hidden" name="coco" id="coco-input" value="0">
+        <input type="hidden" name="xixi" id="xixi-input" value="{{ old('xixi', 0) }}">
+        <input type="hidden" name="coco" id="coco-input" value="{{ old('coco', 0) }}">
 
         <div class="save-bar">
             <a href="{{ route('registros.selecionar-aluno', ['turma_id' => $aluno->turmas->first()?->id]) }}"

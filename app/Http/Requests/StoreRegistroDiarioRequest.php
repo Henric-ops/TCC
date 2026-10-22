@@ -18,24 +18,56 @@ class StoreRegistroDiarioRequest extends FormRequest
         return [
             'aluno_id' => 'required|exists:alunos,id',
 
-            'alimentacao.colacao' => 'nullable|in:tudo,parte,rejeitou',
-            'alimentacao.almoco' => 'nullable|in:tudo,parte,rejeitou',
-            'alimentacao.lanche' => 'nullable|in:tudo,parte,rejeitou',
-            'alimentacao.jantar' => 'nullable|in:tudo,parte,rejeitou',
+            'alimentacao.colacao' => 'required|in:tudo,parte,rejeitou',
+            'alimentacao.almoco' => 'required|in:tudo,parte,rejeitou',
+            'alimentacao.lanche' => 'required|in:tudo,parte,rejeitou',
+            'alimentacao.jantar' => 'required|in:tudo,parte,rejeitou',
 
-            'liquidos.leite' => 'nullable|in:tudo,parte,rejeitou',
-            'liquidos.suco' => 'nullable|in:tudo,parte,rejeitou',
-            'liquidos.agua' => 'nullable|in:tudo,parte,rejeitou',
+            'liquidos.leite' => 'required|in:tudo,parte,rejeitou',
+            'liquidos.suco' => 'required|in:tudo,parte,rejeitou',
+            'liquidos.agua' => 'required|in:tudo,parte,rejeitou',
 
-            'dormiu' => 'nullable|in:sim,nao',
-            'sono_inicio_1' => 'nullable|date_format:H:i',
-            'sono_fim_1' => 'nullable|date_format:H:i',
-            'sono_inicio_2' => 'nullable|date_format:H:i',
-            'sono_fim_2' => 'nullable|date_format:H:i',
+            'dormiu' => 'required|in:sim,nao',
+            'sono_inicio_1' => 'required|date_format:H:i',
+            'sono_fim_1' => 'required|date_format:H:i',
+            'sono_inicio_2' => 'required|date_format:H:i',
+            'sono_fim_2' => 'required|date_format:H:i',
 
-            'xixi' => 'nullable|integer|min:0',
-            'coco' => 'nullable|integer|min:0',
+            'xixi' => 'required|integer|min:0',
+            'coco' => 'required|integer|min:0',
             'observacoes' => 'nullable|string|max:500',
+        ];
+    }
+
+    public function messages(): array
+    {
+        return [
+            'alimentacao.colacao.required' => 'Informe a alimentação da colação.',
+            'alimentacao.almoco.required' => 'Informe a alimentação do almoço.',
+            'alimentacao.lanche.required' => 'Informe a alimentação do lanche.',
+            'alimentacao.jantar.required' => 'Informe a alimentação do jantar.',
+            'alimentacao.*.in' => 'Selecione uma opção válida para a alimentação.',
+            'liquidos.leite.required' => 'Informe o consumo de leite.',
+            'liquidos.suco.required' => 'Informe o consumo de suco.',
+            'liquidos.agua.required' => 'Informe o consumo de água.',
+            'liquidos.*.in' => 'Selecione uma opção válida para os líquidos.',
+            'dormiu.required' => 'Informe se o aluno dormiu.',
+            'dormiu.in' => 'Selecione uma opção válida para o sono.',
+            'sono_inicio_1.required' => 'Informe o início do primeiro período de sono.',
+            'sono_inicio_1.date_format' => 'Informe um horário válido para o início do primeiro período.',
+            'sono_fim_1.required' => 'Informe o fim do primeiro período de sono.',
+            'sono_fim_1.date_format' => 'Informe um horário válido para o fim do primeiro período.',
+            'sono_inicio_2.required' => 'Informe o início do segundo período de sono.',
+            'sono_inicio_2.date_format' => 'Informe um horário válido para o início do segundo período.',
+            'sono_fim_2.required' => 'Informe o fim do segundo período de sono.',
+            'sono_fim_2.date_format' => 'Informe um horário válido para o fim do segundo período.',
+            'xixi.required' => 'Informe a quantidade de trocas por xixi.',
+            'xixi.integer' => 'A quantidade de trocas por xixi deve ser um número inteiro.',
+            'xixi.min' => 'A quantidade de trocas por xixi não pode ser negativa.',
+            'coco.required' => 'Informe a quantidade de trocas por cocô.',
+            'coco.integer' => 'A quantidade de trocas por cocô deve ser um número inteiro.',
+            'coco.min' => 'A quantidade de trocas por cocô não pode ser negativa.',
+            'observacoes.max' => 'A observação não pode ter mais de 500 caracteres.',
         ];
     }
 }
