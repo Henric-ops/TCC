@@ -7,142 +7,126 @@
 
     <style>
         @page {
-            margin: 35px 45px 50px 45px;
+            margin: 70px 50px 70px 50px;
         }
 
         body {
             font-family: DejaVu Sans, sans-serif;
-            font-size: 11px;
-            line-height: 1.5;
-            color: #333;
-        }
-
-        .header {
-            text-align: center;
-            padding-bottom: 18px;
-            border-bottom: 2px solid #426e83;
-            margin-bottom: 25px;
-        }
-
-        .escola {
-            font-size: 15px;
-            font-weight: bold;
-            color: #263c48;
-            margin-bottom: 5px;
-        }
-
-        .sistema {
-            font-size: 9px;
-            color: #888;
-            margin-bottom: 15px;
-        }
-
-        .header h1 {
-            font-size: 17px;
-            color: #263c48;
-            margin: 0;
-        }
-
-        .subtitulo {
             font-size: 10px;
-            color: #777;
-            margin-top: 5px;
+            line-height: 1.5;
+            color: #1f2933;
         }
 
-        .secao {
-            margin-bottom: 28px;
-            page-break-inside: avoid;
+        .topo-fixo {
+            position: fixed;
+            top: -40px;
+            left: 0;
+            right: 0;
+            padding-bottom: 6px;
+            border-bottom: 1px solid #cfd4d9;
+            font-size: 7px;
+            font-weight: bold;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+            color: #6b7785;
+        }
+
+        .faixa {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 22px;
+            border-bottom: 2px solid #111;
+        }
+
+        .faixa td {
+            padding: 0 0 8px 0;
+            vertical-align: bottom;
+        }
+
+        .faixa-escola {
+            font-size: 10px;
+            font-weight: bold;
+            text-transform: uppercase;
+            color: #111;
+        }
+
+        .faixa-sistema {
+            text-align: right;
+            font-size: 9px;
+            text-transform: uppercase;
+            color: #426e83;
+        }
+
+        .titulo {
+            width: 55%;
+            margin: 28px 0 10px 0;
+            font-size: 20px;
+            line-height: 1.2;
+            font-weight: bold;
+            color: #111;
+        }
+
+        .periodo {
+            padding-bottom: 14px;
+            margin-bottom: 18px;
+            border-bottom: 1px solid #cfd4d9;
+            font-size: 9px;
+            color: #6b7785;
+        }
+
+        .identificacao {
+            border-collapse: collapse;
+            margin-bottom: 24px;
+        }
+
+        .identificacao td {
+            padding: 3px 0;
+            font-size: 9px;
+        }
+
+        .identificacao .rotulo {
+            width: 85px;
+            color: #6b7785;
+        }
+
+        .identificacao .valor {
+            font-weight: bold;
+            color: #111;
         }
 
         .secao-titulo {
             font-size: 12px;
             font-weight: bold;
-            color: #263c48;
-            padding-bottom: 6px;
-            margin-bottom: 14px;
-            border-bottom: 1px solid #ddd;
+            color: #111;
+            margin-bottom: 12px;
         }
 
-        .identificacao {
+        .sintese {
             width: 100%;
             border-collapse: collapse;
-            margin-bottom: 30px;
+            margin-bottom: 26px;
         }
 
-        .identificacao td {
+        .sintese td {
             width: 50%;
-            padding: 5px 12px 5px 0;
-            vertical-align: top;
-        }
-
-        .label {
-            display: block;
+            padding: 0;
             font-size: 9px;
-            color: #777;
-            text-transform: uppercase;
-            margin-bottom: 4px;
-        }
-
-        .valor {
-            font-size: 11px;
-            font-weight: bold;
             color: #333;
         }
 
-        .indicadores {
-            width: 100%;
-            border-collapse: separate;
-            border-spacing: 8px 0;
-            margin-left: -8px;
-            margin-bottom: 16px;
-        }
-
-        .indicadores td {
-            width: 50%;
-            padding: 0;
-            vertical-align: top;
-        }
-
-        .indicador {
-            background: #f4f7f8;
-            border: 1px solid #e5ebee;
-            padding: 14px 10px;
-            text-align: center;
-        }
-
-        .indicador-numero {
-            font-size: 21px;
+        .quadro-titulo {
+            font-size: 9px;
             font-weight: bold;
-            color: #263c48;
-            margin-bottom: 5px;
-        }
-
-        .indicador-label {
-            font-size: 9px;
-            color: #687780;
-        }
-
-        .barra-titulo {
-            color: #777;
-            font-size: 9px;
-            margin-bottom: 7px;
-        }
-
-        .barra-fundo {
-            width: 100%;
-            height: 7px;
-            background: #e9edef;
-        }
-
-        .barra-progresso {
-            height: 7px;
-            background: #588e85;
+            color: #111;
+            margin-bottom: 8px;
         }
 
         .tabela-alunos {
             width: 100%;
             border-collapse: collapse;
             table-layout: fixed;
+            border-top: 1px solid #111;
+            border-bottom: 1px solid #111;
         }
 
         .tabela-alunos thead {
@@ -154,39 +138,44 @@
         }
 
         .tabela-alunos th {
-            font-size: 9px;
+            padding: 10px 8px;
+            font-size: 7px;
             font-weight: bold;
             text-transform: uppercase;
-            color: #63717a;
-            background: #f4f7f8;
-            padding: 12px 10px;
-            border-bottom: 1px solid #dfe5e8;
             text-align: left;
+            color: #444;
+            border-bottom: 1px solid #111;
         }
 
         .tabela-alunos td {
-            padding: 12px 10px;
-            border-bottom: 1px solid #e7ebed;
-            font-size: 10px;
+            padding: 10px 8px;
+            font-size: 9px;
+            color: #1f2933;
+            border-bottom: 1px solid #e3e7ea;
         }
 
-        .coluna-aluno {
-            width: 42%;
+        .tabela-alunos tbody tr:last-child td {
+            border-bottom: none;
         }
 
-        .nome-aluno {
-            font-weight: bold;
-            color: #333;
-            overflow-wrap: break-word;
+        .col-aluno {
+            width: 40%;
         }
 
-        .tabela-alunos .numero {
-            text-align: right;
+        .col-presenca {
+            width: 18%;
         }
 
-        .destaque {
-            font-weight: bold;
-            color: #426e83;
+        .col-faltas {
+            width: 16%;
+        }
+
+        .col-registros {
+            width: 26%;
+        }
+
+        .direita {
+            text-align: right !important;
         }
 
         .vazio {
@@ -196,20 +185,24 @@
         }
 
         .nota {
-            font-size: 9px;
-            color: #888;
-            margin-top: 12px;
+            margin-top: 18px;
+            font-size: 8px;
+            color: #6b7785;
+        }
+
+        .nota .nota-destaque {
+            color: #426e83;
         }
 
         .rodape {
             position: fixed;
-            bottom: -25px;
+            bottom: -40px;
             left: 0;
             right: 0;
-            border-top: 1px solid #ddd;
-            padding-top: 10px;
-            font-size: 9px;
-            color: #888;
+            border-top: 1px solid #cfd4d9;
+            padding-top: 8px;
+            font-size: 7px;
+            color: #6b7785;
         }
 
         .rodape table {
@@ -217,122 +210,94 @@
             border-collapse: collapse;
         }
 
+        .rodape td {
+            padding: 0;
+        }
+
         .rodape-direita {
             text-align: right;
+        }
+
+        .pagina:before {
+            content: counter(page);
+        }
+
+        .total-paginas:before {
+            content: counter(pages);
         }
     </style>
 </head>
 
 <body>
-
-
-    <div class="header">
-        <div class="escola">
-            {{ $turma->escola->nome ?? 'Instituição de Ensino' }}
-        </div>
-
-        <div class="sistema">
-            LumiKids · Gestão Escolar
-        </div>
-
-        <h1>Relatório de Acompanhamento da Turma</h1>
-
+    <div class="rodape">
+        <table>
+            <tr>
+                <td class="rodape-direita">
+                    Emitido em {{ now()->format('d/m/Y') }}
+                    &nbsp;&nbsp;
+                </td>
+            </tr>
+        </table>
     </div>
 
-
-
-    <div class="secao-titulo">
-        Identificação da turma
-    </div>
-
-    <table class="identificacao">
+    <table class="faixa">
         <tr>
-            <td>
-                <span class="label">Turma</span>
-                <span class="valor">
-                    {{ $turma->nome }}
-                </span>
-            </td>
-
-            <td>
-                <span class="label">Período analisado</span>
-                <span class="valor">
-                    {{ \Carbon\Carbon::parse($inicio)->format('d/m/Y') }}
-                    a
-                    {{ \Carbon\Carbon::parse($fim)->format('d/m/Y') }}
-                </span>
+            <td class="faixa-escola">
+                {{ $turma->escola->nome ?? 'Instituição de Ensino' }}
             </td>
         </tr>
     </table>
 
-
-
-    <div class="secao">
-        <div class="secao-titulo">
-            Resumo geral da turma
-        </div>
-
-        <table class="indicadores">
-            <tr>
-                <td>
-                    <div class="indicador">
-                        <div class="indicador-numero">
-                            {{ $linhas->count() }}
-                        </div>
-                        <div class="indicador-label">
-                            Alunos vinculados
-                        </div>
-                    </div>
-                </td>
-
-                <td>
-                    <div class="indicador">
-                        <div class="indicador-numero">
-                            {{ $mediaPresencaTurma }}%
-                        </div>
-                        <div class="indicador-label">
-                            Presença média
-                        </div>
-                    </div>
-                </td>
-            </tr>
-        </table>
-
+    <div class="titulo">
+        Relatório de Acompanhamento da Turma
     </div>
 
-
-    <div class="secao-titulo">
-        Acompanhamento dos alunos
+    <div class="periodo">
+        Relatório referente ao período de
+        {{ \Carbon\Carbon::parse($inicio)->format('d/m/Y') }}
+        a
+        {{ \Carbon\Carbon::parse($fim)->format('d/m/Y') }}.
     </div>
+
+    <table class="identificacao">
+        <tr>
+            <td class="rotulo">Instituição:</td>
+            <td class="valor">{{ $turma->escola->nome ?? 'Instituição de Ensino' }}</td>
+        </tr>
+        <tr>
+            <td class="rotulo">Turma:</td>
+            <td class="valor">{{ $turma->nome }}</td>
+        </tr>
+    </table>
+
+    <div class="secao-titulo">Síntese dos registros</div>
+
+    <table class="sintese">
+        <tr>
+            <td>{{ str_pad($linhas->count(), 2, '0', STR_PAD_LEFT) }} alunos vinculados</td>
+            <td>{{ $mediaPresencaTurma }}% de presença média</td>
+        </tr>
+    </table>
+
+    <div class="quadro-titulo">Quadro 1 — Acompanhamento individual</div>
 
     <table class="tabela-alunos">
         <thead>
             <tr>
-                <th class="coluna-aluno">Aluno</th>
-                <th class="numero">Presença</th>
-                <th class="numero">Faltas</th>
-                <th class="numero">Registros diários</th>
+                <th class="col-aluno">Aluno</th>
+                <th class="col-presenca">Presença</th>
+                <th class="col-faltas direita">Faltas</th>
+                <th class="col-registros direita">Registros diários</th>
             </tr>
         </thead>
 
         <tbody>
             @forelse($linhas as $linha)
                 <tr>
-                    <td class="nome-aluno">
-                        {{ $linha['aluno']->nome }}
-                    </td>
-
-                    <td class="numero destaque">
-                        {{ $linha['percentualPresenca'] }}%
-                    </td>
-
-                    <td class="numero">
-                        {{ $linha['faltas'] }}
-                    </td>
-
-                    <td class="numero">
-                        {{ $linha['totalRegistros'] }}
-                    </td>
+                    <td>{{ $linha['aluno']->nome }}</td>
+                    <td>{{ $linha['percentualPresenca'] }}%</td>
+                    <td class="direita">{{ $linha['faltas'] }}</td>
+                    <td class="direita">{{ $linha['totalRegistros'] }}</td>
                 </tr>
             @empty
                 <tr>
@@ -345,22 +310,9 @@
     </table>
 
     <div class="nota">
-        Os percentuais de presença são calculados com base
-        nos registros de frequência disponíveis no período selecionado.
-    </div>
-
-
-
-    <div class="rodape">
-        <table>
-            <tr>
-                <td>LumiKids · Documento escolar</td>
-
-                <td class="rodape-direita">
-                    Emitido em {{ now()->format('d/m/Y') }}
-                </td>
-            </tr>
-        </table>
+        <span class="nota-destaque">Nota metodológica:</span>
+        os percentuais de presença são calculados com base nos registros de
+        frequência disponíveis no período selecionado.
     </div>
 
 </body>
