@@ -1,12 +1,31 @@
+<div align="center">
+
 # LumiKids
 
-**Sistema web de gestão e acompanhamento diário de alunos da Educação Infantil.**
+### Gestão escolar e acompanhamento diário da Educação Infantil
+
+<p>
+  <img src="https://img.shields.io/badge/Projeto-TCC-248f69?style=for-the-badge" alt="Projeto TCC" />
+  <img src="https://img.shields.io/badge/Laravel-13-FF2D20?style=for-the-badge&logo=laravel&logoColor=white" alt="Laravel 13" />
+  <img src="https://img.shields.io/badge/PHP-8.3%2B-777BB4?style=for-the-badge&logo=php&logoColor=white" alt="PHP 8.3+" />
+  <img src="https://img.shields.io/badge/MySQL-Banco%20de%20dados-4479A1?style=for-the-badge&logo=mysql&logoColor=white" alt="MySQL" />
+</p>
+
+
+
+[**🌐 Acessar o sistema**](https://lumikids.alwaysdata.net) · [**💻 Repositório**](https://github.com/Henric-ops/TCC) · [**👨‍💻 Autor**](https://github.com/Henric-ops)
+
+</div>
+
+---
+
+## 📖 Sobre o projeto
 
 O LumiKids substitui a agenda de papel das escolas infantis. O professor registra o dia de cada criança (alimentação, líquidos, sono, troca de fralda e observações) e a presença. O responsável acompanha tudo pelo navegador, vê relatórios e baixa documentos. A administração gerencia escolas, turmas, alunos e usuários.
 
 > Projeto desenvolvido como Trabalho de Conclusão de Curso (TCC) do curso Superior de Tecnologia em Análise e Desenvolvimento de Sistemas, Instituto Federal Farroupilha – Campus São Vicente do Sul (IFFar-SVS).
 
-## Sumário
+## 🧭 Sumário
 
 1. [Funcionalidades](#funcionalidades)
 2. [Tecnologias](#tecnologias)
@@ -27,7 +46,10 @@ O LumiKids substitui a agenda de papel das escolas infantis. O professor registr
 
 ---
 
-## Funcionalidades
+## ✨ Funcionalidades
+
+> [!TIP]
+> O LumiKids reúne acompanhamento diário, controle de frequência e comunicação escola–família em uma única plataforma.
 
 O sistema tem **três perfis de acesso**, cada um com o seu menu e o seu painel inicial.
 
@@ -47,7 +69,20 @@ Outras funcionalidades:
 - **Relatórios em PDF** do aluno, para o administrador e para o responsável.
 - **Layout responsivo**, com painel de marca no topo das telas de login e cadastro no celular.
 
-## Tecnologias
+## 🛠️ Tecnologias
+
+<div align="center">
+
+![PHP](https://img.shields.io/badge/PHP-777BB4?style=for-the-badge&logo=php&logoColor=white)
+![Laravel](https://img.shields.io/badge/Laravel-FF2D20?style=for-the-badge&logo=laravel&logoColor=white)
+![MySQL](https://img.shields.io/badge/MySQL-4479A1?style=for-the-badge&logo=mysql&logoColor=white)
+![HTML5](https://img.shields.io/badge/HTML5-E34F26?style=for-the-badge&logo=html5&logoColor=white)
+![CSS3](https://img.shields.io/badge/CSS3-1572B6?style=for-the-badge&logo=css&logoColor=white)
+![JavaScript](https://img.shields.io/badge/JavaScript-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black)
+![Bootstrap](https://img.shields.io/badge/Bootstrap-7952B3?style=for-the-badge&logo=bootstrap&logoColor=white)
+![Git](https://img.shields.io/badge/Git-F05032?style=for-the-badge&logo=git&logoColor=white)
+
+</div>
 
 | Camada | Tecnologia |
 |---|---|
@@ -57,11 +92,11 @@ Outras funcionalidades:
 | PDF | `barryvdh/laravel-dompdf` (Dompdf) |
 | E-mail | Laravel Mail (SMTP) |
 | Traduções | `laravel-lang/lang` (mensagens em pt-BR) |
-| Ambiente de desenvolvimento | Laragon, VS Code, Git/GitHub, DBeaver |
+| Ambiente de desenvolvimento | Laragon, VS Code, Git/GitHub, Laravel |
 
 O front-end usa arquivos estáticos em `public/css` e `public/js` e o Bootstrap vem por CDN. **Não é necessário rodar `npm`** para usar o sistema.
 
-## Requisitos
+## 📋 Requisitos
 
 - **PHP 8.3 ou superior** (a versão mínima exata está no `composer.json`; o projeto foi desenvolvido com PHP 8.5)
 - Extensões PHP: `ctype`, `curl`, `dom`, `fileinfo`, `gd`, `mbstring`, `openssl`, `pdo_mysql`, `tokenizer`, `xml`, `zip`
@@ -70,7 +105,9 @@ O front-end usa arquivos estáticos em `public/css` e `public/js` e o Bootstrap 
 - **Git**
 - Opcional (recomendado no Windows): **Laragon**, que já traz PHP, MySQL, Composer e Git
 
-## Instalação
+## 🚀 Instalação
+
+**Configure o ambiente local seguindo a sequência abaixo.**
 
 Os passos abaixo funcionam em qualquer sistema. As observações para o Laragon (Windows) aparecem junto.
 
@@ -121,15 +158,7 @@ Abra o `.env` e preencha ao menos a parte do banco. O restante está em [Configu
 php artisan migrate
 ```
 
-### 7. Liberar o acesso às fotos dos alunos
-
-```bash
-php artisan storage:link
-```
-
-> No Windows, este comando pode exigir um terminal aberto **como Administrador**. Sem ele, as fotos dos alunos aparecem quebradas.
-
-### 8. Ajustar o fuso horário
+### 7. Ajustar o fuso horário
 
 Várias telas usam "hoje" como padrão (registros, frequência, dashboards). Em `config/app.php`, confira se o fuso é o do Brasil:
 
@@ -139,7 +168,7 @@ Várias telas usam "hoje" como padrão (registros, frequência, dashboards). Em 
 
 Com o padrão `UTC`, depois das 21h "hoje" passa a ser o dia seguinte.
 
-### 9. Criar a primeira escola e o administrador
+### 8. Criar a primeira escola e o administrador
 
 O perfil de administrador **não é criado pela tela de cadastro**, por segurança. Crie o primeiro pelo terminal:
 
@@ -168,7 +197,7 @@ App\Models\User::create([
 
 A senha é criptografada automaticamente ao salvar. **Troque o e-mail e a senha do exemplo.** Digite `exit` para sair do tinker.
 
-### 10. Iniciar o sistema
+### 9. Iniciar o sistema
 
 ```bash
 php artisan serve
@@ -176,7 +205,7 @@ php artisan serve
 
 Abra **http://127.0.0.1:8000** e entre com o administrador criado.
 
-## Configuração do .env
+## ⚙️ Configuração do .env
 
 | Variável | Para que serve | Exemplo |
 |---|---|---|
@@ -213,7 +242,7 @@ MAIL_FROM_ADDRESS="nao-responda@lumikids.local"
 MAIL_FROM_NAME="${APP_NAME}"
 ```
 
-### E-mail: teste e envio de verdade
+### ✉️ E-mail: teste e envio de verdade
 
 **Para testar sem enviar nada:** deixe `MAIL_MAILER=log`. Os e-mails (comunicados e recuperação de senha) são gravados em `storage/logs/laravel.log`.
 
@@ -232,7 +261,7 @@ MAIL_FROM_NAME="${APP_NAME}"
 
 Depois de alterar o `.env`, rode `php artisan config:clear`.
 
-## Primeiro acesso: ordem recomendada de cadastro
+## 🧩 Primeiro acesso: ordem recomendada de cadastro
 
 Há dependências entre os cadastros. Siga esta ordem na primeira vez:
 
@@ -244,9 +273,9 @@ Há dependências entre os cadastros. Siga esta ordem na primeira vez:
 6. **Responsáveis:** o responsável se cadastra pela tela pública. Em *Usuários*, o administrador clica em **Verificar**, escolhe o(s) aluno(s) e o parentesco e **aprova**. (Também dá para o administrador criar o responsável já vinculado.)
 7. Pronto: o professor já pode lançar registros e frequência, e o responsável já enxerga o filho.
 
-## Como usar, por perfil
+## 👥 Como usar, por perfil
 
-### Administrador
+### 🛡️ Administrador
 
 | Menu | O que fazer |
 |---|---|
@@ -259,7 +288,7 @@ Há dependências entre os cadastros. Siga esta ordem na primeira vez:
 | **Comunicados** | Enviar e-mail a um responsável (escolhe o aluno e depois o responsável). |
 | **Relatórios** | Escolher a turma (resumo de todos os alunos) ou também um aluno (relatório individual), com período De/Até. O relatório individual pode ser baixado em PDF. |
 
-### Professor
+### 👩‍🏫 Professor
 
 1. **Cadastro:** *Criar conta* na tela de login, escolhendo o perfil Professor. Aguarde a aprovação do administrador.
 2. **Dashboard:** mostra as turmas dele, quantos registros foram feitos hoje e quais turmas ainda estão sem frequência.
@@ -272,7 +301,7 @@ Há dependências entre os cadastros. Siga esta ordem na primeira vez:
 6. **Comunicados:** escolha o aluno e o responsável, escreva o assunto e a mensagem. O responsável recebe por e-mail.
 7. **Boletim:** escreva o texto e, se já tiver o documento pronto, anexe o PDF.
 
-### Responsável
+### 👨‍👩‍👧 Responsável
 
 1. **Cadastro:** *Criar conta*, escolhendo o perfil Responsável. Aguarde o administrador aprovar e vincular você ao seu filho.
 2. **Dashboard:** um card por filho com a frequência de hoje e se o registro do dia já foi feito, mais os comunicados recentes (clique para ler).
@@ -281,7 +310,7 @@ Há dependências entre os cadastros. Siga esta ordem na primeira vez:
 5. **Relatório:** escolha o filho e o período. Mostra presença, registros, média de sono e o **calendário de presença**. O botão *Baixar PDF* gera o arquivo.
 6. **Boletins e comunicados:** consulte os boletins e os comunicados enviados pela escola.
 
-## Regras do sistema que vale conhecer
+## 📌 Regras do sistema que vale conhecer
 
 - **Cadastro público = pendente.** A pessoa só consegue entrar depois de aprovada. Contas pendentes ou recusadas veem uma mensagem ao tentar o login.
 - **Professor edita só o que lançou.** O administrador edita qualquer registro. Registros de outro professor aparecem sem botão de editar.
@@ -292,7 +321,7 @@ Há dependências entre os cadastros. Siga esta ordem na primeira vez:
 - **Exclusão lógica.** Usuários e alunos excluídos somem das telas de cadastro e o usuário excluído não consegue mais entrar. Registros, frequência e mensagens antigas continuam consultáveis, com o nome correto.
 - **Comunicação por e-mail, em mão única.** Professor ou administrador envia ao responsável. O professor só alcança responsáveis dos alunos das turmas dele. O envio fica registrado no sistema.
 
-## Rotas principais
+## 🗺️ Rotas principais
 
 | Perfil | Caminho | Tela |
 |---|---|---|
@@ -306,7 +335,10 @@ Há dependências entre os cadastros. Siga esta ordem na primeira vez:
 
 Para listar todas as rotas: `php artisan route:list`.
 
-## Banco de dados
+## 🗄️ Banco de dados
+
+> [!NOTE]
+> O diagrama de relacionamentos abaixo foi preservado integralmente, mantendo as entidades, cardinalidades e identificações dos vínculos originais.
 
 Principais tabelas:
 
@@ -349,7 +381,7 @@ erDiagram
     BOLETIM ||--o| BOLETIM_DOCUMENTO : "anexo PDF"
 ```
 
-## Estrutura do projeto
+## 📁 Estrutura do projeto
 
 ```
 app/
@@ -377,7 +409,10 @@ resources/views/                   # telas em Blade (auth, dashboard, usuarios, 
 routes/web.php                     # todas as rotas
 ```
 
-## Segurança e privacidade
+## 🔒 Segurança e privacidade
+
+> [!IMPORTANT]
+> A aplicação trabalha com informações de crianças. Para uso real, valide as regras de acesso e as políticas de tratamento de dados conforme a LGPD.
 
 O sistema guarda dados de crianças, então algumas medidas foram adotadas:
 
@@ -391,7 +426,7 @@ O sistema guarda dados de crianças, então algumas medidas foram adotadas:
 
 > A preservação do histórico de pessoas excluídas precisa estar de acordo com a LGPD (por exemplo, com política de retenção ou anonimização). Isso está listado em [próximos passos](#limitações-e-próximos-passos).
 
-## Problemas comuns
+## 🩺 Problemas comuns
 
 | Sintoma | Causa provável | Solução |
 |---|---|---|
@@ -413,7 +448,7 @@ php artisan route:list         # lista as rotas
 php artisan migrate:fresh      # CUIDADO: apaga todas as tabelas e recria do zero
 ```
 
-## Publicação em servidor
+## ☁️ Publicação em servidor
 
 O sistema foi desenvolvido e validado em ambiente local (Laragon). Para colocar em um servidor, um roteiro resumido:
 
@@ -424,7 +459,7 @@ O sistema foi desenvolvido e validado em ambiente local (Laragon). Para colocar 
 5. Garanta permissão de escrita em `storage/` e `bootstrap/cache/`.
 6. Use **HTTPS**.
 
-## Limitações e próximos passos
+## 🔭 Limitações e próximos passos
 
 Ainda não implementado:
 
@@ -432,12 +467,17 @@ Ainda não implementado:
 - Notificações automáticas de novos registros.
 - Fotos das atividades do dia.
 - Exportação de dados e backup pela interface.
-- PDF do relatório de turma (hoje só em tela).
 - Calendário letivo (para diferenciar "sem aula" de "faltou").
 - Política de retenção e anonimização de dados (LGPD).
 - Testes automatizados.
 
-## Autor e licença
+## 👤 Autor e licença
+
+<div align="center">
+
+[![GitHub](https://img.shields.io/badge/GitHub-Henric--ops-181717?style=for-the-badge&logo=github&logoColor=white)](https://github.com/Henric-ops)
+
+</div>
 
 - **Autor:** Henric Baccin Sander ([@Henric-ops](https://github.com/Henric-ops))
 - **Orientador:** Prof. Me. Gustavo Rissetti
