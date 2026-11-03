@@ -3,7 +3,7 @@
 @section('title', 'Alunos')
 
 @push('styles')
-    <link rel="stylesheet" href="{{ asset('css/alunos.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/alunos.css') }}?v={{ filemtime(public_path('css/alunos.css')) }}">
     <link rel="stylesheet" href="{{ asset('css/historico-frequencia.css') }}">
     <link rel="stylesheet" href="{{ asset('css/usuario-buttons.css') }}">
 @endpush

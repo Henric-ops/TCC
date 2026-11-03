@@ -138,7 +138,7 @@
     margin-bottom: 0;
 }
 
-@media (max-width: 767.98px) {
+@media (max-width: 991.98px) {
     .alunos-index-page .alunos-table-card .table-responsive {
         overflow-x: auto;
         overflow-y: auto;
@@ -212,18 +212,29 @@
 
     .alunos-filtros {
         width: 100%;
+        align-items: stretch;
+        flex-direction: column;
+        gap: .85rem;
+        padding: 1rem;
     }
 
     .alunos-filtro-item {
-        flex: 1 1 160px;
+        min-width: 0;
+        width: 100%;
+        max-width: none;
+        flex: 0 0 auto;
     }
 
     .alunos-filtro-btn {
-        flex: 1 1 100%;
+        align-self: stretch;
+        width: 100%;
+        min-height: 2.75rem;
+        flex: 0 0 auto;
     }
 
     .alunos-header>.usuario-button {
         width: 100%;
+        min-height: 2.75rem;
     }
 
 }

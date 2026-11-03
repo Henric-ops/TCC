@@ -4,7 +4,7 @@
 
 @section('content')
 
-    <link rel="stylesheet" href="{{ asset('css/turmas.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/turmas.css') }}?v={{ filemtime(public_path('css/turmas.css')) }}">
     <link rel="stylesheet" href="{{ asset('css/historico-frequencia.css') }}">
     <link rel="stylesheet" href="{{ asset('css/alunos.css') }}">
     <link rel="stylesheet" href="{{ asset('css/usuario-buttons.css') }}">

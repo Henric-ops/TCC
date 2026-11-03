@@ -143,15 +143,34 @@
 
     .turmas-header-actions {
         width: 100%;
-        justify-content: space-between;
+        justify-content: flex-start;
     }
 
     .turmas-header-actions .usuario-button {
         flex: 1;
+        width: 100%;
+        min-height: 2.75rem;
+    }
+
+    .turmas-index-page .alunos-filtros {
+        align-items: stretch;
+        flex-direction: column;
+        gap: .85rem;
+        padding: 1rem;
     }
 
     .turmas-index-page .alunos-filtro-item {
-        flex: 0 1 auto;
+        min-width: 0;
+        width: 100%;
+        max-width: none;
+        flex: 0 0 auto;
+    }
+
+    .turmas-index-page .alunos-filtro-btn {
+        align-self: stretch;
+        width: 100%;
+        min-height: 2.75rem;
+        flex: 0 0 auto;
     }
 
     .turmas-table-card .table {

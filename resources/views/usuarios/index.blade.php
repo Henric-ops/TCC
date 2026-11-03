@@ -4,7 +4,7 @@
 
 @section('content')
 
-    <link rel="stylesheet" href="{{ asset('css/tabela.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/tabela.css') }}?v={{ filemtime(public_path('css/tabela.css')) }}">
     <link rel="stylesheet" href="{{ asset('css/historico-frequencia.css') }}">
     <link rel="stylesheet" href="{{ asset('css/alunos.css') }}">
     <link rel="stylesheet" href="{{ asset('css/usuario-buttons.css') }}">
@@ -197,14 +197,14 @@
 
                             <tr>
 
-                                <td>
+                                <td data-label="Nome">
 
                                     <strong>{{ $usuario->nome }}</strong>
 
                                 </td>
 
 
-                                <td class="usuario-email">
+                                <td data-label="E-mail" class="usuario-email">
 
                                     {{ $usuario->email }}
 
@@ -213,7 +213,7 @@
 
 
                                 @if(!request('perfil'))
-                                    <td>
+                                    <td data-label="Perfil">
                                         @if($usuario->perfil === 'professor')
                                             Professor
                                         @elseif($usuario->perfil === 'responsavel')
@@ -224,7 +224,7 @@
 
 
 
-                                <td>
+                                <td data-label="Status">
 
                                     @if($usuario->status === 'pendente')
                                         Pendente
@@ -238,7 +238,7 @@
 
 
 
-                                <td class="text-end text-nowrap">
+                                <td data-label="Ações" class="text-end text-nowrap">
 
                                     <a href="{{ route('admin.usuarios.edit', $usuario) }}"
                                         class="usuario-action usuario-action-primary" title="Editar usuário"
@@ -285,7 +285,7 @@
 
                         @empty
 
-                            <tr>
+                            <tr class="usuario-empty-row">
 
                                 <td colspan="{{ request('perfil') ? 4 : 5 }}" class="text-center py-5">
 
