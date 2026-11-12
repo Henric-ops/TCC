@@ -302,12 +302,13 @@ class RegistroDiarioController extends Controller
         }
 
         if ($request->filled('dormiu')) {
+            $dormiu = $request->input('dormiu') === 'sim';
             $registro->sono()->create([
-                'dormiu' => $request->input('dormiu') === 'sim',
-                'inicio_1' => $request->input('sono_inicio_1') ?: null,
-                'fim_1' => $request->input('sono_fim_1') ?: null,
-                'inicio_2' => $request->input('sono_inicio_2') ?: null,
-                'fim_2' => $request->input('sono_fim_2') ?: null,
+                'dormiu' => $dormiu,
+                'inicio_1' => $dormiu ? $request->input('sono_inicio_1') : null,
+                'fim_1' => $dormiu ? $request->input('sono_fim_1') : null,
+                'inicio_2' => $dormiu ? $request->input('sono_inicio_2') : null,
+                'fim_2' => $dormiu ? $request->input('sono_fim_2') : null,
             ]);
         }
 

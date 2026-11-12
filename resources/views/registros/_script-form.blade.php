@@ -40,6 +40,38 @@
         ['sono_inicio_2', 'sono_fim_2', 'duracao-2']
     ];
 
+    const camposSono = periodos.flatMap(([inicioNome, fimNome]) => [
+        document.querySelector(`[name="${inicioNome}"]`),
+        document.querySelector(`[name="${fimNome}"]`)
+    ]);
+
+    function atualizarCamposSono() {
+        const naoDormiu = document.querySelector('[name="dormiu"]:checked')?.value === 'nao';
+
+        camposSono.forEach((campo) => {
+            campo.disabled = naoDormiu;
+            campo.required = !naoDormiu && document.querySelector('[name="dormiu"]:checked')?.value === 'sim';
+        });
+
+        if (naoDormiu) {
+            periodos.forEach(([, , destino]) => {
+                document.getElementById(destino).textContent = '--';
+            });
+        } else {
+            periodos.forEach(([inicioNome, fimNome, destino]) => {
+                atualizarDuracao(
+                    document.querySelector(`[name="${inicioNome}"]`),
+                    document.querySelector(`[name="${fimNome}"]`),
+                    destino
+                );
+            });
+        }
+    }
+
+    document.querySelectorAll('[name="dormiu"]').forEach((input) => {
+        input.addEventListener('change', atualizarCamposSono);
+    });
+
     periodos.forEach(([inicioNome, fimNome, destino]) => {
         const inicio = document.querySelector(`[name="${inicioNome}"]`);
         const fim = document.querySelector(`[name="${fimNome}"]`);
@@ -48,4 +80,6 @@
         fim.addEventListener('input', atualizar);
         atualizar();
     });
+
+    atualizarCamposSono();
 </script>

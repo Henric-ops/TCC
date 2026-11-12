@@ -28,10 +28,10 @@ class StoreRegistroDiarioRequest extends FormRequest
             'liquidos.agua' => 'required|in:tudo,parte,rejeitou',
 
             'dormiu' => 'required|in:sim,nao',
-            'sono_inicio_1' => 'required|date_format:H:i',
-            'sono_fim_1' => 'required|date_format:H:i',
-            'sono_inicio_2' => 'required|date_format:H:i',
-            'sono_fim_2' => 'required|date_format:H:i',
+            'sono_inicio_1' => 'exclude_unless:dormiu,sim|required|date_format:H:i',
+            'sono_fim_1' => 'exclude_unless:dormiu,sim|required|date_format:H:i',
+            'sono_inicio_2' => 'exclude_unless:dormiu,sim|required|date_format:H:i',
+            'sono_fim_2' => 'exclude_unless:dormiu,sim|required|date_format:H:i',
 
             'xixi' => 'required|integer|min:0',
             'coco' => 'required|integer|min:0',

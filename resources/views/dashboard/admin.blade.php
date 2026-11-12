@@ -39,10 +39,12 @@
                 <div class="dash-panel mb-4">
                     <div class="dash-panel-header">
                         <h2>Aguardando aprovação</h2>
-                        <a href="{{ route('admin.usuarios.index') }}">Ver todos ({{ $totalPendentes }})</a>
+                        @if($totalPendentes > 3)
+                            <a href="{{ route('admin.usuarios.index') }}">Ver todos ({{ $totalPendentes }})</a>
+                        @endif
                     </div>
                     <div class="pendencia-list">
-                        @foreach($pendentes as $pendente)
+                        @foreach($pendentes->take(3) as $pendente)
                             <div class="pendencia-item">
                                 <div>
                                     <strong>{{ $pendente->nome }}</strong>
@@ -58,14 +60,16 @@
             <div class="dash-panel">
                 <div class="dash-panel-header">
                     <h2>Turmas</h2>
-                    <a href="{{ route('admin.turmas.index') }}">Ver todas</a>
+                    @if($totalTurmas > 3)
+                        <a href="{{ route('admin.turmas.index') }}">Ver todas ({{ $totalTurmas }})</a>
+                    @endif
                 </div>
 
                 @if($turmas->isEmpty())
                     <div class="dash-empty">Nenhuma turma cadastrada ainda.</div>
                 @else
                     <div class="turma-list">
-                        @foreach($turmas as $turma)
+                        @foreach($turmas->take(3) as $turma)
                             <div class="turma-item">
                                 <div class="turma-info">
                                     <strong>{{ $turma->nome }}</strong>
@@ -106,6 +110,5 @@
                 </div>
             </div>
         </div>
-    </div>
     </div>
 @endsection

@@ -480,6 +480,11 @@ label.radio {
     outline: none;
 }
 
+.time-input input:disabled {
+    cursor: not-allowed;
+    opacity: .55;
+}
+
 .duration-pill {
     margin-left: auto;
     background: rgba(34, 160, 107, .1);

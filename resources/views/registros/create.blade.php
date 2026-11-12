@@ -104,20 +104,20 @@
                 <div class="period-block">
                     Período 1 das
                     <label class="time-input"></i><input type="time" name="sono_inicio_1"
-                            value="{{ old('sono_inicio_1') }}" required></label>
+                            value="{{ old('sono_inicio_1') }}"></label>
                     às
-                    <label class="time-input"></i><input type="time" name="sono_fim_1" value="{{ old('sono_fim_1') }}"
-                            required></label>
+                    <label class="time-input"></i><input type="time" name="sono_fim_1"
+                            value="{{ old('sono_fim_1') }}"></label>
                     <span class="duration-pill" id="duracao-1">--</span>
                 </div>
 
                 <div class="period-block">
                     Período 2 das
                     <label class="time-input"></i><input type="time" name="sono_inicio_2"
-                            value="{{ old('sono_inicio_2') }}" required></label>
+                            value="{{ old('sono_inicio_2') }}"></label>
                     às
-                    <label class="time-input"></i><input type="time" name="sono_fim_2" value="{{ old('sono_fim_2') }}"
-                            required></label>
+                    <label class="time-input"></i><input type="time" name="sono_fim_2"
+                            value="{{ old('sono_fim_2') }}"></label>
                     <span class="duration-pill" id="duracao-2">--</span>
                 </div>
             </div>

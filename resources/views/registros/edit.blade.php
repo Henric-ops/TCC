@@ -97,17 +97,17 @@
 
                 <div class="period-block">
                     Período 1 das
-                    <label class="time-input"><i class="bi bi-clock-fill"></i><input type="time" name="sono_inicio_1" value="{{ old('sono_inicio_1', optional($registro->sono)->inicio_1) }}" required></label>
+                    <label class="time-input"><i class="bi bi-clock-fill"></i><input type="time" name="sono_inicio_1" value="{{ old('sono_inicio_1', optional($registro->sono)->inicio_1) }}"></label>
                     às
-                    <label class="time-input"><i class="bi bi-clock-fill"></i><input type="time" name="sono_fim_1" value="{{ old('sono_fim_1', optional($registro->sono)->fim_1) }}" required></label>
+                    <label class="time-input"><i class="bi bi-clock-fill"></i><input type="time" name="sono_fim_1" value="{{ old('sono_fim_1', optional($registro->sono)->fim_1) }}"></label>
                     <span class="duration-pill" id="duracao-1">--</span>
                 </div>
 
                 <div class="period-block">
                     Período 2 das
-                    <label class="time-input"><i class="bi bi-clock-fill"></i><input type="time" name="sono_inicio_2" value="{{ old('sono_inicio_2', optional($registro->sono)->inicio_2) }}" required></label>
+                    <label class="time-input"><i class="bi bi-clock-fill"></i><input type="time" name="sono_inicio_2" value="{{ old('sono_inicio_2', optional($registro->sono)->inicio_2) }}"></label>
                     às
-                    <label class="time-input"><i class="bi bi-clock-fill"></i><input type="time" name="sono_fim_2" value="{{ old('sono_fim_2', optional($registro->sono)->fim_2) }}" required></label>
+                    <label class="time-input"><i class="bi bi-clock-fill"></i><input type="time" name="sono_fim_2" value="{{ old('sono_fim_2', optional($registro->sono)->fim_2) }}"></label>
                     <span class="duration-pill" id="duracao-2">--</span>
                 </div>
             </div>
