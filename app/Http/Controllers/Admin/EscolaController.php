@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\StoreEscolaRequest;
 use App\Http\Requests\Admin\UpdateEscolaRequest;
+use Illuminate\Support\Facades\DB;
 use App\Models\Escola;
 
 class EscolaController extends Controller
@@ -40,13 +41,16 @@ class EscolaController extends Controller
         return redirect()->route('admin.escolas.index')->with('sucesso', 'Escola atualizada com sucesso.');
     }
 
-    public function destroy(Escola $escola)// método para excluir uma escola
+    public function destroy(Escola $escola)
     {
-        $temVinculos = $escola->usuarios()->exists() || $escola->alunos()->exists() || $escola->turmas()->exists();
+        $temVinculos = $escola->usuarios()->withTrashed()->exists()
+            || $escola->alunos()->withTrashed()->exists()
+            || $escola->turmas()->withTrashed()->exists()
+            || DB::table('escola_professor')->where('escola_id', $escola->id)->exists();
 
         if ($temVinculos) {
             return redirect()->route('admin.escolas.index')
-                ->with('erro', 'Essa escola tem usuários, alunos ou turmas vinculados e não pode ser excluída.');
+                ->with('erro', 'Essa escola tem usuários, alunos, turmas ou professores vinculados e não pode ser removida.');
         }
 
         $escola->delete();

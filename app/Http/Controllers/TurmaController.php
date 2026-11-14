@@ -36,6 +36,7 @@ class TurmaController extends Controller
         return view('turmas.minhas', compact('turmas', 'turmasPorEscola', 'escolasPermitidas', 'escolaId'));
     }
 
+
     public function show(Turma $turma)
     {
         abort_unless(Auth::user()->turmas->contains('id', $turma->id), 403);

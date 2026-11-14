@@ -67,11 +67,11 @@ class TurmasController extends Controller
 
         return redirect()->route('admin.turmas.index')->with('sucesso', 'Turma atualizada com sucesso.');
     }
-
     public function destroy(Turma $turma)
     {
         $turma->delete();
 
-        return redirect()->route('admin.turmas.index')->with('sucesso', 'Turma removida.');
+        return redirect()->route('admin.turmas.index')
+            ->with('sucesso', 'Turma removida. O histórico de frequência continua preservado.');
     }
 }

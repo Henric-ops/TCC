@@ -20,7 +20,7 @@ class Frequencia extends Model
 
     public function turma()
     {
-        return $this->belongsTo(Turma::class);
+        return $this->belongsTo(Turma::class)->withTrashed();
     }
 
     public function registradoPor()
