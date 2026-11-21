@@ -39,7 +39,8 @@
             <div class="freq-filtro-item alunos-filtro-item">
                 <label for="escola_id">Escola</label>
 
-                <select name="escola_id" id="escola_id" class="alunos-filtro-escola">
+                <select name="escola_id" id="escola_id" class="alunos-filtro-escola"
+                    onchange="document.getElementById('turma_id').value = ''; this.form.submit()">
                     <option value="">Todas as escolas</option>
 
                     @foreach($escolasPermitidas as $escola)

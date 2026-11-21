@@ -18,7 +18,12 @@ class AlunoController extends Controller
         $turmaId = request('turma_id');
 
         $escolasPermitidas = Escola::orderBy('nome')->get();
-        $turmasPermitidas = Turma::orderBy('nome')->get();
+        $turmasPermitidas = Turma::query()
+            ->when($escolaId, function ($query) use ($escolaId) {
+                $query->where('escola_id', $escolaId);
+            })
+            ->orderBy('nome')
+            ->get();
 
         $alunos = Aluno::with(['turmas'])
             ->when($busca, function ($query) use ($busca) {
