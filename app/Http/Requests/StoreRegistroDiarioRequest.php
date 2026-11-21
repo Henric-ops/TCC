@@ -4,6 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Validation\Rule;
 
 class StoreRegistroDiarioRequest extends FormRequest
 {
@@ -15,8 +16,15 @@ class StoreRegistroDiarioRequest extends FormRequest
 
     public function rules(): array
     {
+        $alunoIdRules = ['required', 'exists:alunos,id'];
+
+        if ($this->isMethod('post')) {
+            $alunoIdRules[] = Rule::unique('registro_diarios', 'aluno_id')
+                ->where(fn($query) => $query->where('data', now()->toDateString()));
+        }
+
         return [
-            'aluno_id' => 'required|exists:alunos,id',
+            'aluno_id' => $alunoIdRules,
 
             'alimentacao.colacao' => 'required|in:tudo,parte,rejeitou',
             'alimentacao.almoco' => 'required|in:tudo,parte,rejeitou',
@@ -51,6 +59,7 @@ class StoreRegistroDiarioRequest extends FormRequest
             'liquidos.suco.required' => 'Informe o consumo de suco.',
             'liquidos.agua.required' => 'Informe o consumo de água.',
             'liquidos.*.in' => 'Selecione uma opção válida para os líquidos.',
+            'aluno_id.unique' => 'Já existe um registro diário para este aluno hoje.',
             'dormiu.required' => 'Informe se o aluno dormiu.',
             'dormiu.in' => 'Selecione uma opção válida para o sono.',
             'sono_inicio_1.required_without_all' => 'Informe pelo menos um período completo de sono.',
