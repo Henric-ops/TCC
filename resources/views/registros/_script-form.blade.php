@@ -46,12 +46,28 @@
     ]);
 
     function atualizarCamposSono() {
-        const naoDormiu = document.querySelector('[name="dormiu"]:checked')?.value === 'nao';
+        const escolhaSono = document.querySelector('[name="dormiu"]:checked')?.value;
+        const naoDormiu = escolhaSono === 'nao';
+        const dormiu = escolhaSono === 'sim';
 
         camposSono.forEach((campo) => {
             campo.disabled = naoDormiu;
-            campo.required = !naoDormiu && document.querySelector('[name="dormiu"]:checked')?.value === 'sim';
+            campo.required = false;
         });
+
+        if (dormiu) {
+            const inicio1 = document.querySelector('[name="sono_inicio_1"]');
+            const fim1 = document.querySelector('[name="sono_fim_1"]');
+            const inicio2 = document.querySelector('[name="sono_inicio_2"]');
+            const fim2 = document.querySelector('[name="sono_fim_2"]');
+            const periodo1Preenchido = inicio1.value || fim1.value;
+            const periodo2Preenchido = inicio2.value || fim2.value;
+
+            inicio1.required = Boolean(fim1.value) || (!periodo1Preenchido && !periodo2Preenchido);
+            fim1.required = Boolean(inicio1.value);
+            inicio2.required = Boolean(fim2.value);
+            fim2.required = Boolean(inicio2.value);
+        }
 
         if (naoDormiu) {
             periodos.forEach(([, , destino]) => {
@@ -75,7 +91,10 @@
     periodos.forEach(([inicioNome, fimNome, destino]) => {
         const inicio = document.querySelector(`[name="${inicioNome}"]`);
         const fim = document.querySelector(`[name="${fimNome}"]`);
-        const atualizar = () => atualizarDuracao(inicio, fim, destino);
+        const atualizar = () => {
+            atualizarDuracao(inicio, fim, destino);
+            atualizarCamposSono();
+        };
         inicio.addEventListener('input', atualizar);
         fim.addEventListener('input', atualizar);
         atualizar();
