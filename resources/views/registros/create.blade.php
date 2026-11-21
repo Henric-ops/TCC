@@ -26,10 +26,14 @@
             <div>
                 <h1>{{ $aluno->nome }}</h1>
                 <div class="sub">{{ $aluno->data_nascimento->age }} anos · Turma
-                    {{ $aluno->turmas->pluck('nome')->join(', ') ?: '—' }} · Registro de hoje
+                    {{ $aluno->turmas->pluck('nome')->join(', ') ?: '—' }} · Registro diário
                 </div>
             </div>
-            <div class="date-pill"><i class="bi bi-calendar3"></i> {{ now()->format('d/m/Y') }}</div>
+            <div>
+                <label for="data" class="form-label mb-1">Data do registro</label>
+                <input type="date" id="data" name="data" class="form-control"
+                    value="{{ old('data', now()->toDateString()) }}" max="{{ now()->toDateString() }}" required>
+            </div>
         </div>
 
         <div class="grid-top">

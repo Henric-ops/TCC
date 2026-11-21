@@ -205,13 +205,16 @@ class RegistroDiarioController extends Controller
         $registro = RegistroDiario::create([
             'aluno_id' => $request->aluno_id,
             'professor_id' => Auth::id(),
-            'data' => now()->format('Y-m-d'),
+            'data' => $request->input('data'),
             'observacao' => null,
         ]);
 
         $this->salvarFilhos($registro, $request);
 
-        return redirect()->route('registros.index')->with('sucesso', 'Registro salvo com sucesso.');
+        return redirect()->route('registros.index', [
+            'inicio' => $registro->data->format('Y-m-d'),
+            'fim' => $registro->data->format('Y-m-d'),
+        ])->with('sucesso', 'Registro salvo com sucesso.');
     }
 
     public function edit(RegistroDiario $registro)// método para exibir o formulário de edição de um registro específico

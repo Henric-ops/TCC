@@ -20,10 +20,10 @@ class StoreRegistroDiarioRequest extends FormRequest
 
         if ($this->isMethod('post')) {
             $alunoIdRules[] = Rule::unique('registro_diarios', 'aluno_id')
-                ->where(fn($query) => $query->where('data', now()->toDateString()));
+                ->where(fn($query) => $query->where('data', $this->input('data')));
         }
 
-        return [
+        $rules = [
             'aluno_id' => $alunoIdRules,
 
             'alimentacao.colacao' => 'required|in:tudo,parte,rejeitou',
@@ -45,6 +45,12 @@ class StoreRegistroDiarioRequest extends FormRequest
             'coco' => 'required|integer|min:0',
             'observacoes' => 'sometimes|nullable|string|max:500',
         ];
+
+        if ($this->isMethod('post')) {
+            $rules['data'] = 'required|date_format:Y-m-d|before_or_equal:today';
+        }
+
+        return $rules;
     }
 
     public function messages(): array
@@ -59,7 +65,10 @@ class StoreRegistroDiarioRequest extends FormRequest
             'liquidos.suco.required' => 'Informe o consumo de suco.',
             'liquidos.agua.required' => 'Informe o consumo de água.',
             'liquidos.*.in' => 'Selecione uma opção válida para os líquidos.',
-            'aluno_id.unique' => 'Já existe um registro diário para este aluno hoje.',
+            'aluno_id.unique' => 'Já existe um registro diário para este aluno nessa data.',
+            'data.required' => 'Informe a data do registro.',
+            'data.date_format' => 'Informe uma data válida.',
+            'data.before_or_equal' => 'A data do registro não pode ser futura.',
             'dormiu.required' => 'Informe se o aluno dormiu.',
             'dormiu.in' => 'Selecione uma opção válida para o sono.',
             'sono_inicio_1.required_without_all' => 'Informe pelo menos um período completo de sono.',
