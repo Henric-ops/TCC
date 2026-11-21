@@ -35,7 +35,7 @@ class StoreRegistroDiarioRequest extends FormRequest
 
             'xixi' => 'required|integer|min:0',
             'coco' => 'required|integer|min:0',
-            'observacoes' => 'nullable|string|max:500',
+            'observacoes' => 'sometimes|nullable|string|max:500',
         ];
     }
 

@@ -135,7 +135,7 @@
                 </div>
             </div>
 
-            <div class="obs-label">OBSERVAÇÕES</div>
+            <div class="obs-label">OBSERVAÇÕES (OPCIONAL)</div>
             <textarea name="observacoes" placeholder="Ex: fezes com aspecto normal">{{ old('observacoes', $observacoesAtual) }}</textarea>
         </div>
 
