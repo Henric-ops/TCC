@@ -64,6 +64,12 @@
     --bs-table-hover-bg: #f8f9fa;
 }
 
+.alunos-table-card .table {
+    width: 100%;
+    min-width: 700px;
+    margin-bottom: 0;
+}
+
 .alunos-table-card thead th {
     background: #f2f2f2;
     border-bottom: 1px solid var(--lk-border);
@@ -105,6 +111,7 @@
     height: calc(100vh - 4rem);
     min-height: 0;
     flex-direction: column;
+    overflow: hidden;
 }
 
 .alunos-index-page>* {
@@ -135,7 +142,60 @@
 }
 
 .alunos-index-page .alunos-pagination {
+    flex: 0 0 auto;
     margin-bottom: 0;
+    padding-top: .25rem;
+}
+
+.alunos-pagination nav {
+    align-items: center;
+    gap: 1rem;
+}
+
+.alunos-pagination nav p.small {
+    margin: 0;
+    color: var(--lk-text-label);
+    font-size: .8rem;
+}
+
+.alunos-pagination nav>div:last-child>div:first-child {
+    display: none;
+}
+
+.alunos-pagination nav>div:last-child {
+    justify-content: center !important;
+}
+
+.alunos-pagination .pagination {
+    gap: .25rem;
+    margin: 0;
+}
+
+.alunos-pagination .pagination .page-item .page-link {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 2.1rem;
+    height: 2.1rem;
+    padding: 0 .6rem;
+    border: 0;
+    border-radius: 8px;
+    background: transparent;
+    color: #64708A;
+    font-size: .84rem;
+    font-weight: 600;
+    line-height: 1;
+    box-shadow: none;
+}
+
+.alunos-pagination .pagination .page-item.active .page-link {
+    background: #EEF3FF;
+    color: #4C7DF5;
+}
+
+.alunos-pagination .pagination .page-item.disabled .page-link {
+    background: transparent;
+    color: #B8BFD0;
 }
 
 @media (max-width: 991.98px) {
@@ -148,6 +208,7 @@
     .alunos-table-card .table tbody {
         display: block;
         width: 100%;
+        min-width: 0;
     }
 
     .alunos-table-card .table thead {
