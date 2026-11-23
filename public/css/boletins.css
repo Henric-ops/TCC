@@ -5,6 +5,47 @@
     font-weight: 700;
 }
 
+.boletins-index-page {
+    display: flex;
+    height: calc(100vh - 4rem);
+    min-height: 0;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+.boletins-index-page>* {
+    flex: 0 0 auto;
+}
+
+.boletins-index-page .boletins-table-card {
+    display: flex;
+    min-height: 0;
+    flex: 1 1 auto;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+.boletins-index-page .boletins-table-scroll {
+    min-height: 0;
+    max-height: none;
+    flex: 1 1 auto;
+    overflow: auto;
+    scrollbar-color: #cbd5e1 transparent;
+    scrollbar-width: thin;
+}
+
+.boletins-table-card .table {
+    width: 100%;
+    min-width: 700px;
+    margin-bottom: 0;
+}
+
+.boletins-index-page .boletins-table-scroll thead th {
+    position: sticky;
+    z-index: 2;
+    top: 0;
+}
+
 .boletins-table-card {
     overflow: hidden;
     border: 1px solid var(--lk-border);
@@ -102,15 +143,77 @@
     color: var(--lk-text-body);
 }
 
+.boletins-pagination {
+    flex: 0 0 auto;
+    margin-bottom: 0;
+    padding-top: .25rem;
+}
+
+.boletins-pagination nav {
+    align-items: center;
+    gap: 1rem;
+}
+
+.boletins-pagination nav p.small {
+    margin: 0;
+    color: var(--lk-text-label);
+    font-size: .8rem;
+}
+
+.boletins-pagination nav>div:last-child>div:first-child {
+    display: none;
+}
+
+.boletins-pagination nav>div:last-child {
+    justify-content: center !important;
+}
+
+.boletins-pagination .pagination {
+    gap: .25rem;
+    margin: 0;
+}
+
+.boletins-pagination .pagination .page-item .page-link {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 2.1rem;
+    height: 2.1rem;
+    padding: 0 .6rem;
+    border: 0;
+    border-radius: 8px;
+    background: transparent;
+    color: #64708A;
+    font-size: .84rem;
+    font-weight: 600;
+    line-height: 1;
+    box-shadow: none;
+}
+
+.boletins-pagination .pagination .page-item.active .page-link {
+    background: #EEF3FF;
+    color: #4C7DF5;
+}
+
+.boletins-pagination .pagination .page-item.disabled .page-link {
+    background: transparent;
+    color: #B8BFD0;
+}
+
 @media (max-width: 767.98px) {
+    .boletins-index-page {
+        height: calc(100dvh - 102px);
+    }
+
     .boletins-table-card .table-responsive {
-        overflow: visible;
+        overflow: auto;
     }
 
     .boletins-table-card .table,
     .boletins-table-card .table tbody {
         display: block;
         width: 100%;
+        min-width: 0;
     }
 
     .boletins-table-card .table thead {

@@ -10,60 +10,61 @@
 
 @section('content')
 
-    <div class="boletins-header d-flex justify-content-between align-items-center mb-4">
-        <div>
-            <h1 class="h4 mb-1">Boletins</h1>
+    <div class="boletins-index-page">
+        <div class="boletins-header d-flex justify-content-between align-items-center mb-4">
+            <div>
+                <h1 class="h4 mb-1">Boletins</h1>
+            </div>
+
+            <div class="boletins-header-actions d-flex align-items-center gap-3">
+                <a href="{{ route('boletins.create') }}" class="usuario-button usuario-button-primary">
+                    <i class="bi bi-file-earmark-plus" aria-hidden="true"></i>
+                    Novo boletim
+                </a>
+            </div>
         </div>
 
-        <div class="boletins-header-actions d-flex align-items-center gap-3">
-            <a href="{{ route('boletins.create') }}" class="usuario-button usuario-button-primary">
-                <i class="bi bi-file-earmark-plus" aria-hidden="true"></i>
-                Novo boletim
+        @if (session('sucesso'))
+            <div class="alert alert-success d-flex align-items-center gap-2" role="alert">
+                <i class="bi bi-check-circle-fill" aria-hidden="true"></i>
+                <span>
+                    {{ session('sucesso') }}
+                </span>
+            </div>
+        @endif
+
+        <form method="GET" class="freq-filtros">
+            <div class="freq-filtro-item">
+                <label for="busca">Aluno</label>
+                <input type="text" id="busca" name="busca" value="{{ $busca }}" placeholder="Buscar por nome...">
+            </div>
+
+            <div class="freq-filtro-item">
+                <label for="turma_id">Turma</label>
+                <select name="turma_id" id="turma_id">
+                    <option value="">Todas as turmas</option>
+                    @foreach ($turmasPermitidas as $turma)
+                        <option value="{{ $turma->id }}" {{ (string) $turmaId === (string) $turma->id ? 'selected' : '' }}>
+                            {{ $turma->nome }}
+                        </option>
+                    @endforeach
+                </select>
+            </div>
+
+            <button type="submit" class="usuario-button usuario-button-primary">
+                <i class="bi bi-search" aria-hidden="true"></i>
+                Buscar
+            </button>
+
+            <a href="{{ route('boletins.index') }}" class="usuario-button usuario-button-muted">
+                <i class="bi bi-x-lg" aria-hidden="true"></i>
+                Limpar
             </a>
-        </div>
-    </div>
+        </form>
 
-    @if (session('sucesso'))
-        <div class="alert alert-success d-flex align-items-center gap-2" role="alert">
-            <i class="bi bi-check-circle-fill" aria-hidden="true"></i>
-            <span>
-                {{ session('sucesso') }}
-            </span>
-        </div>
-    @endif
+        <div class="card boletins-table-card">
 
-    <form method="GET" class="freq-filtros">
-        <div class="freq-filtro-item">
-            <label for="busca">Aluno</label>
-            <input type="text" id="busca" name="busca" value="{{ $busca }}" placeholder="Buscar por nome...">
-        </div>
-
-        <div class="freq-filtro-item">
-            <label for="turma_id">Turma</label>
-            <select name="turma_id" id="turma_id">
-                <option value="">Todas as turmas</option>
-                @foreach ($turmasPermitidas as $turma)
-                    <option value="{{ $turma->id }}" {{ (string) $turmaId === (string) $turma->id ? 'selected' : '' }}>
-                        {{ $turma->nome }}
-                    </option>
-                @endforeach
-            </select>
-        </div>
-
-        <button type="submit" class="usuario-button usuario-button-primary">
-            <i class="bi bi-search" aria-hidden="true"></i>
-            Buscar
-        </button>
-
-        <a href="{{ route('boletins.index') }}" class="usuario-button usuario-button-muted">
-            <i class="bi bi-x-lg" aria-hidden="true"></i>
-            Limpar
-        </a>
-    </form>
-
-    <div class="card boletins-table-card">
-
-        <div class="table-responsive">
+            <div class="table-responsive boletins-table-scroll">
 
             <table class="table table-hover align-middle mb-0">
 
@@ -78,8 +79,8 @@
 
                 <tbody>
                     @forelse ($boletins as $boletim)
-                        <tr>
-                            <td>
+                        <tr class="boletim-row">
+                            <td data-label="Aluno">
                                 <strong>
                                     {{ $boletim->aluno?->nome ?? 'Aluno não disponível' }}
                                 </strong>
@@ -87,7 +88,7 @@
                                     <small class="text-muted ms-1">Desligado</small>
                                 @endif
                             </td>
-                            <td>
+                            <td data-label="Conteúdo">
                                 @if ($boletim->observacao && ($boletim->documento || $boletim->arquivo_pdf))
                                     Avaliação + PDF
                                 @elseif ($boletim->observacao)
@@ -96,8 +97,8 @@
                                     PDF
                                 @endif
                             </td>
-                            <td>{{ $boletim->created_at->format('d/m/Y') }}</td>
-                            <td class="text-end text-nowrap">
+                            <td data-label="Data">{{ $boletim->created_at->format('d/m/Y') }}</td>
+                            <td data-label="Ações" class="text-end text-nowrap">
                                 <a href="{{ route('boletins.edit', $boletim) }}" class="usuario-action usuario-action-primary"
                                     title="Editar boletim" aria-label="Editar boletim">
                                     <i class="bi bi-pencil-square" aria-hidden="true"></i>
@@ -119,7 +120,7 @@
                         </tr>
                     @empty
                         <tr>
-                            <td colspan="6" class="text-center py-5">
+                            <td colspan="4" class="text-center py-5">
                                 <div class="boletim-empty">
                                     <i class="bi bi-file-earmark-text" aria-hidden="true"></i>
                                     <span>Nenhum boletim cadastrado ainda.</span>
@@ -130,10 +131,11 @@
                     @endforelse
                 </tbody>
             </table>
+            </div>
         </div>
-    </div>
 
-    <div class="mt-3">
-        {{ $boletins->links() }}
+        <div class="mt-3 boletins-pagination">
+            {{ $boletins->links('pagination::bootstrap-5') }}
+        </div>
     </div>
 @endsection
